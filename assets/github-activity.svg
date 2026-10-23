@@ -59,7 +59,7 @@
       <rect x="0" y="0" width="154" height="42" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
       <!-- Sparkline Activity Icon -->
       <path d="M14 21 L20 21 L24 14 L28 27 L32 17 L36 21 L42 21" fill="none" stroke="#2563EB" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="52" y="20" class="metric-val">48</text>
+      <text x="52" y="20" class="metric-val">49</text>
       <text x="52" y="34" class="metric-label">Contributions</text>
     </g>
   </g>
