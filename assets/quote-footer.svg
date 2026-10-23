@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 110" width="100%" height="auto">
+  <defs>
+    <linearGradient id="qfBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#F8FAFC"/>
+    </linearGradient>
+    <linearGradient id="waveGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#818CF8" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#C084FC" stop-opacity="0.6"/>
+    </linearGradient>
+    <linearGradient id="waveGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#60A5FA" stop-opacity="0.5"/>
+      <stop offset="50%" stop-color="#A78BFA" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#E879F9" stop-opacity="0.4"/>
+    </linearGradient>
+    <filter id="qfShadow" x="-2%" y="-5%" width="104%" height="115%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0F172A" flood-opacity="0.04"/>
+    </filter>
+  </defs>
+
+  <!-- Container Box -->
+  <rect x="2" y="2" width="996" height="106" rx="16" fill="url(#qfBg)" stroke="#E2E8F0" stroke-width="1.2" filter="url(#qfShadow)"/>
+
+  <!-- Large Stylized Quote Mark -->
+  <g transform="translate(36, 32)">
+    <!-- Quote Glyphs -->
+    <path d="M0 24 C0 10 8 0 20 0 L20 10 C14 10 10 14 10 20 L20 20 L20 38 L0 38 Z" fill="#2563EB"/>
+    <path d="M26 24 C26 10 34 0 46 0 L46 10 C40 10 36 14 36 20 L46 20 L46 38 L26 38 Z" fill="#2563EB"/>
+  </g>
+
+  <!-- Quote Text -->
+  <text x="104" y="60" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="16" font-weight="500" fill="#334155" letter-spacing="-0.2px">
+    “Using AI/ML to build impactful, deployable tech, not just prototypes.”
+  </text>
+
+  <!-- Fluid Bezier Wave Lines on Right -->
+  <g transform="translate(680, 0)">
+    <path d="M0 65 Q 60 15, 120 45 T 240 60 T 310 40" fill="none" stroke="url(#waveGrad1)" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M0 75 Q 70 25, 130 55 T 250 68 T 310 50" fill="none" stroke="url(#waveGrad2)" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M20 55 Q 80 85, 150 45 T 270 52 T 310 35" fill="none" stroke="#BAE6FD" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+  </g>
+</svg>

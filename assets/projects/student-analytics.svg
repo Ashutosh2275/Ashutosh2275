@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 160" width="100%" height="auto">
+  <defs>
+    <linearGradient id="saBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F0F9FF"/>
+      <stop offset="100%" stop-color="#E0F2FE"/>
+    </linearGradient>
+    <linearGradient id="barGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+    <linearGradient id="barGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#60A5FA"/>
+      <stop offset="100%" stop-color="#2563EB"/>
+    </linearGradient>
+    <filter id="saShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0284C7" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect x="2" y="2" width="316" height="156" rx="16" fill="url(#saBg)" stroke="#E0F2FE" stroke-width="1.5" filter="url(#saShadow)"/>
+
+  <!-- Subtle Grid Accent -->
+  <g stroke="#BAE6FD" stroke-width="0.8" opacity="0.35">
+    <line x1="30" y1="20" x2="30" y2="140"/>
+    <line x1="70" y1="20" x2="70" y2="140"/>
+    <line x1="110" y1="20" x2="110" y2="140"/>
+    <line x1="150" y1="20" x2="150" y2="140"/>
+    <line x1="190" y1="20" x2="190" y2="140"/>
+    <line x1="230" y1="20" x2="230" y2="140"/>
+    <line x1="270" y1="20" x2="270" y2="140"/>
+    <line x1="20" y1="40" x2="300" y2="40"/>
+    <line x1="20" y1="80" x2="300" y2="80"/>
+    <line x1="20" y1="120" x2="300" y2="120"/>
+  </g>
+
+  <!-- Central Illustration Group -->
+  <g transform="translate(105, 20)">
+    <!-- Analytics Chart Board -->
+    <rect x="4" y="6" width="102" height="108" rx="10" fill="#FFFFFF" stroke="#BAE6FD" stroke-width="1.5"/>
+
+    <!-- Chart Grid Lines -->
+    <line x1="16" y1="30" x2="94" y2="30" stroke="#F1F5F9" stroke-width="1"/>
+    <line x1="16" y1="52" x2="94" y2="52" stroke="#F1F5F9" stroke-width="1"/>
+    <line x1="16" y1="74" x2="94" y2="74" stroke="#F1F5F9" stroke-width="1"/>
+    <line x1="16" y1="96" x2="94" y2="96" stroke="#CBD5E1" stroke-width="1.5"/>
+
+    <!-- Ascending Bar Chart -->
+    <!-- Bar 1 -->
+    <rect x="24" y="70" width="12" height="26" rx="3" fill="#BAE6FD"/>
+    <!-- Bar 2 -->
+    <rect x="42" y="52" width="12" height="44" rx="3" fill="#7DD3FC"/>
+    <!-- Bar 3 -->
+    <rect x="60" y="38" width="12" height="58" rx="3" fill="url(#barGrad1)"/>
+    <!-- Bar 4 -->
+    <rect x="78" y="24" width="12" height="72" rx="3" fill="url(#barGrad2)"/>
+
+    <!-- Upward Trendline with Arrow -->
+    <path d="M28 66 Q50 48 84 20" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Trend points -->
+    <circle cx="30" cy="65" r="3" fill="#FFFFFF" stroke="#2563EB" stroke-width="2"/>
+    <circle cx="48" cy="48" r="3" fill="#FFFFFF" stroke="#2563EB" stroke-width="2"/>
+    <circle cx="66" cy="34" r="3" fill="#FFFFFF" stroke="#2563EB" stroke-width="2"/>
+    <circle cx="84" cy="20" r="3.5" fill="#2563EB"/>
+
+    <!-- Graduation Cap / Target Node in Top Left -->
+    <g transform="translate(-16, -6)">
+      <path d="M22 18 L34 13 L46 18 L34 23 Z" fill="#0284C7"/>
+      <path d="M26 21 V26 C26 28 30 30 34 30 C38 30 42 28 42 26 V21" fill="none" stroke="#0284C7" stroke-width="1.5"/>
+      <line x1="44" y1="18.5" x2="44" y2="28" stroke="#F59E0B" stroke-width="1.2"/>
+      <circle cx="44" cy="29" r="1.5" fill="#F59E0B"/>
+    </g>
+  </g>
+</svg>

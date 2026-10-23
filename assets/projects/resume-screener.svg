@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 160" width="100%" height="auto">
+  <defs>
+    <linearGradient id="rsBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F5F3FF"/>
+      <stop offset="100%" stop-color="#EDE9FE"/>
+    </linearGradient>
+    <filter id="rsShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#7C3AED" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect x="2" y="2" width="316" height="156" rx="16" fill="url(#rsBg)" stroke="#EDE9FE" stroke-width="1.5" filter="url(#rsShadow)"/>
+
+  <!-- Subtle Grid Accent -->
+  <g stroke="#DDD6FE" stroke-width="0.8" opacity="0.35">
+    <line x1="30" y1="20" x2="30" y2="140"/>
+    <line x1="70" y1="20" x2="70" y2="140"/>
+    <line x1="110" y1="20" x2="110" y2="140"/>
+    <line x1="150" y1="20" x2="150" y2="140"/>
+    <line x1="190" y1="20" x2="190" y2="140"/>
+    <line x1="230" y1="20" x2="230" y2="140"/>
+    <line x1="270" y1="20" x2="270" y2="140"/>
+    <line x1="20" y1="40" x2="300" y2="40"/>
+    <line x1="20" y1="80" x2="300" y2="80"/>
+    <line x1="20" y1="120" x2="300" y2="120"/>
+  </g>
+
+  <!-- Central Illustration Group -->
+  <g transform="translate(112, 22)">
+    <!-- Main Resume Card -->
+    <rect x="10" y="6" width="80" height="104" rx="8" fill="#FFFFFF" stroke="#DDD6FE" stroke-width="1.5"/>
+    <path d="M72 6 L90 24 L72 24 Z" fill="#EDE9FE" stroke="#DDD6FE" stroke-width="1"/>
+
+    <!-- Avatar Placeholder -->
+    <circle cx="32" cy="28" r="10" fill="#EDE9FE"/>
+    <!-- Avatar Head & Body -->
+    <circle cx="32" cy="26" r="4.5" fill="#7C3AED"/>
+    <path d="M25 36 C25 32 28 31 32 31 C36 31 39 32 39 36" fill="#7C3AED"/>
+
+    <!-- Name / Title Placeholder Lines -->
+    <line x1="48" y1="25" x2="76" y2="25" stroke="#6D28D9" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="48" y1="32" x2="68" y2="32" stroke="#A78BFA" stroke-width="1.8" stroke-linecap="round"/>
+
+    <!-- Divider -->
+    <line x1="20" y1="44" x2="80" y2="44" stroke="#EDE9FE" stroke-width="1.2"/>
+
+    <!-- Skill Match Tags -->
+    <rect x="20" y="52" width="26" height="7" rx="3.5" fill="#DDD6FE"/>
+    <rect x="50" y="52" width="28" height="7" rx="3.5" fill="#DDD6FE"/>
+    
+    <rect x="20" y="64" width="34" height="7" rx="3.5" fill="#EDE9FE"/>
+    <rect x="58" y="64" width="22" height="7" rx="3.5" fill="#EDE9FE"/>
+
+    <!-- Score Bar -->
+    <rect x="20" y="78" width="60" height="6" rx="3" fill="#F3F4F6"/>
+    <rect x="20" y="78" width="48" height="6" rx="3" fill="#7C3AED"/>
+
+    <line x1="20" y1="92" x2="75" y2="92" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round"/>
+    <line x1="20" y1="99" x2="55" y2="99" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round"/>
+
+    <!-- AI Scan / Magnifying Lens -->
+    <g transform="translate(56, 48)">
+      <circle cx="24" cy="24" r="18" fill="#FFFFFF" fill-opacity="0.85" stroke="#7C3AED" stroke-width="2.5"/>
+      <line x1="37" y1="37" x2="49" y2="49" stroke="#7C3AED" stroke-width="3" stroke-linecap="round"/>
+      <!-- Checkmark inside lens -->
+      <path d="M17 24 L22 29 L31 19" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+    <!-- Sparkle Stars -->
+    <g fill="#7C3AED">
+      <path d="M0 16 L2 10 L4 16 L10 18 L4 20 L2 26 L0 20 L-6 18 Z" opacity="0.8"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 195" width="100%" height="auto" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <filter id="goalShadow" x="-5%" y="-10%" width="110%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0F172A" flood-opacity="0.04"/>
+    </filter>
+  </defs>
+
+  <style>
+    .goal-title { font-size: 15px; font-weight: 700; fill: #0F172A; }
+    .goal-item { font-size: 12.5px; font-weight: 500; fill: #334155; }
+  </style>
+
+  <!-- Container Box -->
+  <rect x="1" y="1" width="318" height="193" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2" filter="url(#goalShadow)"/>
+
+  <!-- Card Title -->
+  <g transform="translate(20, 24)">
+    <!-- Target / Crosshair Icon -->
+    <circle cx="10" cy="8" r="8" fill="none" stroke="#2563EB" stroke-width="2"/>
+    <circle cx="10" cy="8" r="4.5" fill="none" stroke="#2563EB" stroke-width="1.5"/>
+    <circle cx="10" cy="8" r="1.8" fill="#2563EB"/>
+    <text x="26" y="13" class="goal-title">My Learning Goals</text>
+  </g>
+
+  <!-- Goals List -->
+  <g transform="translate(20, 56)">
+    <!-- Goal 1 -->
+    <g transform="translate(0, 0)">
+      <circle cx="10" cy="8" r="3.5" fill="#2563EB"/>
+      <text x="24" y="12" class="goal-item">Expand ML &amp; Deep Learning skills</text>
+    </g>
+    <!-- Goal 2 -->
+    <g transform="translate(0, 24)">
+      <circle cx="10" cy="8" r="3.5" fill="#7C3AED"/>
+      <text x="24" y="12" class="goal-item">Master Computer Vision architectures</text>
+    </g>
+    <!-- Goal 3 -->
+    <g transform="translate(0, 48)">
+      <circle cx="10" cy="8" r="3.5" fill="#EAB308"/>
+      <text x="24" y="12" class="goal-item">Build Smart IoT systems with AI</text>
+    </g>
+    <!-- Goal 4 -->
+    <g transform="translate(0, 72)">
+      <circle cx="10" cy="8" r="3.5" fill="#F97316"/>
+      <text x="24" y="12" class="goal-item">Contribute to Open Source</text>
+    </g>
+    <!-- Goal 5 -->
+    <g transform="translate(0, 96)">
+      <circle cx="10" cy="8" r="3.5" fill="#10B981"/>
+      <text x="24" y="12" class="goal-item">Keep exploring and learning new tech</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,323 @@
+<!-- ==========================================================================
+     Ashutosh Mishra | GitHub Profile README
+     Theme: Professional Minimalist Light (Pale Blue / Deep Navy Palette)
+     User: Ashutosh2275
+========================================================================== -->
+
+<div align="center">
+
+  <!-- Hero Banner -->
+  <a href="#about-me">
+    <img src="assets/banner.svg" alt="Ashutosh Mishra - AI/ML &amp; Full-Stack Developer Banner" width="100%" />
+  </a>
+
+  <!-- Quick Action & Professional Links -->
+  <p align="center">
+    <a href="https://linkedin.com/in/ashutosh2275" target="_blank" rel="noopener noreferrer">
+      <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
+    </a>
+    &nbsp;
+    <a href="https://suraksha-weekly.vercel.app" target="_blank" rel="noopener noreferrer">
+      <img src="https://img.shields.io/badge/Portfolio-1E293B?style=for-the-badge&logo=firefoxbrowser&logoColor=white" alt="Portfolio" />
+    </a>
+    &nbsp;
+    <a href="mailto:ashutoshmishra2275@gmail.com">
+      <img src="https://img.shields.io/badge/Email-E11D48?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" />
+    </a>
+    &nbsp;
+    <a href="https://github.com/Ashutosh2275?tab=repositories">
+      <img src="https://img.shields.io/badge/Resume-7C3AED?style=for-the-badge&logo=googledocs&logoColor=white" alt="Resume / CV" />
+    </a>
+  </p>
+
+</div>
+
+<br />
+
+<!-- ==========================================================================
+     SECTION: About Me & Currently (Side-by-Side Clean Grid)
+========================================================================== -->
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <!-- Left Column: About Me -->
+    <td width="58%" valign="top" style="border: none; padding-right: 12px;">
+      <h3>👤 About Me</h3>
+      <p align="justify">
+        I am a <b>Computer Science Engineering student</b> (B.Tech CSE, 2023–2027) based in Bhubaneswar, India, with a dedicated focus on <b>AI/ML engineering, Retrieval-Augmented Generation (RAG)</b>, and <b>scalable backend architectures</b>.
+      </p>
+      <p align="justify">
+        I believe in taking artificial intelligence beyond toy prototypes into reliable, deployable software. My work bridges foundational machine learning algorithms with production-ready web backends, intuitive APIs, and practical problem-solving.
+      </p>
+      <br />
+      <!-- Value Pillars SVG -->
+      <img src="assets/values.svg" alt="Core Values: Learn New Technologies, Build Real Applications, Collaborate With Great Minds, Create Real-World Impact" width="100%" />
+    </td>
+
+    <!-- Right Column: Currently & GitHub Activity -->
+    <td width="42%" valign="top" style="border: none; padding-left: 12px;">
+      <h3>🟢 Currently</h3>
+      <ul>
+        <li>📖 <b>Learning:</b> Spring Boot &amp; Large Vision-Language Models (VLMs)</li>
+        <li>⚙️ <b>Building:</b> Production RAG pipelines &amp; Full-Stack ML applications</li>
+        <li>🎯 <b>Seeking:</b> Software Engineering &amp; AI/ML Internships</li>
+        <li>🚀 <b>Exploring:</b> Scalable microservices &amp; incident intelligence</li>
+      </ul>
+
+      <br />
+
+      <h3>📊 GitHub Activity</h3>
+      <p align="center">
+        <a href="https://github.com/Ashutosh2275">
+          <img src="assets/github-contribution-grid-snake.svg" alt="Ashutosh Mishra Contribution Snake" width="100%" />
+        </a>
+      </p>
+      <p align="center">
+        <a href="https://github.com/Ashutosh2275?tab=repositories">
+          <img src="https://img.shields.io/badge/Public_Repos-9-2563EB?style=flat-square&logo=github&logoColor=white" alt="Repositories" />
+        </a>
+        &nbsp;
+        <a href="https://github.com/Ashutosh2275">
+          <img src="https://img.shields.io/badge/Active_Status-Open_to_Work-10B981?style=flat-square&logo=statuspage&logoColor=white" alt="Status" />
+        </a>
+      </p>
+    </td>
+  </tr>
+</table>
+
+<br />
+
+<!-- ==========================================================================
+     SECTION: Featured Projects (2x2 Uniform Gallery)
+========================================================================== -->
+
+<div align="left">
+  <table width="100%">
+    <tr>
+      <td style="border: none;">
+        <h3>📦 Featured Projects</h3>
+      </td>
+      <td align="right" style="border: none;">
+        <a href="https://github.com/Ashutosh2275?tab=repositories"><b>View All Repositories ➔</b></a>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<table width="100%" border="0" cellpadding="8" cellspacing="0">
+  <tr>
+    <!-- Project 1: Healthcare Document Intelligence -->
+    <td width="50%" valign="top">
+      <a href="https://github.com/Ashutosh2275/Datacure">
+        <img src="assets/projects/healthcare-rag.svg" alt="Healthcare Document Intelligence &amp; RAG Assistant" width="100%" />
+      </a>
+      <h4>🏥 Healthcare Document Intelligence &amp; RAG Assistant</h4>
+      <p align="justify">
+        Production-grade hospital intelligence and clinical document Q&amp;A platform. Integrates semantic retrieval over unstructured medical records with strict hallucination controls, citation grounding, and HIPAA-conscious data processing.
+      </p>
+      <p>
+        <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python" />
+        <img src="https://img.shields.io/badge/LangChain-1C3C3C?style=flat-square&logo=chainlink&logoColor=white" alt="LangChain" />
+        <img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI" />
+        <img src="https://img.shields.io/badge/ChromaDB-FC521F?style=flat-square" alt="ChromaDB" />
+      </p>
+      <p>
+        <a href="https://github.com/Ashutosh2275/Datacure"><b>🐙 View Code</b></a>
+        &nbsp;•&nbsp;
+        <a href="https://github.com/Ashutosh2275/Datacure#live-preview"><b>↗ Demo (Staging)</b></a>
+      </p>
+    </td>
+
+    <!-- Project 2: Intelligent Resume Screening -->
+    <td width="50%" valign="top">
+      <a href="https://github.com/Ashutosh2275">
+        <img src="assets/projects/resume-screener.svg" alt="Intelligent Resume Screening &amp; Job Matching System" width="100%" />
+      </a>
+      <h4>📄 Intelligent Resume Screening &amp; Job Matching</h4>
+      <p align="justify">
+        AI-driven candidate evaluation engine parsing PDF/DOCX resumes against structured job descriptions. Uses transformer-based semantic embeddings to score skill alignment, parse experience timelines, and eliminate keyword stuffing bias.
+      </p>
+      <p>
+        <img src="https://img.shields.io/badge/NLP-Transformers-7C3AED?style=flat-square" alt="NLP" />
+        <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=flat-square&logo=pytorch&logoColor=white" alt="PyTorch" />
+        <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React" />
+        <img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI" />
+      </p>
+      <p>
+        <a href="https://github.com/Ashutosh2275"><b>🐙 View Code</b></a>
+        &nbsp;•&nbsp;
+        <em>↗ Demo (Beta)</em>
+      </p>
+    </td>
+  </tr>
+
+  <tr>
+    <!-- Project 3: Smart Student Performance Analytics -->
+    <td width="50%" valign="top">
+      <a href="https://github.com/Ashutosh2275/EduVista">
+        <img src="assets/projects/student-analytics.svg" alt="Smart Student Performance Analytics" width="100%" />
+      </a>
+      <h4>📈 Smart Student Performance Analytics</h4>
+      <p align="justify">
+        Predictive academic intelligence engine evaluating student engagement trends, coursework milestones, and historical benchmarks to forecast exam outcomes and recommend targeted interventions before grade drop-offs occur.
+      </p>
+      <p>
+        <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python" />
+        <img src="https://img.shields.io/badge/XGBoost-185886?style=flat-square" alt="XGBoost" />
+        <img src="https://img.shields.io/badge/Scikit--Learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white" alt="Scikit-Learn" />
+        <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
+      </p>
+      <p>
+        <a href="https://github.com/Ashutosh2275/EduVista"><b>🐙 View Code</b></a>
+        &nbsp;•&nbsp;
+        <a href="https://github.com/Ashutosh2275/EduVista"><b>↗ Repository Demo</b></a>
+      </p>
+    </td>
+
+    <!-- Project 4: Financial Intelligence & Fraud Detection -->
+    <td width="50%" valign="top">
+      <a href="https://github.com/Ashutosh2275/suraksha-weekly">
+        <img src="assets/projects/fraud-detection.svg" alt="AI-Powered Financial Intelligence &amp; Fraud Detection" width="100%" />
+      </a>
+      <h4>🛡️ Financial Intelligence &amp; Fraud Detection</h4>
+      <p align="justify">
+        Real-time financial anomaly detection and parametric protection system. Built for <em>Guidewire DEVTrails 2026</em>, deploying unsupervised Isolation Forests and time-series heuristics to detect fraudulent risk spikes with sub-second latency.
+      </p>
+      <p>
+        <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python" />
+        <img src="https://img.shields.io/badge/Isolation_Forest-059669?style=flat-square" alt="Isolation Forest" />
+        <img src="https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white" alt="Vercel" />
+        <img src="https://img.shields.io/badge/REST_API-0284C7?style=flat-square" alt="API" />
+      </p>
+      <p>
+        <a href="https://github.com/Ashutosh2275/suraksha-weekly"><b>🐙 View Code</b></a>
+        &nbsp;•&nbsp;
+        <a href="https://suraksha-weekly.vercel.app" target="_blank" rel="noopener noreferrer"><b>↗ Live Demo (Vercel)</b></a>
+      </p>
+    </td>
+  </tr>
+</table>
+
+<br />
+
+<!-- ==========================================================================
+     SECTION: Technical Skills
+========================================================================== -->
+
+<div align="left">
+  <h3>🛠️ Technical Skills</h3>
+</div>
+
+<p align="center">
+  <img src="assets/skills.svg" alt="Technical Skills: Languages, AI/ML, Frontend, Backend, Databases" width="100%" />
+</p>
+
+<!-- Accessible Categorized Tech Matrix -->
+<table width="100%" border="0" cellpadding="6" cellspacing="0">
+  <tr>
+    <td width="20%" valign="top">
+      <b>Languages</b><br />
+      • Python<br />
+      • Java<br />
+      • C / C++<br />
+      • JavaScript (ES6+)<br />
+      • TypeScript
+    </td>
+    <td width="20%" valign="top">
+      <b>AI / ML &amp; GenAI</b><br />
+      • PyTorch &amp; TF<br />
+      • Scikit-Learn<br />
+      • LangChain &amp; RAG<br />
+      • OpenAI / Hugging Face<br />
+      • Computer Vision (YOLO)
+    </td>
+    <td width="20%" valign="top">
+      <b>Frontend</b><br />
+      • React.js<br />
+      • Next.js<br />
+      • Tailwind CSS<br />
+      • HTML5 &amp; CSS3<br />
+      • Vite
+    </td>
+    <td width="20%" valign="top">
+      <b>Backend</b><br />
+      • FastAPI<br />
+      • Node.js &amp; Express<br />
+      • Spring Boot<br />
+      • RESTful APIs<br />
+      • Microservices
+    </td>
+    <td width="20%" valign="top">
+      <b>Databases &amp; Tools</b><br />
+      • PostgreSQL &amp; SQL<br />
+      • MongoDB<br />
+      • Firebase / Redis<br />
+      • Docker &amp; Git/GitHub<br />
+      • Postman &amp; Linux
+    </td>
+  </tr>
+</table>
+
+<br />
+
+<!-- ==========================================================================
+     SECTION: GitHub Statistics & Learning Goals
+========================================================================== -->
+
+<div align="left">
+  <h3>📊 GitHub Analytics &amp; Continuous Learning</h3>
+</div>
+
+<table width="100%" border="0" cellpadding="4" cellspacing="0">
+  <tr>
+    <!-- Live GitHub Stats -->
+    <td width="48%" valign="top" align="center">
+      <a href="https://github.com/Ashutosh2275">
+        <img src="https://github-readme-stats.vercel.app/api?username=Ashutosh2275&show_icons=true&bg_color=FFFFFF&border_color=E2E8F0&title_color=0F172A&text_color=475569&icon_color=2563EB&border_radius=12&hide_border=false" alt="Ashutosh2275's GitHub Stats" width="100%" />
+      </a>
+    </td>
+
+    <!-- Most Used Languages -->
+    <td width="26%" valign="top" align="center">
+      <a href="https://github.com/Ashutosh2275">
+        <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Ashutosh2275&layout=compact&bg_color=FFFFFF&border_color=E2E8F0&title_color=0F172A&text_color=475569&border_radius=12&hide_border=false" alt="Ashutosh2275's Top Languages" width="100%" />
+      </a>
+    </td>
+
+    <!-- Learning Goals Card -->
+    <td width="26%" valign="top" align="center">
+      <img src="assets/learning-goals.svg" alt="My Learning Goals" width="100%" />
+    </td>
+  </tr>
+</table>
+
+<br />
+
+<!-- ==========================================================================
+     SECTION: Contact & Connect
+========================================================================== -->
+
+<div align="center">
+  <h3>📬 Let's Connect</h3>
+  <p>
+    Whether discussing AI architectures, backend systems, open-source projects, or engineering roles:
+  </p>
+  <p>
+    <a href="https://linkedin.com/in/ashutosh2275">
+      <img src="https://img.shields.io/badge/LinkedIn-Ashutosh_Mishra-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn" />
+    </a>
+    &nbsp;
+    <a href="mailto:ashutoshmishra2275@gmail.com">
+      <img src="https://img.shields.io/badge/Email-ashutoshmishra2275@gmail.com-E11D48?style=flat-square&logo=gmail&logoColor=white" alt="Email" />
+    </a>
+    &nbsp;
+    <a href="https://github.com/Ashutosh2275">
+      <img src="https://img.shields.io/badge/GitHub-@Ashutosh2275-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub" />
+    </a>
+  </p>
+
+  <br />
+
+  <!-- Signature Quote Footer -->
+  <img src="assets/quote-footer.svg" alt="Using AI/ML to build impactful, deployable tech, not just prototypes." width="100%" />
+</div>

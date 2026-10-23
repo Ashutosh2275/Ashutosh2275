@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 96" width="100%" height="auto" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <filter id="valShadow" x="-5%" y="-10%" width="110%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0F172A" flood-opacity="0.04"/>
+    </filter>
+  </defs>
+
+  <style>
+    .val-title { font-size: 13.5px; font-weight: 700; fill: #0F172A; }
+    .val-sub { font-size: 11px; font-weight: 500; fill: #64748B; }
+  </style>
+
+  <!-- Card 1: Learn -->
+  <g transform="translate(0, 4)" filter="url(#valShadow)">
+    <rect x="0" y="0" width="136" height="84" rx="12" fill="#FFFFFF" stroke="#EDE9FE" stroke-width="1.2"/>
+    <!-- Icon Container -->
+    <rect x="12" y="12" width="28" height="28" rx="8" fill="#F5F3FF"/>
+    <!-- Brain / Intellect Icon -->
+    <path d="M21 21 C20 18 22 16 24 16 C26 16 27 17 28 19 C29 17 31 16 32 17 C34 18 34 20 33 22 C35 23 35 25 34 27 C33 28 31 29 30 28 C29 30 27 30 26 29 C25 30 23 29 22 28 C21 27 20 25 21 23 C20 22 20 21 21 21 Z" fill="#7C3AED"/>
+    <text x="12" y="56" class="val-title">Learn</text>
+    <text x="12" y="72" class="val-sub">New Technologies</text>
+  </g>
+
+  <!-- Card 2: Build -->
+  <g transform="translate(148, 4)" filter="url(#valShadow)">
+    <rect x="0" y="0" width="136" height="84" rx="12" fill="#FFFFFF" stroke="#DCFCE7" stroke-width="1.2"/>
+    <!-- Icon Container -->
+    <rect x="12" y="12" width="28" height="28" rx="8" fill="#F0FDF4"/>
+    <!-- Lightning Bolt Icon -->
+    <path d="M27 16 L20 25 L25 25 L23 32 L31 22 L26 22 Z" fill="#10B981"/>
+    <text x="12" y="56" class="val-title">Build</text>
+    <text x="12" y="72" class="val-sub">Real Applications</text>
+  </g>
+
+  <!-- Card 3: Collaborate -->
+  <g transform="translate(296, 4)" filter="url(#valShadow)">
+    <rect x="0" y="0" width="136" height="84" rx="12" fill="#FFFFFF" stroke="#FEF3C7" stroke-width="1.2"/>
+    <!-- Icon Container -->
+    <rect x="12" y="12" width="28" height="28" rx="8" fill="#FFFBEB"/>
+    <!-- Users / People Icon -->
+    <circle cx="23" cy="21" r="3.5" fill="#D97706"/>
+    <circle cx="29" cy="22" r="3" fill="#F59E0B"/>
+    <path d="M17 29 C17 26 20 25 23 25 C26 25 29 26 29 29" fill="#D97706"/>
+    <path d="M27 29 C27 27 29 26 31 26 C33 26 35 27 35 29" fill="#F59E0B"/>
+    <text x="12" y="56" class="val-title">Collaborate</text>
+    <text x="12" y="72" class="val-sub">With Great Minds</text>
+  </g>
+
+  <!-- Card 4: Create -->
+  <g transform="translate(444, 4)" filter="url(#valShadow)">
+    <rect x="0" y="0" width="136" height="84" rx="12" fill="#FFFFFF" stroke="#FEE2E2" stroke-width="1.2"/>
+    <!-- Icon Container -->
+    <rect x="12" y="12" width="28" height="28" rx="8" fill="#FEF2F2"/>
+    <!-- Growth Chart Icon -->
+    <path d="M20 30 L22 26 L26 27 L30 20 L32 22 L31 18 L27 19 L29 21 L26 25 L22 24 L19 29 Z" fill="#E11D48"/>
+    <rect x="19" y="30" width="14" height="2" rx="1" fill="#E11D48"/>
+    <text x="12" y="56" class="val-title">Create</text>
+    <text x="12" y="72" class="val-sub">Real-World Impact</text>
+  </g>
+</svg>
