@@ -11,21 +11,25 @@ GitHub displays a profile README when a public repository with the exact same na
 ```text
 ├── README.md                              # Main profile document (light minimal theme)
 ├── INSTALL.md                             # Setup, configuration & troubleshooting guide
+├── preview.html                           # Standalone local preview renderer
+├── scripts/
+│   └── generate_contributions.py          # Data pipeline generating live contribution heatmap
 ├── assets/
 │   ├── banner.svg                         # High-resolution vector hero banner
-│   ├── values.svg                         # Core value cards (Learn, Build, Collaborate, Create)
+│   ├── values.svg                         # Full-width core value cards (Learn, Build, Collaborate, Create)
+│   ├── github-activity.svg                # Full-width live contribution heatmap with wave accent
 │   ├── skills.svg                         # Categorized technical skills icon matrix
 │   ├── learning-goals.svg                 # Engineering goals card
 │   ├── quote-footer.svg                   # Signature footer banner with wave accent
-│   ├── github-contribution-grid-snake.svg # Contribution snake grid animation (bundled default)
 │   └── projects/
-│       ├── healthcare-rag.svg             # Custom vector art: Healthcare RAG Assistant
-│       ├── resume-screener.svg            # Custom vector art: Resume Screening & Job Matching
-│       ├── student-analytics.svg          # Custom vector art: Student Performance Analytics
-│       └── fraud-detection.svg            # Custom vector art: Financial Intelligence & Fraud
+│       ├── dinedeck.svg                   # Custom vector art: DineDeck In-Dining OS
+│       ├── healthcare-rag.svg             # Custom vector art: DataCure Hospital Platform
+│       ├── drai-vision.svg                # Custom vector art: DRAI AI Edge Vision Pipeline
+│       └── fraud-detection.svg            # Custom vector art: ArthSavora Financial Engine
 └── .github/
     └── workflows/
-        └── contribution-snake.yml         # Daily automation workflow for contribution snake
+        ├── update-contributions.yml       # Daily contribution heatmap update workflow
+        └── contribution-snake.yml         # Daily contribution snake animation workflow
 ```
 
 ---
@@ -63,12 +67,14 @@ git push -u origin main
 
 ---
 
-## 3. Configuring the Contribution Snake Workflow
+## 3. Configuring Automated Daily Workflows
 
-The repository includes `.github/workflows/contribution-snake.yml` to automatically animate your contribution grid every 24 hours.
+The repository includes automated GitHub Actions workflows to keep your profile visual assets synchronized with your real GitHub contributions:
+- `.github/workflows/update-contributions.yml`: Generates the custom full-width live heatmap card (`assets/github-activity.svg`).
+- `.github/workflows/contribution-snake.yml`: Generates the contribution snake grid.
 
 ### Step 3.1: Enable Workflow Permissions
-By default, GitHub Actions may have read-only permissions. Grant write permissions so the workflow can commit the updated snake animation back to `assets/`:
+Grant write permissions so GitHub Actions can commit the freshly generated contribution assets back to `assets/`:
 
 1. In your `Ashutosh2275/Ashutosh2275` repository, navigate to **Settings** ➔ **Actions** ➔ **General**.
 2. Scroll to the bottom to **Workflow permissions**.
@@ -76,13 +82,13 @@ By default, GitHub Actions may have read-only permissions. Grant write permissio
 4. Check **Allow GitHub Actions to create and approve pull requests** (optional, recommended).
 5. Click **Save**.
 
-### Step 3.2: Trigger the Workflow Manually
-To test the workflow immediately:
+### Step 3.2: Triggering Workflows Manually
+To test or refresh immediately:
 1. Go to the **Actions** tab in your repository.
-2. Under "Workflows" on the left, click **Generate Contribution Snake**.
+2. Select either **Update GitHub Activity Heatmap** or **Generate Contribution Snake**.
 3. Click the **Run workflow** dropdown on the right and select the `main` branch.
 4. Click **Run workflow**.
-5. Once completed (typically ~30 seconds), the workflow updates `assets/github-contribution-grid-snake.svg` with your actual contribution graph.
+5. Once completed (typically ~25 seconds), the workflow updates your activity card with your latest verified contribution counts.
 
 ---
 
