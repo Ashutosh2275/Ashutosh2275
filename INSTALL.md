@@ -97,10 +97,10 @@ All hyperlinks are verified against Ashutosh's live portfolio and resume:
 | **Email** | Header & Contact sections | `mailto:ashutoshmishra2275@gmail.com` |
 | **Resume** | Hero banner & Quick links | `https://drive.google.com/file/d/1RyirKSNDgrU9XfwkMZfwFgM8A7Jv8sfR/view?usp=sharing` |
 | **GitHub Profile** | Meta, badges & cards | `https://github.com/Ashutosh2275` |
-| **DataCure Repo** | Featured Projects (Card 1) | `https://github.com/Ashutosh2275/Datacure` |
-| **EduVista Repo** | Featured Projects (Card 3) | `https://github.com/Ashutosh2275/EduVista` |
-| **Suraksha Repo** | Featured Projects (Card 4) | `https://github.com/Ashutosh2275/suraksha-weekly` |
-| **Suraksha Demo** | Featured Projects (Card 4) | `https://suraksha-weekly.vercel.app` |
+| **DineDeck Repo** | Featured Projects (Card 1) | `https://github.com/Ashutosh2275/Dinedeck` |
+| **DataCure Repo** | Featured Projects (Card 2) | `https://github.com/Ashutosh2275/Datacure` |
+| **DRAI AI Repo** | Featured Projects (Card 3) | `https://github.com/Ashutosh2275/DRAI-AI` |
+| **ArthSavora Repo** | Featured Projects (Card 4) | `https://github.com/Ashutosh2275/ARTHSAVORA` |
 
 ---
 

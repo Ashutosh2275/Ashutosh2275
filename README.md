@@ -58,10 +58,10 @@
     <td width="42%" valign="top" style="border: none; padding-left: 12px;">
       <h3>🟢 Currently</h3>
       <ul>
-        <li>📖 <b>Learning:</b> Spring Boot &amp; Large Vision-Language Models (VLMs)</li>
-        <li>⚙️ <b>Building:</b> Production RAG pipelines &amp; Full-Stack ML applications</li>
-        <li>🎯 <b>Seeking:</b> Software Engineering &amp; AI/ML Internships</li>
-        <li>🚀 <b>Exploring:</b> Scalable microservices &amp; incident intelligence</li>
+        <li>📖 <b>Learning:</b> Spring Boot, Distributed Systems &amp; Vision-Language Models</li>
+        <li>⚙️ <b>Building:</b> In-Dining OS (<code>DineDeck</code>) &amp; Hospital Intelligence (<code>DataCure</code>)</li>
+        <li>🎯 <b>Seeking:</b> Software Engineering &amp; AI/ML Opportunities</li>
+        <li>🚀 <b>Exploring:</b> Autonomous Edge Vision (<code>DRAI</code>) &amp; Scalable Cloud Tech</li>
       </ul>
 
       <br />
@@ -74,11 +74,11 @@
       </p>
       <p align="center">
         <a href="https://github.com/Ashutosh2275?tab=repositories">
-          <img src="https://img.shields.io/badge/Public_Repos-9-2563EB?style=flat-square&logo=github&logoColor=white" alt="Repositories" />
+          <img src="https://img.shields.io/badge/Public_Repos-10-2563EB?style=flat-square&logo=github&logoColor=white" alt="Repositories" />
         </a>
         &nbsp;
         <a href="https://github.com/Ashutosh2275">
-          <img src="https://img.shields.io/badge/Active_Status-Open_to_Work-10B981?style=flat-square&logo=statuspage&logoColor=white" alt="Status" />
+          <img src="https://img.shields.io/badge/Status-GitHub_Pro-10B981?style=flat-square&logo=github&logoColor=white" alt="Pro Status" />
         </a>
       </p>
     </td>
@@ -106,93 +106,97 @@
 
 <table width="100%" border="0" cellpadding="8" cellspacing="0">
   <tr>
-    <!-- Project 1: Healthcare Document Intelligence -->
+    <!-- Project 1: DineDeck -->
+    <td width="50%" valign="top">
+      <a href="https://github.com/Ashutosh2275/Dinedeck">
+        <img src="assets/projects/dinedeck.svg" alt="DineDeck - Next-Generation In-Dining Operating System" width="100%" />
+      </a>
+      <h4>🍽️ DineDeck — Omnichannel In-Dining Operating System</h4>
+      <p align="justify">
+        Enterprise-grade restaurant operating system engineered for high-volume dining establishments, multi-branch food chains, and aggregators. Unifies contactless table QR ordering, real-time Kitchen Display Systems (KDS), POS terminals, and multi-tenant merchant controls into a reactive, high-throughput ecosystem.
+      </p>
+      <p>
+        <img src="https://img.shields.io/badge/Fastify-000000?style=flat-square&logo=fastify&logoColor=white" alt="Fastify" />
+        <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
+        <img src="https://img.shields.io/badge/PostgreSQL_16-336791?style=flat-square&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+        <img src="https://img.shields.io/badge/Redis_7-DC382D?style=flat-square&logo=redis&logoColor=white" alt="Redis" />
+        <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker" />
+      </p>
+      <p>
+        <a href="https://github.com/Ashutosh2275/Dinedeck"><b>🐙 View Code</b></a>
+        &nbsp;•&nbsp;
+        <a href="https://github.com/Ashutosh2275/Dinedeck#system-architecture"><b>📐 Architecture Specification</b></a>
+      </p>
+    </td>
+
+    <!-- Project 2: DataCure -->
     <td width="50%" valign="top">
       <a href="https://github.com/Ashutosh2275/Datacure">
-        <img src="assets/projects/healthcare-rag.svg" alt="Healthcare Document Intelligence &amp; RAG Assistant" width="100%" />
+        <img src="assets/projects/healthcare-rag.svg" alt="DataCure - AI-Powered Hospital Intelligence Platform" width="100%" />
       </a>
-      <h4>🏥 Healthcare Document Intelligence &amp; RAG Assistant</h4>
+      <h4>🏥 DataCure — AI Clinical Operations &amp; Hospital Intelligence</h4>
       <p align="justify">
-        Production-grade hospital intelligence and clinical document Q&amp;A platform. Integrates semantic retrieval over unstructured medical records with strict hallucination controls, citation grounding, and HIPAA-conscious data processing.
+        Production-grade modular Hospital Management Platform (HMS) coupled with predictive ML microservices. Automates patient admission lifecycles, billing, and pharmacy supply chains while deploying supervised models for 30-day readmission risk scoring, bed occupancy optimization, and patient flow forecasting.
       </p>
       <p>
         <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python" />
-        <img src="https://img.shields.io/badge/LangChain-1C3C3C?style=flat-square&logo=chainlink&logoColor=white" alt="LangChain" />
         <img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI" />
-        <img src="https://img.shields.io/badge/ChromaDB-FC521F?style=flat-square" alt="ChromaDB" />
+        <img src="https://img.shields.io/badge/Scikit--Learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white" alt="Scikit-Learn" />
+        <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React" />
+        <img src="https://img.shields.io/badge/Nginx-009639?style=flat-square&logo=nginx&logoColor=white" alt="Nginx" />
       </p>
       <p>
         <a href="https://github.com/Ashutosh2275/Datacure"><b>🐙 View Code</b></a>
         &nbsp;•&nbsp;
-        <a href="https://github.com/Ashutosh2275/Datacure#live-preview"><b>↗ Demo (Staging)</b></a>
-      </p>
-    </td>
-
-    <!-- Project 2: Intelligent Resume Screening -->
-    <td width="50%" valign="top">
-      <a href="https://github.com/Ashutosh2275">
-        <img src="assets/projects/resume-screener.svg" alt="Intelligent Resume Screening &amp; Job Matching System" width="100%" />
-      </a>
-      <h4>📄 Intelligent Resume Screening &amp; Job Matching</h4>
-      <p align="justify">
-        AI-driven candidate evaluation engine parsing PDF/DOCX resumes against structured job descriptions. Uses transformer-based semantic embeddings to score skill alignment, parse experience timelines, and eliminate keyword stuffing bias.
-      </p>
-      <p>
-        <img src="https://img.shields.io/badge/NLP-Transformers-7C3AED?style=flat-square" alt="NLP" />
-        <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=flat-square&logo=pytorch&logoColor=white" alt="PyTorch" />
-        <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React" />
-        <img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI" />
-      </p>
-      <p>
-        <a href="https://github.com/Ashutosh2275"><b>🐙 View Code</b></a>
-        &nbsp;•&nbsp;
-        <em>↗ Demo (Beta)</em>
+        <a href="https://github.com/Ashutosh2275/Datacure#overview"><b>📋 Enterprise Overview</b></a>
       </p>
     </td>
   </tr>
 
   <tr>
-    <!-- Project 3: Smart Student Performance Analytics -->
+    <!-- Project 3: DRAI AI -->
     <td width="50%" valign="top">
-      <a href="https://github.com/Ashutosh2275/EduVista">
-        <img src="assets/projects/student-analytics.svg" alt="Smart Student Performance Analytics" width="100%" />
+      <a href="https://github.com/Ashutosh2275/DRAI-AI">
+        <img src="assets/projects/drai-vision.svg" alt="DRAI AI - Autonomous Computer Vision Hazard &amp; Safety Pipeline" width="100%" />
       </a>
-      <h4>📈 Smart Student Performance Analytics</h4>
+      <h4>👁️ DRAI AI — Autonomous Edge Computer Vision Pipeline</h4>
       <p align="justify">
-        Predictive academic intelligence engine evaluating student engagement trends, coursework milestones, and historical benchmarks to forecast exam outcomes and recommend targeted interventions before grade drop-offs occur.
+        Edge-deployable industrial safety intelligence pipeline automating real-time hazard detection and PPE compliance. Leverages lightweight, fine-tuned YOLOv8n deep learning models delivering sub-35ms multi-class inference for personnel tracking, hard-hat verification, and instant fire/smoke alert dispatching.
       </p>
       <p>
+        <img src="https://img.shields.io/badge/YOLOv8-Ultralytics-00599C?style=flat-square" alt="YOLOv8" />
+        <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=flat-square&logo=pytorch&logoColor=white" alt="PyTorch" />
+        <img src="https://img.shields.io/badge/OpenCV-5C3EE8?style=flat-square&logo=opencv&logoColor=white" alt="OpenCV" />
         <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python" />
-        <img src="https://img.shields.io/badge/XGBoost-185886?style=flat-square" alt="XGBoost" />
-        <img src="https://img.shields.io/badge/Scikit--Learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white" alt="Scikit-Learn" />
-        <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
+        <img src="https://img.shields.io/badge/Edge_Inference-10B981?style=flat-square" alt="Edge ML" />
       </p>
       <p>
-        <a href="https://github.com/Ashutosh2275/EduVista"><b>🐙 View Code</b></a>
+        <a href="https://github.com/Ashutosh2275/DRAI-AI"><b>🐙 View Code</b></a>
         &nbsp;•&nbsp;
-        <a href="https://github.com/Ashutosh2275/EduVista"><b>↗ Repository Demo</b></a>
+        <a href="https://github.com/Ashutosh2275/DRAI-AI#overview"><b>⚡ Pipeline Architecture</b></a>
       </p>
     </td>
 
-    <!-- Project 4: Financial Intelligence & Fraud Detection -->
+    <!-- Project 4: ArthSavora -->
     <td width="50%" valign="top">
-      <a href="https://github.com/Ashutosh2275/suraksha-weekly">
-        <img src="assets/projects/fraud-detection.svg" alt="AI-Powered Financial Intelligence &amp; Fraud Detection" width="100%" />
+      <a href="https://github.com/Ashutosh2275/ARTHSAVORA">
+        <img src="assets/projects/fraud-detection.svg" alt="ArthSavora - Financial Intelligence &amp; Predictive Analytics Engine" width="100%" />
       </a>
-      <h4>🛡️ Financial Intelligence &amp; Fraud Detection</h4>
+      <h4>🛡️ ArthSavora — Intelligent Financial Analytics &amp; Anomaly Engine</h4>
       <p align="justify">
-        Real-time financial anomaly detection and parametric protection system. Built for <em>Guidewire DEVTrails 2026</em>, deploying unsupervised Isolation Forests and time-series heuristics to detect fraudulent risk spikes with sub-second latency.
+        Cloud-native financial intelligence platform delivering real-time transaction surveillance, budget governance, and spending analytics. Incorporates machine learning anomaly detection to flag suspicious cash flow deviations, coupled with time-series forecasting models and reactive Firebase synchronization.
       </p>
       <p>
-        <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python" />
-        <img src="https://img.shields.io/badge/Isolation_Forest-059669?style=flat-square" alt="Isolation Forest" />
-        <img src="https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white" alt="Vercel" />
+        <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white" alt="Node.js" />
+        <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=tensorflow&logoColor=white" alt="TensorFlow" />
+        <img src="https://img.shields.io/badge/Firebase_RTDB-FFA611?style=flat-square&logo=firebase&logoColor=black" alt="Firebase" />
+        <img src="https://img.shields.io/badge/JWT_Auth-000000?style=flat-square&logo=jsonwebtokens&logoColor=white" alt="JWT" />
         <img src="https://img.shields.io/badge/REST_API-0284C7?style=flat-square" alt="API" />
       </p>
       <p>
-        <a href="https://github.com/Ashutosh2275/suraksha-weekly"><b>🐙 View Code</b></a>
+        <a href="https://github.com/Ashutosh2275/ARTHSAVORA"><b>🐙 View Code</b></a>
         &nbsp;•&nbsp;
-        <a href="https://suraksha-weekly.vercel.app" target="_blank" rel="noopener noreferrer"><b>↗ Live Demo (Vercel)</b></a>
+        <a href="https://heyashutosh.netlify.app/" target="_blank" rel="noopener noreferrer"><b>↗ Live Showcase</b></a>
       </p>
     </td>
   </tr>

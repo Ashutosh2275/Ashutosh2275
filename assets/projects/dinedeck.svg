@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 160" width="100%" height="auto">
+  <defs>
+    <linearGradient id="ddBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="100%" stop-color="#EFF6FF"/>
+    </linearGradient>
+    <filter id="ddShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#1E293B" flood-opacity="0.06"/>
+    </filter>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect x="2" y="2" width="316" height="156" rx="16" fill="url(#ddBg)" stroke="#E2E8F0" stroke-width="1.5" filter="url(#ddShadow)"/>
+
+  <!-- Subtle Blueprint Grid Accent -->
+  <g stroke="#CBD5E1" stroke-width="0.8" opacity="0.3">
+    <line x1="30" y1="20" x2="30" y2="140"/>
+    <line x1="70" y1="20" x2="70" y2="140"/>
+    <line x1="110" y1="20" x2="110" y2="140"/>
+    <line x1="150" y1="20" x2="150" y2="140"/>
+    <line x1="190" y1="20" x2="190" y2="140"/>
+    <line x1="230" y1="20" x2="230" y2="140"/>
+    <line x1="270" y1="20" x2="270" y2="140"/>
+    <line x1="20" y1="40" x2="300" y2="40"/>
+    <line x1="20" y1="80" x2="300" y2="80"/>
+    <line x1="20" y1="120" x2="300" y2="120"/>
+  </g>
+
+  <!-- Central POS / KDS Terminal Screen -->
+  <g transform="translate(105, 18)">
+    <!-- Terminal Body -->
+    <rect x="0" y="8" width="110" height="92" rx="8" fill="#FFFFFF" stroke="#0F172A" stroke-width="2"/>
+    <!-- Terminal Screen Header -->
+    <rect x="4" y="12" width="102" height="16" rx="4" fill="#0F172A"/>
+    <text x="10" y="24" fill="#38BDF8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="8" font-weight="700">DINEDECK KDS</text>
+    <circle cx="94" cy="20" r="3" fill="#10B981"/>
+
+    <!-- Order Items in Kitchen Stream -->
+    <g transform="translate(8, 34)">
+      <!-- Order Row 1 -->
+      <rect x="0" y="0" width="44" height="26" rx="4" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1"/>
+      <rect x="4" y="4" width="18" height="4" rx="2" fill="#2563EB"/>
+      <line x1="4" y1="13" x2="36" y2="13" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="4" y1="19" x2="28" y2="19" stroke="#CBD5E1" stroke-width="1.5" stroke-linecap="round"/>
+
+      <!-- Order Row 2 -->
+      <rect x="50" y="0" width="44" height="26" rx="4" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1"/>
+      <rect x="54" y="4" width="18" height="4" rx="2" fill="#10B981"/>
+      <line x1="54" y1="13" x2="86" y2="13" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="54" y1="19" x2="74" y2="19" stroke="#CBD5E1" stroke-width="1.5" stroke-linecap="round"/>
+
+      <!-- Order Row 3 -->
+      <rect x="0" y="32" width="94" height="24" rx="4" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1"/>
+      <circle cx="10" cy="44" r="4" fill="#3B82F6"/>
+      <line x1="18" y1="41" x2="68" y2="41" stroke="#1E40AF" stroke-width="2" stroke-linecap="round"/>
+      <line x1="18" y1="48" x2="52" y2="48" stroke="#60A5FA" stroke-width="1.5" stroke-linecap="round"/>
+      <rect x="74" y="38" width="14" height="12" rx="3" fill="#2563EB"/>
+      <path d="M78 44 L81 47 L85 41" fill="none" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round"/>
+    </g>
+
+    <!-- Terminal Stand -->
+    <path d="M38 100 L72 100 L80 120 L30 120 Z" fill="#64748B" opacity="0.4"/>
+    <rect x="25" y="118" width="60" height="5" rx="2" fill="#334155"/>
+
+    <!-- Contactless QR Badge floating on Left -->
+    <g transform="translate(-24, 20)">
+      <rect x="0" y="0" width="36" height="36" rx="8" fill="#FFFFFF" stroke="#3B82F6" stroke-width="1.5" filter="url(#ddShadow)"/>
+      <!-- QR Pattern -->
+      <rect x="6" y="6" width="10" height="10" fill="#0F172A"/>
+      <rect x="8" y="8" width="6" height="6" fill="#FFFFFF"/>
+      <rect x="20" y="6" width="10" height="10" fill="#0F172A"/>
+      <rect x="22" y="8" width="6" height="6" fill="#FFFFFF"/>
+      <rect x="6" y="20" width="10" height="10" fill="#0F172A"/>
+      <rect x="8" y="22" width="6" height="6" fill="#FFFFFF"/>
+      <rect x="20" y="20" width="4" height="4" fill="#2563EB"/>
+      <rect x="26" y="26" width="4" height="4" fill="#2563EB"/>
+    </g>
+  </g>
+</svg>
