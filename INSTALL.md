@@ -88,18 +88,19 @@ To test the workflow immediately:
 
 ## 4. Personalizing Links & Contact Destinations
 
-The profile includes working placeholders based on your known profiles. You can verify and adjust them in `README.md`:
+All hyperlinks are verified against Ashutosh's live portfolio and resume:
 
-| Item | Current Location in `README.md` | Verification / Value |
+| Item | Location in `README.md` | Verified Value |
 | :--- | :--- | :--- |
-| **LinkedIn** | Lines 14, 275 | `https://linkedin.com/in/ashutosh2275` |
-| **Email** | Lines 22, 279 | `ashutoshmishra2275@gmail.com` |
-| **Portfolio** | Line 18 | `https://suraksha-weekly.vercel.app` (or your personal domain) |
-| **Resume** | Line 26 | Links to `https://github.com/Ashutosh2275?tab=repositories` or replace with a direct PDF URL |
-| **Datacure Repo** | Line 96 | `https://github.com/Ashutosh2275/Datacure` |
-| **EduVista Repo** | Line 140 | `https://github.com/Ashutosh2275/EduVista` |
-| **Suraksha Repo** | Line 162 | `https://github.com/Ashutosh2275/suraksha-weekly` |
-| **Live Demo** | Line 177 | `https://suraksha-weekly.vercel.app` |
+| **LinkedIn** | Header & Contact sections | `https://www.linkedin.com/in/ashutoshmishra-tech/` |
+| **Portfolio** | Header & Contact sections | `https://heyashutosh.netlify.app/` |
+| **Email** | Header & Contact sections | `mailto:ashutoshmishra2275@gmail.com` |
+| **Resume** | Hero banner & Quick links | `https://drive.google.com/file/d/1RyirKSNDgrU9XfwkMZfwFgM8A7Jv8sfR/view?usp=sharing` |
+| **GitHub Profile** | Meta, badges & cards | `https://github.com/Ashutosh2275` |
+| **DataCure Repo** | Featured Projects (Card 1) | `https://github.com/Ashutosh2275/Datacure` |
+| **EduVista Repo** | Featured Projects (Card 3) | `https://github.com/Ashutosh2275/EduVista` |
+| **Suraksha Repo** | Featured Projects (Card 4) | `https://github.com/Ashutosh2275/suraksha-weekly` |
+| **Suraksha Demo** | Featured Projects (Card 4) | `https://suraksha-weekly.vercel.app` |
 
 ---
 
