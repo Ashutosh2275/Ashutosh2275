@@ -21,30 +21,30 @@
   </defs>
 
   <style>
-    .card-title { font-size: 21px; font-weight: 800; fill: #0F172A; letter-spacing: -0.3px; }
-    .card-title-highlight { fill: #2563EB; }
-    .card-subtitle { font-size: 13px; font-weight: 400; fill: #64748B; }
-    .metric-val { font-size: 18px; font-weight: 800; fill: #0F172A; }
-    .metric-label { font-size: 11px; font-weight: 500; fill: #64748B; }
-    .cal-label { font-size: 10px; font-weight: 500; fill: #64748B; }
-    .legend-text { font-size: 10.5px; font-weight: 500; fill: #64748B; }
+    .card-title { font-size: 21px; font-weight: 800; fill: #10264A; letter-spacing: -0.3px; }
+    .card-title-highlight { fill: #2878F0; }
+    .card-subtitle { font-size: 13px; font-weight: 400; fill: #526783; }
+    .metric-val { font-size: 18px; font-weight: 800; fill: #10264A; }
+    .metric-label { font-size: 11px; font-weight: 500; fill: #526783; }
+    .cal-label { font-size: 10px; font-weight: 500; fill: #526783; }
+    .legend-text { font-size: 10.5px; font-weight: 500; fill: #526783; }
   </style>
 
   <!-- Outer Rounded Container Card -->
-  <rect x="2" y="2" width="956" height="282" rx="16" fill="url(#actBg)" stroke="#E2E8F0" stroke-width="1.2" filter="url(#actShadow)"/>
+  <rect x="2" y="2" width="956" height="282" rx="16" fill="url(#actBg)" stroke="#DFE8F5" stroke-width="1.2" filter="url(#actShadow)"/>
 
   <!-- Flowing Translucent Wave Lines on Right / Behind Grid -->
   <g transform="translate(480, 110)">
     <path d="M 0 110 Q 120 40, 240 85 T 460 70" fill="none" stroke="url(#waveCyan)" stroke-width="2.8" stroke-linecap="round"/>
     <path d="M 0 125 Q 140 60, 260 100 T 460 85" fill="none" stroke="url(#waveBlue)" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="380" cy="74" r="3.5" fill="#2563EB" opacity="0.8"/>
+    <circle cx="380" cy="74" r="3.5" fill="#2878F0" opacity="0.8"/>
   </g>
 
   <!-- Top Header Section -->
   <g transform="translate(32, 26)">
     <!-- GitHub Octocat Icon in Dark Circle -->
     <rect x="2" y="2" width="38" height="38" rx="10" fill="#EFF6FF" stroke="#DBEAFE" stroke-width="1"/>
-    <circle cx="21" cy="21" r="15" fill="#0F172A"/>
+    <circle cx="21" cy="21" r="15" fill="#10264A"/>
     <path d="M21 13 C16.5 13 13 16.5 13 21 C13 24.6 15.3 27.6 18.6 28.7 C19 28.8 19.1 28.5 19.1 28.3 L19.1 27.2 C16.8 27.7 16.3 26.2 16.3 26.2 C15.9 25.3 15.4 25 15.4 25 C14.6 24.5 15.4 24.5 15.4 24.5 C16.3 24.6 16.7 25.4 16.7 25.4 C17.4 26.6 18.6 26.3 19 26.1 C19.1 25.6 19.3 25.2 19.5 25 C17.7 24.8 15.8 24.1 15.8 21 C15.8 20.1 16.1 19.4 16.6 18.8 C16.5 18.6 16.2 17.8 16.7 16.7 C16.7 16.7 17.4 16.5 18.9 17.5 C19.6 17.3 20.3 17.2 21 17.2 C21.7 17.2 22.4 17.3 23.1 17.5 C24.6 16.5 25.3 16.7 25.3 16.7 C25.8 17.8 25.5 18.6 25.4 18.8 C25.9 19.4 26.2 20.1 26.2 21 C26.2 24.1 24.3 24.8 22.5 25 C22.8 25.3 23 25.8 23 26.5 L23 28.3 C23 28.5 23.1 28.8 23.5 28.7 C26.7 27.6 29 24.6 29 21 C29 16.5 25.5 13 21 13 Z" fill="#FFFFFF"/>
 
     <!-- Heading & Subtitle -->
@@ -53,8 +53,8 @@
 
     <!-- Top-Right Metric Pill -->
     <g transform="translate(740, 0)">
-      <rect x="0" y="0" width="154" height="42" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
-      <path d="M14 21 L20 21 L24 14 L28 27 L32 17 L36 21 L42 21" fill="none" stroke="#2563EB" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="0" y="0" width="154" height="42" rx="10" fill="#FFFFFF" stroke="#DFE8F5" stroke-width="1"/>
+      <path d="M14 21 L20 21 L24 14 L28 27 L32 17 L36 21 L42 21" fill="none" stroke="#2878F0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
       <text x="52" y="20" class="metric-val">169</text>
       <text x="52" y="34" class="metric-label">Contributions</text>
     </g>

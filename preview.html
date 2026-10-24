@@ -2,41 +2,242 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>GitHub Profile Preview - Ashutosh Mishra (Ashutosh2275)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Profile Preview - Ashutosh Mishra (@Ashutosh2275)</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-light.min.css">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     body {
-      background-color: #F8FAFC;
+      background-color: #F0F4F8;
       margin: 0;
-      padding: 40px 20px;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+    }
+    .toolbar {
+      position: sticky;
+      top: 10px;
+      z-index: 1000;
+      background: #FFFFFF;
+      border: 1px solid #DFE8F5;
+      border-radius: 30px;
+      padding: 6px 16px;
+      display: flex;
+      gap: 12px;
+      box-shadow: 0 4px 12px rgba(16, 38, 74, 0.08);
+      margin-bottom: 20px;
+    }
+    .toolbar button {
+      background: transparent;
+      border: 1px solid transparent;
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      color: #526783;
+      transition: all 0.2s ease;
+    }
+    .toolbar button.active {
+      background: #2878F0;
+      color: #FFFFFF;
+    }
+    .toolbar button:hover:not(.active) {
+      background: #EAF2FF;
+      color: #2878F0;
+    }
+    .viewport-container {
+      width: 100%;
+      max-width: 980px;
+      transition: max-width 0.3s ease;
+      background: #FFFFFF;
+      border: 1px solid #DFE8F5;
+      border-radius: 12px;
+      padding: 36px 44px;
+      box-shadow: 0 4px 20px rgba(16, 38, 74, 0.04);
+      box-sizing: border-box;
+    }
+    .markdown-body {
+      color: #10264A;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
     }
-    .container {
-      max-width: 980px;
-      width: 100%;
-      background: #FFFFFF;
-      border: 1px solid #E2E8F0;
-      border-radius: 12px;
-      padding: 32px 40px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-    }
-    table {
+    .markdown-body table {
       border-collapse: collapse;
       width: 100%;
+      margin: 12px 0;
     }
-    table td {
-      border: 1px solid #E2E8F0 !important;
-      padding: 14px !important;
+    .markdown-body table td {
+      border: none !important;
+      padding: 6px !important;
     }
   </style>
 </head>
 <body>
-  <div class="container markdown-body" id="preview"></div>
+
+  <div class="toolbar">
+    <button class="active" onclick="setViewport('980px', this)">🖥️ Desktop (Default)</button>
+    <button onclick="setViewport('1440px', this)">💻 Wide (1440px)</button>
+    <button onclick="setViewport('390px', this)">📱 Mobile (390px)</button>
+  </div>
+
+  <div class="viewport-container markdown-body" id="preview"></div>
+
   <script>
-    const fallbackMarkdown = "<!-- ==========================================================================\n     Ashutosh Mishra | GitHub Profile README\n     Theme: Professional Minimalist Light (Pale Blue / Deep Navy Palette)\n     User: Ashutosh2275\n========================================================================== -->\n\n<div align=\"center\">\n\n  <!-- Hero Banner -->\n  <a href=\"https://heyashutosh.netlify.app/\" target=\"_blank\" rel=\"noopener noreferrer\">\n    <img src=\"assets/banner.svg\" alt=\"Ashutosh Mishra - AI/ML &amp; Full-Stack Developer Banner\" width=\"100%\" />\n  </a>\n\n  <!-- Quick Action & Professional Links -->\n  <p align=\"center\">\n    <a href=\"https://www.linkedin.com/in/ashutoshmishra-tech/\" target=\"_blank\" rel=\"noopener noreferrer\">\n      <img src=\"https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white\" alt=\"LinkedIn\" />\n    </a>\n    &nbsp;\n    <a href=\"https://heyashutosh.netlify.app/\" target=\"_blank\" rel=\"noopener noreferrer\">\n      <img src=\"https://img.shields.io/badge/Portfolio-1E293B?style=for-the-badge&logo=firefoxbrowser&logoColor=white\" alt=\"Portfolio\" />\n    </a>\n    &nbsp;\n    <a href=\"mailto:ashutoshmishra2275@gmail.com\">\n      <img src=\"https://img.shields.io/badge/Email-E11D48?style=for-the-badge&logo=gmail&logoColor=white\" alt=\"Email\" />\n    </a>\n    &nbsp;\n    <a href=\"https://drive.google.com/file/d/1RyirKSNDgrU9XfwkMZfwFgM8A7Jv8sfR/view?usp=sharing\" target=\"_blank\" rel=\"noopener noreferrer\">\n      <img src=\"https://img.shields.io/badge/Resume-7C3AED?style=for-the-badge&logo=googledocs&logoColor=white\" alt=\"Resume / CV\" />\n    </a>\n  </p>\n\n</div>\n\n<br />\n\n<!-- ==========================================================================\n     SECTION: About Me (Full Width)\n========================================================================== -->\n\n<div align=\"left\">\n  <h3>\ud83d\udc64 About Me</h3>\n  <p align=\"justify\">\n    I'm a <b>Computer Science Engineering student</b> with a strong interest in <b>AI/ML</b>, <b>backend systems</b> and <b>real-world applications</b>. I love building products that solve meaningful problems, exploring new technologies and turning ideas into working solutions.\n  </p>\n  <br />\n  <!-- Full-Width Value Pillars (Learn, Build, Collaborate, Create) -->\n  <p align=\"center\">\n    <img src=\"assets/values.svg\" alt=\"Core Values: Learn New Technologies, Build Real Applications, Collaborate With Amazing People, Create Real-World Impact\" width=\"100%\" />\n  </p>\n</div>\n\n<br />\n\n<!-- ==========================================================================\n     SECTION: GitHub Activity (Full Width Contribution Heatmap)\n========================================================================== -->\n\n<div align=\"center\">\n  <a href=\"https://github.com/Ashutosh2275\">\n    <img src=\"assets/github-activity.svg\" alt=\"Ashutosh Mishra - GitHub Activity\" width=\"100%\" />\n  </a>\n</div>\n\n<br />\n\n<!-- ==========================================================================\n     SECTION: Featured Projects (2x2 Uniform Gallery with 3D Robot Mascots)\n========================================================================== -->\n\n<div align=\"left\">\n  <table width=\"100%\">\n    <tr>\n      <td style=\"border: none;\">\n        <h3>\ud83d\udce6 Featured Projects</h3>\n      </td>\n      <td align=\"right\" style=\"border: none;\">\n        <a href=\"https://github.com/Ashutosh2275?tab=repositories\"><b>View All Repositories \u2794</b></a>\n      </td>\n    </tr>\n  </table>\n</div>\n\n<table width=\"100%\" border=\"0\" cellpadding=\"6\" cellspacing=\"0\">\n  <tr>\n    <!-- Project 1: Healthcare Document Intelligence & RAG Assistant -->\n    <td width=\"50%\" valign=\"top\">\n      <a href=\"https://github.com/Ashutosh2275/Datacure\">\n        <img src=\"assets/projects/healthcare-rag.svg\" alt=\"Healthcare Document Intelligence &amp; RAG Assistant\" width=\"100%\" />\n      </a>\n      <p align=\"center\">\n        <a href=\"https://github.com/Ashutosh2275/Datacure\"><b>\ud83d\udc19 View Code</b></a>\n        &nbsp;&nbsp;\u2022&nbsp;&nbsp;\n        <a href=\"https://heyashutosh.netlify.app/\" target=\"_blank\" rel=\"noopener noreferrer\"><b>\ud83d\ude80 Live Demo</b></a>\n      </p>\n    </td>\n\n    <!-- Project 2: Intelligent Resume Screening & Job Matching System -->\n    <td width=\"50%\" valign=\"top\">\n      <a href=\"https://github.com/Ashutosh2275/Datacure\">\n        <img src=\"assets/projects/resume-screener.svg\" alt=\"Intelligent Resume Screening &amp; Job Matching System\" width=\"100%\" />\n      </a>\n      <p align=\"center\">\n        <a href=\"https://github.com/Ashutosh2275/Datacure\"><b>\ud83d\udc19 View Code</b></a>\n        &nbsp;&nbsp;\u2022&nbsp;&nbsp;\n        <a href=\"https://heyashutosh.netlify.app/\" target=\"_blank\" rel=\"noopener noreferrer\"><b>\ud83d\ude80 Live Demo</b></a>\n      </p>\n    </td>\n  </tr>\n\n  <tr>\n    <!-- Project 3: Smart Student Performance Analytics -->\n    <td width=\"50%\" valign=\"top\">\n      <a href=\"https://github.com/Ashutosh2275/DRAI-AI\">\n        <img src=\"assets/projects/student-analytics.svg\" alt=\"Smart Student Performance Analytics\" width=\"100%\" />\n      </a>\n      <p align=\"center\">\n        <a href=\"https://github.com/Ashutosh2275/DRAI-AI\"><b>\ud83d\udc19 View Code</b></a>\n        &nbsp;&nbsp;\u2022&nbsp;&nbsp;\n        <a href=\"https://heyashutosh.netlify.app/\" target=\"_blank\" rel=\"noopener noreferrer\"><b>\ud83d\ude80 Live Demo</b></a>\n      </p>\n    </td>\n\n    <!-- Project 4: Financial Intelligence & Fraud Detection -->\n    <td width=\"50%\" valign=\"top\">\n      <a href=\"https://github.com/Ashutosh2275/ARTHSAVORA\">\n        <img src=\"assets/projects/fraud-detection.svg\" alt=\"Financial Intelligence &amp; Fraud Detection\" width=\"100%\" />\n      </a>\n      <p align=\"center\">\n        <a href=\"https://github.com/Ashutosh2275/ARTHSAVORA\"><b>\ud83d\udc19 View Code</b></a>\n        &nbsp;&nbsp;\u2022&nbsp;&nbsp;\n        <a href=\"https://heyashutosh.netlify.app/\" target=\"_blank\" rel=\"noopener noreferrer\"><b>\ud83d\ude80 Live Demo</b></a>\n      </p>\n    </td>\n  </tr>\n</table>\n\n<br />\n\n<!-- ==========================================================================\n     SECTION: Technical Skills\n========================================================================== -->\n\n<div align=\"left\">\n  <h3>\ud83d\udee0\ufe0f Technical Skills</h3>\n</div>\n\n<p align=\"center\">\n  <img src=\"assets/skills.svg\" alt=\"Technical Skills: Languages, AI/ML, Frontend, Backend, Databases\" width=\"100%\" />\n</p>\n\n<!-- Accessible Categorized Tech Matrix -->\n<table width=\"100%\" border=\"0\" cellpadding=\"6\" cellspacing=\"0\">\n  <tr>\n    <td width=\"20%\" valign=\"top\">\n      <b>Languages</b><br />\n      \u2022 Python<br />\n      \u2022 Java<br />\n      \u2022 C / C++<br />\n      \u2022 JavaScript (ES6+)<br />\n      \u2022 TypeScript\n    </td>\n    <td width=\"20%\" valign=\"top\">\n      <b>AI / ML &amp; GenAI</b><br />\n      \u2022 PyTorch &amp; TF<br />\n      \u2022 Scikit-Learn<br />\n      \u2022 LangChain &amp; RAG<br />\n      \u2022 OpenAI / Hugging Face<br />\n      \u2022 Computer Vision (YOLO)\n    </td>\n    <td width=\"20%\" valign=\"top\">\n      <b>Frontend</b><br />\n      \u2022 React.js<br />\n      \u2022 Next.js<br />\n      \u2022 Tailwind CSS<br />\n      \u2022 HTML5 &amp; CSS3<br />\n      \u2022 Redux / Vite\n    </td>\n    <td width=\"20%\" valign=\"top\">\n      <b>Backend</b><br />\n      \u2022 FastAPI<br />\n      \u2022 Node.js &amp; Express<br />\n      \u2022 Spring Boot<br />\n      \u2022 RESTful APIs<br />\n      \u2022 Microservices\n    </td>\n    <td width=\"20%\" valign=\"top\">\n      <b>Databases &amp; Cloud</b><br />\n      \u2022 PostgreSQL &amp; SQL<br />\n      \u2022 MongoDB<br />\n      \u2022 Firebase / Redis<br />\n      \u2022 Docker &amp; Git/GitHub<br />\n      \u2022 AWS &amp; Linux\n    </td>\n  </tr>\n</table>\n\n<br />\n\n<!-- ==========================================================================\n     SECTION: GitHub Statistics & Analytics (3 Cards)\n========================================================================== -->\n\n<table width=\"100%\" border=\"0\" cellpadding=\"4\" cellspacing=\"0\">\n  <tr>\n    <!-- Live GitHub Stats Card -->\n    <td width=\"33%\" valign=\"top\" align=\"center\">\n      <a href=\"https://github.com/Ashutosh2275\">\n        <img src=\"assets/stats.svg\" alt=\"Ashutosh2275's GitHub Stats\" width=\"100%\" />\n      </a>\n    </td>\n\n    <!-- Most Used Languages Card -->\n    <td width=\"34%\" valign=\"top\" align=\"center\">\n      <a href=\"https://github.com/Ashutosh2275\">\n        <img src=\"assets/languages.svg\" alt=\"Ashutosh2275's Top Languages\" width=\"100%\" />\n      </a>\n    </td>\n\n    <!-- Learning Goals Card -->\n    <td width=\"33%\" valign=\"top\" align=\"center\">\n      <img src=\"assets/learning-goals.svg\" alt=\"My Learning Goals\" width=\"100%\" />\n    </td>\n  </tr>\n</table>\n\n<br />\n\n<!-- ==========================================================================\n     SECTION: Contact & Connect\n========================================================================== -->\n\n<div align=\"center\">\n  <h3>\ud83d\udcec Let's Connect</h3>\n  <p>\n    Whether discussing AI architectures, backend systems, open-source projects, or engineering roles:\n  </p>\n  <p>\n    <a href=\"https://www.linkedin.com/in/ashutoshmishra-tech/\" target=\"_blank\" rel=\"noopener noreferrer\">\n      <img src=\"https://img.shields.io/badge/LinkedIn-Ashutosh_Mishra-0A66C2?style=flat-square&logo=linkedin&logoColor=white\" alt=\"LinkedIn\" />\n    </a>\n    &nbsp;\n    <a href=\"https://heyashutosh.netlify.app/\" target=\"_blank\" rel=\"noopener noreferrer\">\n      <img src=\"https://img.shields.io/badge/Portfolio-heyashutosh.netlify.app-1E293B?style=flat-square&logo=firefoxbrowser&logoColor=white\" alt=\"Portfolio\" />\n    </a>\n    &nbsp;\n    <a href=\"mailto:ashutoshmishra2275@gmail.com\">\n      <img src=\"https://img.shields.io/badge/Email-ashutoshmishra2275@gmail.com-E11D48?style=flat-square&logo=gmail&logoColor=white\" alt=\"Email\" />\n    </a>\n    &nbsp;\n    <a href=\"https://github.com/Ashutosh2275\" target=\"_blank\" rel=\"noopener noreferrer\">\n      <img src=\"https://img.shields.io/badge/GitHub-@Ashutosh2275-181717?style=flat-square&logo=github&logoColor=white\" alt=\"GitHub\" />\n    </a>\n  </p>\n\n  <br />\n\n  <!-- Signature Quote Footer -->\n  <img src=\"assets/quote-footer.svg\" alt=\"Using AI/ML to build impactful, deployable tech, not just prototypes.\" width=\"100%\" />\n</div>\n";
+    function setViewport(width, btn) {
+      document.querySelector('.viewport-container').style.maxWidth = width;
+      document.querySelectorAll('.toolbar button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    const fallbackMarkdown = `<div align="center">
+<a href="https://heyashutosh.netlify.app/" target="_blank" rel="noopener noreferrer">
+<img src="assets/banner.svg" alt="Ashutosh Mishra - AI/ML &amp; Full-Stack Developer Banner" width="100%" />
+</a>
+<p align="center">
+<a href="https://www.linkedin.com/in/ashutoshmishra-tech/" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>&nbsp;
+<a href="https://heyashutosh.netlify.app/" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/Portfolio-1E293B?style=for-the-badge&logo=firefoxbrowser&logoColor=white" alt="Portfolio" /></a>&nbsp;
+<a href="mailto:ashutoshmishra2275@gmail.com"><img src="https://img.shields.io/badge/Email-E11D48?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" /></a>&nbsp;
+<a href="https://drive.google.com/file/d/1RyirKSNDgrU9XfwkMZfwFgM8A7Jv8sfR/view?usp=sharing" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/Resume-7C3AED?style=for-the-badge&logo=googledocs&logoColor=white" alt="Resume / CV" /></a>
+</p>
+</div>
+
+<br />
+
+### <img src="assets/icons/user.svg" width="22" height="22" valign="middle" /> About Me
+
+I'm a **Computer Science Engineering student** with a strong interest in **AI/ML**, **backend systems**, and **real-world applications**. I love building products that solve meaningful problems, exploring new technologies, and turning ideas into working solutions.
+
+<p align="center">
+<img src="assets/values.svg" alt="Core Values: Learn New Technologies, Build Real Applications, Collaborate With Amazing People, Create Real-World Impact" width="100%" />
+</p>
+
+<br />
+
+<div align="center">
+<a href="https://github.com/Ashutosh2275">
+<img src="assets/github-activity.svg" alt="Ashutosh Mishra - GitHub Activity" width="100%" />
+</a>
+</div>
+
+<br />
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td style="border: none;"><h3><img src="assets/icons/package.svg" width="22" height="22" valign="middle" /> Featured Projects</h3></td>
+<td align="right" style="border: none;"><a href="https://github.com/Ashutosh2275?tab=repositories"><b>View All Repositories ➔</b></a></td>
+</tr>
+</table>
+
+<table width="100%" border="0" cellpadding="6" cellspacing="0">
+<tr>
+<td width="50%" valign="top">
+<a href="https://github.com/Ashutosh2275/Datacure"><img src="assets/projects/healthcare-rag.svg" alt="Healthcare Document Intelligence &amp; RAG Assistant" width="100%" /></a>
+<p align="center"><a href="https://github.com/Ashutosh2275/Datacure"><b>🐙 View Code</b></a>&nbsp;&nbsp;•&nbsp;&nbsp;<a href="https://heyashutosh.netlify.app/" target="_blank" rel="noopener noreferrer"><b>🚀 Live Demo</b></a></p>
+</td>
+<td width="50%" valign="top">
+<a href="https://github.com/Ashutosh2275/Datacure"><img src="assets/projects/resume-screener.svg" alt="Intelligent Resume Screening &amp; Job Matching System" width="100%" /></a>
+<p align="center"><a href="https://github.com/Ashutosh2275/Datacure"><b>🐙 View Code</b></a>&nbsp;&nbsp;•&nbsp;&nbsp;<a href="https://heyashutosh.netlify.app/" target="_blank" rel="noopener noreferrer"><b>🚀 Live Demo</b></a></p>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+<a href="https://github.com/Ashutosh2275/DRAI-AI"><img src="assets/projects/student-analytics.svg" alt="Smart Student Performance Analytics" width="100%" /></a>
+<p align="center"><a href="https://github.com/Ashutosh2275/DRAI-AI"><b>🐙 View Code</b></a>&nbsp;&nbsp;•&nbsp;&nbsp;<a href="https://heyashutosh.netlify.app/" target="_blank" rel="noopener noreferrer"><b>🚀 Live Demo</b></a></p>
+</td>
+<td width="50%" valign="top">
+<a href="https://github.com/Ashutosh2275/ARTHSAVORA"><img src="assets/projects/fraud-detection.svg" alt="Financial Intelligence &amp; Fraud Detection" width="100%" /></a>
+<p align="center"><a href="https://github.com/Ashutosh2275/ARTHSAVORA"><b>🐙 View Code</b></a>&nbsp;&nbsp;•&nbsp;&nbsp;<a href="https://heyashutosh.netlify.app/" target="_blank" rel="noopener noreferrer"><b>🚀 Live Demo</b></a></p>
+</td>
+</tr>
+</table>
+
+<br />
+
+### <img src="assets/icons/tools.svg" width="22" height="22" valign="middle" /> Technical Skills
+
+<p align="center">
+<img src="assets/skills.svg" alt="Technical Skills: Languages, AI/ML, Frontend, Backend, Databases" width="100%" />
+</p>
+
+<table width="100%" border="0" cellpadding="6" cellspacing="0">
+<tr>
+<td width="20%" valign="top">
+<b>Languages</b><br />
+• Python<br />
+• Java<br />
+• C / C++<br />
+• JavaScript (ES6+)<br />
+• TypeScript
+</td>
+<td width="20%" valign="top">
+<b>AI / ML &amp; GenAI</b><br />
+• PyTorch &amp; TF<br />
+• Scikit-Learn<br />
+• LangChain &amp; RAG<br />
+• OpenAI / Hugging Face<br />
+• Computer Vision (YOLO)
+</td>
+<td width="20%" valign="top">
+<b>Frontend</b><br />
+• React.js<br />
+• Next.js<br />
+• Tailwind CSS<br />
+• HTML5 &amp; CSS3<br />
+• Redux / Vite
+</td>
+<td width="20%" valign="top">
+<b>Backend</b><br />
+• FastAPI<br />
+• Node.js &amp; Express<br />
+• Spring Boot<br />
+• RESTful APIs<br />
+• Microservices
+</td>
+<td width="20%" valign="top">
+<b>Databases &amp; Cloud</b><br />
+• PostgreSQL &amp; SQL<br />
+• MongoDB<br />
+• Firebase / Redis<br />
+• Docker &amp; Git/GitHub<br />
+• AWS &amp; Linux
+</td>
+</tr>
+</table>
+
+<br />
+
+<table width="100%" border="0" cellpadding="4" cellspacing="0">
+<tr>
+<td width="33%" valign="top" align="center">
+<a href="https://github.com/Ashutosh2275"><img src="assets/stats.svg" alt="Ashutosh2275's GitHub Stats" width="100%" /></a>
+</td>
+<td width="34%" valign="top" align="center">
+<a href="https://github.com/Ashutosh2275"><img src="assets/languages.svg" alt="Ashutosh2275's Top Languages" width="100%" /></a>
+</td>
+<td width="33%" valign="top" align="center">
+<img src="assets/learning-goals.svg" alt="My Learning Goals" width="100%" />
+</td>
+</tr>
+</table>
+
+<br />
+
+<div align="center">
+<h3>📬 Let's Connect</h3>
+<p>
+Whether discussing AI architectures, backend systems, open-source projects, or engineering roles:
+</p>
+<p>
+<a href="https://www.linkedin.com/in/ashutoshmishra-tech/" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/LinkedIn-Ashutosh_Mishra-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>&nbsp;
+<a href="https://heyashutosh.netlify.app/" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/Portfolio-heyashutosh.netlify.app-1E293B?style=flat-square&logo=firefoxbrowser&logoColor=white" alt="Portfolio" /></a>&nbsp;
+<a href="mailto:ashutoshmishra2275@gmail.com"><img src="https://img.shields.io/badge/Email-ashutoshmishra2275@gmail.com-E11D48?style=flat-square&logo=gmail&logoColor=white" alt="Email" /></a>&nbsp;
+<a href="https://github.com/Ashutosh2275" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/GitHub-@Ashutosh2275-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub" /></a>
+</p>
+<br />
+<img src="assets/quote-footer.svg" alt="Using AI/ML to build impactful, deployable tech, not just prototypes." width="100%" />
+</div>`;
 
     function render(md) {
       document.getElementById('preview').innerHTML = marked.parse(md);

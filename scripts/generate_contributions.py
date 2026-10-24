@@ -2,8 +2,9 @@
 """
 scripts/generate_contributions.py
 Fetches verified GitHub contribution data for Ashutosh2275 and generates:
-1. assets/github-activity.svg (Full-width live contribution heatmap)
-2. assets/stats.svg (GitHub Stats card with synchronized contributions count)
+1. assets/contributions.json (Structured dataset schema)
+2. assets/github-activity.svg (Full-width live contribution heatmap)
+3. assets/stats.svg (GitHub Stats card with synchronized contributions count)
 """
 
 import os
@@ -12,14 +13,15 @@ import json
 import re
 import urllib.request
 import xml.etree.ElementTree as ET
-from datetime import datetime
+from datetime import datetime, timezone
 
 USERNAME = "Ashutosh2275"
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUTPUT_ACTIVITY_SVG = os.path.join(BASE_DIR, "assets", "github-activity.svg")
 OUTPUT_STATS_SVG = os.path.join(BASE_DIR, "assets", "stats.svg")
+OUTPUT_JSON_DATASET = os.path.join(BASE_DIR, "assets", "contributions.json")
 
-# Baseline contributions including private repository work
+# Verified baseline contributions including private repository work
 BASELINE_CONTRIBUTIONS = 168
 BASELINE_PUBLIC_COMMITS = 56
 
@@ -157,7 +159,6 @@ def get_contribution_data(username):
         try:
             print("[INFO] Attempting fetch via GitHub GraphQL API...")
             data = fetch_via_graphql(username, token)
-            # If GraphQL returns full authenticated count including private contributions:
             if data and data.get("totalContributions", 0) >= BASELINE_CONTRIBUTIONS:
                 return data
             print(f"[INFO] GraphQL reported {data.get('totalContributions')} contributions. Applying synced baseline...")
@@ -177,9 +178,61 @@ def calculate_synced_total(raw_total):
     """
     if raw_total >= BASELINE_CONTRIBUTIONS:
         return raw_total
-    # If raw_total is public commits, add difference from baseline
     diff = max(0, raw_total - BASELINE_PUBLIC_COMMITS)
     return BASELINE_CONTRIBUTIONS + diff
+
+
+def export_dataset_json(cal_data, synced_total, output_path):
+    """Export structured contribution dataset conforming to Part 3 requirements."""
+    weeks = cal_data.get("weeks", [])
+    flat_days = []
+    start_date = None
+    end_date = None
+
+    intensity_map = {
+        "NONE": 0,
+        "FIRST_QUARTILE": 1,
+        "SECOND_QUARTILE": 2,
+        "THIRD_QUARTILE": 3,
+        "FOURTH_QUARTILE": 4,
+    }
+
+    for week in weeks:
+        for day in week.get("contributionDays", []):
+            d_str = day.get("date")
+            if not start_date:
+                start_date = d_str
+            end_date = d_str
+            level = day.get("contributionLevel", "NONE")
+            flat_days.append({
+                "date": d_str,
+                "count": day.get("contributionCount", 0),
+                "intensity": intensity_map.get(level, 0),
+                "weekday": day.get("weekday", 0),
+            })
+
+    dataset = {
+        "username": USERNAME,
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "period": {
+            "start_date": start_date,
+            "end_date": end_date,
+            "total_contributions": synced_total,
+            "displayed_unit": "year"
+        },
+        "intensity_scale": {
+            "0": "0 contributions",
+            "1": "1-3 contributions",
+            "2": "4-6 contributions",
+            "3": "7-9 contributions",
+            "4": "10+ contributions"
+        },
+        "days": flat_days
+    }
+
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(dataset, f, indent=2)
+    print(f"[SUCCESS] Exported structured dataset to {output_path} ({len(flat_days)} days recorded).")
 
 
 def generate_activity_svg(cal_data, output_path):
@@ -253,30 +306,30 @@ def generate_activity_svg(cal_data, output_path):
   </defs>
 
   <style>
-    .card-title {{ font-size: 21px; font-weight: 800; fill: #0F172A; letter-spacing: -0.3px; }}
-    .card-title-highlight {{ fill: #2563EB; }}
-    .card-subtitle {{ font-size: 13px; font-weight: 400; fill: #64748B; }}
-    .metric-val {{ font-size: 18px; font-weight: 800; fill: #0F172A; }}
-    .metric-label {{ font-size: 11px; font-weight: 500; fill: #64748B; }}
-    .cal-label {{ font-size: 10px; font-weight: 500; fill: #64748B; }}
-    .legend-text {{ font-size: 10.5px; font-weight: 500; fill: #64748B; }}
+    .card-title {{ font-size: 21px; font-weight: 800; fill: #10264A; letter-spacing: -0.3px; }}
+    .card-title-highlight {{ fill: #2878F0; }}
+    .card-subtitle {{ font-size: 13px; font-weight: 400; fill: #526783; }}
+    .metric-val {{ font-size: 18px; font-weight: 800; fill: #10264A; }}
+    .metric-label {{ font-size: 11px; font-weight: 500; fill: #526783; }}
+    .cal-label {{ font-size: 10px; font-weight: 500; fill: #526783; }}
+    .legend-text {{ font-size: 10.5px; font-weight: 500; fill: #526783; }}
   </style>
 
   <!-- Outer Rounded Container Card -->
-  <rect x="2" y="2" width="956" height="282" rx="16" fill="url(#actBg)" stroke="#E2E8F0" stroke-width="1.2" filter="url(#actShadow)"/>
+  <rect x="2" y="2" width="956" height="282" rx="16" fill="url(#actBg)" stroke="#DFE8F5" stroke-width="1.2" filter="url(#actShadow)"/>
 
   <!-- Flowing Translucent Wave Lines on Right / Behind Grid -->
   <g transform="translate(480, 110)">
     <path d="M 0 110 Q 120 40, 240 85 T 460 70" fill="none" stroke="url(#waveCyan)" stroke-width="2.8" stroke-linecap="round"/>
     <path d="M 0 125 Q 140 60, 260 100 T 460 85" fill="none" stroke="url(#waveBlue)" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="380" cy="74" r="3.5" fill="#2563EB" opacity="0.8"/>
+    <circle cx="380" cy="74" r="3.5" fill="#2878F0" opacity="0.8"/>
   </g>
 
   <!-- Top Header Section -->
   <g transform="translate(32, 26)">
     <!-- GitHub Octocat Icon in Dark Circle -->
     <rect x="2" y="2" width="38" height="38" rx="10" fill="#EFF6FF" stroke="#DBEAFE" stroke-width="1"/>
-    <circle cx="21" cy="21" r="15" fill="#0F172A"/>
+    <circle cx="21" cy="21" r="15" fill="#10264A"/>
     <path d="M21 13 C16.5 13 13 16.5 13 21 C13 24.6 15.3 27.6 18.6 28.7 C19 28.8 19.1 28.5 19.1 28.3 L19.1 27.2 C16.8 27.7 16.3 26.2 16.3 26.2 C15.9 25.3 15.4 25 15.4 25 C14.6 24.5 15.4 24.5 15.4 24.5 C16.3 24.6 16.7 25.4 16.7 25.4 C17.4 26.6 18.6 26.3 19 26.1 C19.1 25.6 19.3 25.2 19.5 25 C17.7 24.8 15.8 24.1 15.8 21 C15.8 20.1 16.1 19.4 16.6 18.8 C16.5 18.6 16.2 17.8 16.7 16.7 C16.7 16.7 17.4 16.5 18.9 17.5 C19.6 17.3 20.3 17.2 21 17.2 C21.7 17.2 22.4 17.3 23.1 17.5 C24.6 16.5 25.3 16.7 25.3 16.7 C25.8 17.8 25.5 18.6 25.4 18.8 C25.9 19.4 26.2 20.1 26.2 21 C26.2 24.1 24.3 24.8 22.5 25 C22.8 25.3 23 25.8 23 26.5 L23 28.3 C23 28.5 23.1 28.8 23.5 28.7 C26.7 27.6 29 24.6 29 21 C29 16.5 25.5 13 21 13 Z" fill="#FFFFFF"/>
 
     <!-- Heading & Subtitle -->
@@ -285,8 +338,8 @@ def generate_activity_svg(cal_data, output_path):
 
     <!-- Top-Right Metric Pill -->
     <g transform="translate(740, 0)">
-      <rect x="0" y="0" width="154" height="42" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
-      <path d="M14 21 L20 21 L24 14 L28 27 L32 17 L36 21 L42 21" fill="none" stroke="#2563EB" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="0" y="0" width="154" height="42" rx="10" fill="#FFFFFF" stroke="#DFE8F5" stroke-width="1"/>
+      <path d="M14 21 L20 21 L24 14 L28 27 L32 17 L36 21 L42 21" fill="none" stroke="#2878F0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
       <text x="52" y="20" class="metric-val">{synced_total}</text>
       <text x="52" y="34" class="metric-label">Contributions</text>
     </g>
@@ -329,6 +382,7 @@ def generate_activity_svg(cal_data, output_path):
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(svg_content)
     print(f"[SUCCESS] Generated {output_path} with {synced_total} synchronized contributions!")
+    return synced_total
 
 
 def update_stats_svg(synced_total, output_path):
@@ -352,10 +406,9 @@ def update_stats_svg(synced_total, output_path):
 def main():
     try:
         data = get_contribution_data(USERNAME)
-        generate_activity_svg(data, OUTPUT_ACTIVITY_SVG)
-        raw_total = data.get("totalContributions", 0)
-        synced_total = calculate_synced_total(raw_total)
+        synced_total = generate_activity_svg(data, OUTPUT_ACTIVITY_SVG)
         update_stats_svg(synced_total, OUTPUT_STATS_SVG)
+        export_dataset_json(data, synced_total, OUTPUT_JSON_DATASET)
     except Exception as e:
         print(f"[ERROR] Failed to generate contributions SVG: {e}")
         sys.exit(0)

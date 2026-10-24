@@ -1,6 +1,6 @@
 name: Update GitHub Activity Heatmap
 
-on:
+"on":
   # Run daily at 00:00 UTC to refresh contribution data
   schedule:
     - cron: "0 0 * * *"
@@ -38,15 +38,25 @@ jobs:
           python -m pip install --upgrade pip
           pip install beautifulsoup4
 
-      - name: Generate live contribution heatmap SVG
+      - name: Generate live contribution heatmap SVG and dataset
         env:
+          GH_PAT: ${{ secrets.GH_PAT }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           python scripts/generate_contributions.py
+
+      - name: Validate generated SVG assets
+        run: |
+          python -c "
+          import xml.etree.ElementTree as ET
+          ET.parse('assets/github-activity.svg')
+          ET.parse('assets/stats.svg')
+          print('SVG XML validation passed!')
+          "
 
       - name: Commit and push changes
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git add assets/github-activity.svg assets/stats.svg
+          git add assets/github-activity.svg assets/stats.svg assets/contributions.json
           git diff --staged --quiet || (git commit -m "chore: refresh contribution activity heatmap and stats [skip ci]" && git push)
