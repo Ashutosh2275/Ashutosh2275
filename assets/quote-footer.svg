@@ -5,14 +5,14 @@
       <stop offset="100%" stop-color="#F8FAFC"/>
     </linearGradient>
     <linearGradient id="waveGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.8"/>
-      <stop offset="50%" stop-color="#818CF8" stop-opacity="0.9"/>
-      <stop offset="100%" stop-color="#C084FC" stop-opacity="0.6"/>
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.85"/>
+      <stop offset="50%" stop-color="#818CF8" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#C084FC" stop-opacity="0.7"/>
     </linearGradient>
     <linearGradient id="waveGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#60A5FA" stop-opacity="0.5"/>
-      <stop offset="50%" stop-color="#A78BFA" stop-opacity="0.7"/>
-      <stop offset="100%" stop-color="#E879F9" stop-opacity="0.4"/>
+      <stop offset="0%" stop-color="#60A5FA" stop-opacity="0.6"/>
+      <stop offset="50%" stop-color="#A78BFA" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#E879F9" stop-opacity="0.5"/>
     </linearGradient>
     <filter id="qfShadow" x="-2%" y="-5%" width="104%" height="115%">
       <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0F172A" flood-opacity="0.04"/>

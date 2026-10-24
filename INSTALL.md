@@ -15,19 +15,19 @@ GitHub displays a profile README when a public repository with the exact same na
 ├── scripts/
 │   └── generate_contributions.py          # Data pipeline generating live contribution heatmap
 ├── assets/
-│   ├── banner.png                         # High-resolution vector hero banner
-│   ├── values.png                         # Full-width core value cards (Learn, Build, Collaborate, Create)
-│   ├── github-activity.png                # Full-width contribution heatmap with wave accent
-│   ├── skills.png                         # Categorized technical skills icon matrix
-│   ├── stats.png                          # GitHub Stats card (Contributions, Repositories, Stars)
-│   ├── languages.png                      # Most Used Languages horizontal bar chart card
-│   ├── learning-goals.png                 # Learning Goals card
-│   ├── quote-footer.png                   # Signature footer banner with wave accent
+│   ├── banner.svg                         # High-resolution vector hero banner
+│   ├── values.svg                         # Full-width core value cards (Learn, Build, Collaborate, Create)
+│   ├── github-activity.svg                # Full-width contribution heatmap with wave accent
+│   ├── skills.svg                         # Categorized technical skills icon matrix
+│   ├── stats.svg                          # GitHub Stats card (Contributions, Repositories, Stars)
+│   ├── languages.svg                      # Most Used Languages horizontal bar chart card
+│   ├── learning-goals.svg                 # Learning Goals card
+│   ├── quote-footer.svg                   # Signature footer banner with wave accent
 │   └── projects/
-│       ├── card-healthcare.png            # 3D Robot Card: Healthcare Document Intelligence & RAG
-│       ├── card-resume.png                # 3D Robot Card: Intelligent Resume Screening & Job Matching
-│       ├── card-student.png               # 3D Robot Card: Smart Student Performance Analytics
-│       └── card-fraud.png                 # 3D Robot Card: Financial Intelligence & Fraud Detection
+│       ├── healthcare-rag.svg             # 3D Robot Card: Healthcare Document Intelligence & RAG
+│       ├── resume-screener.svg            # 3D Robot Card: Intelligent Resume Screening & Job Matching
+│       ├── student-analytics.svg          # 3D Robot Card: Smart Student Performance Analytics
+│       └── fraud-detection.svg            # 3D Robot Card: Financial Intelligence & Fraud Detection
 └── .github/
     └── workflows/
         ├── update-contributions.yml       # Daily contribution heatmap update workflow

@@ -1,74 +1,141 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 160" width="100%" height="auto">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 220" width="100%" height="auto" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
   <defs>
-    <linearGradient id="saBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#F0F9FF"/>
-      <stop offset="100%" stop-color="#E0F2FE"/>
+    <linearGradient id="saCardBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#F8FAFC"/>
     </linearGradient>
-    <linearGradient id="barGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#38BDF8"/>
-      <stop offset="100%" stop-color="#0284C7"/>
+    <linearGradient id="robotScreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#1E293B"/>
     </linearGradient>
-    <linearGradient id="barGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#60A5FA"/>
-      <stop offset="100%" stop-color="#2563EB"/>
+    <linearGradient id="robotBody" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#E2E8F0"/>
     </linearGradient>
-    <filter id="saShadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0284C7" flood-opacity="0.08"/>
+    <filter id="pCardShadow" x="-3%" y="-4%" width="106%" height="112%">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#0F172A" flood-opacity="0.05"/>
     </filter>
   </defs>
 
-  <!-- Background Canvas -->
-  <rect x="2" y="2" width="316" height="156" rx="16" fill="url(#saBg)" stroke="#E0F2FE" stroke-width="1.5" filter="url(#saShadow)"/>
+  <style>
+    .p-title { font-size: 15px; font-weight: 700; fill: #0F172A; letter-spacing: -0.2px; }
+    .p-desc { font-size: 11.5px; font-weight: 400; fill: #64748B; }
+    .p-tag { font-size: 10px; font-weight: 600; fill: #2563EB; }
+    .p-btn-text { font-size: 11px; font-weight: 600; fill: #0F172A; }
+    .p-btn-demo { font-size: 11px; font-weight: 600; fill: #2563EB; }
+  </style>
 
-  <!-- Subtle Grid Accent -->
-  <g stroke="#BAE6FD" stroke-width="0.8" opacity="0.35">
-    <line x1="30" y1="20" x2="30" y2="140"/>
-    <line x1="70" y1="20" x2="70" y2="140"/>
-    <line x1="110" y1="20" x2="110" y2="140"/>
-    <line x1="150" y1="20" x2="150" y2="140"/>
-    <line x1="190" y1="20" x2="190" y2="140"/>
-    <line x1="230" y1="20" x2="230" y2="140"/>
-    <line x1="270" y1="20" x2="270" y2="140"/>
-    <line x1="20" y1="40" x2="300" y2="40"/>
-    <line x1="20" y1="80" x2="300" y2="80"/>
-    <line x1="20" y1="120" x2="300" y2="120"/>
+  <!-- Card Container -->
+  <rect x="3" y="3" width="554" height="214" rx="14" fill="url(#saCardBg)" stroke="#E2E8F0" stroke-width="1.2" filter="url(#pCardShadow)"/>
+
+  <!-- Left Side: Robot Illustration Container -->
+  <g transform="translate(16, 16)">
+    <rect x="0" y="0" width="168" height="182" rx="12" fill="#F0F7FF" stroke="#E0F2FE" stroke-width="1"/>
+
+    <!-- Decorative Stars -->
+    <path d="M 140 28 L 142 32 L 140 36 L 138 32 Z" fill="#BAE6FD" opacity="0.8"/>
+    <path d="M 22 46 L 24 49 L 22 52 L 20 49 Z" fill="#BAE6FD" opacity="0.8"/>
+
+    <!-- Growth Analytics Bar Chart Board on Right of Robot -->
+    <g transform="translate(96, 30)">
+      <rect x="0" y="0" width="58" height="78" rx="6" fill="#FFFFFF" stroke="#BBF7D0" stroke-width="1.2"/>
+      <!-- Upward Trend Line Arrow -->
+      <path d="M 8 46 Q 22 40, 32 24 L 46 14" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round"/>
+      <polygon points="46,11 48,16 43,15" fill="#10B981"/>
+      <!-- Analytics Bars (Gradually Increasing) -->
+      <rect x="10" y="52" width="7" height="18" rx="2" fill="#BAE6FD"/>
+      <rect x="20" y="44" width="7" height="26" rx="2" fill="#6EE7B7"/>
+      <rect x="30" y="34" width="7" height="36" rx="2" fill="#34D399"/>
+      <rect x="40" y="22" width="7" height="48" rx="2" fill="#10B981"/>
+    </g>
+
+    <!-- 3D Cute Robot Mascot -->
+    <g transform="translate(18, 30)">
+      <!-- Antenna -->
+      <line x1="42" y1="12" x2="42" y2="2" stroke="#94A3B8" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="42" cy="2" r="3.5" fill="#38BDF8"/>
+
+      <!-- Robot Ears / Headphone Bolts -->
+      <rect x="10" y="32" width="6" height="14" rx="3" fill="#60A5FA"/>
+      <rect x="68" y="32" width="6" height="14" rx="3" fill="#60A5FA"/>
+
+      <!-- Robot Head Shell -->
+      <rect x="13" y="12" width="58" height="50" rx="18" fill="url(#robotBody)" stroke="#CBD5E1" stroke-width="1.2"/>
+      <!-- Visor / Face Screen -->
+      <rect x="20" y="22" width="44" height="28" rx="10" fill="url(#robotScreen)"/>
+      <!-- Glowing Blue Digital Eyes -->
+      <ellipse cx="32" cy="36" rx="4.5" ry="5.5" fill="#38BDF8"/>
+      <ellipse cx="52" cy="36" rx="4.5" ry="5.5" fill="#38BDF8"/>
+      <circle cx="34" cy="34" r="1.5" fill="#FFFFFF"/>
+      <circle cx="54" cy="34" r="1.5" fill="#FFFFFF"/>
+
+      <!-- Robot Neck -->
+      <rect x="36" y="62" width="12" height="6" rx="2" fill="#94A3B8"/>
+
+      <!-- Robot Body -->
+      <rect x="22" y="68" width="40" height="42" rx="12" fill="url(#robotBody)" stroke="#CBD5E1" stroke-width="1.2"/>
+      <circle cx="42" cy="84" r="6" fill="#38BDF8" opacity="0.3"/>
+      <circle cx="42" cy="84" r="3.5" fill="#0284C7"/>
+
+      <!-- Left Arm -->
+      <path d="M 22 76 C 10 82, 6 96, 12 108" fill="none" stroke="#CBD5E1" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="12" cy="108" r="4.5" fill="#1E293B"/>
+
+      <!-- Right Arm (Pointing at the Analytics Chart) -->
+      <path d="M 62 76 C 76 80, 86 82, 94 76" fill="none" stroke="#CBD5E1" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="94" cy="76" r="4.5" fill="#1E293B"/>
+    </g>
   </g>
 
-  <!-- Central Illustration Group -->
-  <g transform="translate(105, 20)">
-    <!-- Analytics Chart Board -->
-    <rect x="4" y="6" width="102" height="108" rx="10" fill="#FFFFFF" stroke="#BAE6FD" stroke-width="1.5"/>
+  <!-- Right Side: Content & Actions -->
+  <g transform="translate(198, 26)">
+    <!-- Project Title -->
+    <text x="0" y="18" class="p-title">Smart Student Performance</text>
+    <text x="0" y="38" class="p-title">Analytics</text>
 
-    <!-- Chart Grid Lines -->
-    <line x1="16" y1="30" x2="94" y2="30" stroke="#F1F5F9" stroke-width="1"/>
-    <line x1="16" y1="52" x2="94" y2="52" stroke="#F1F5F9" stroke-width="1"/>
-    <line x1="16" y1="74" x2="94" y2="74" stroke="#F1F5F9" stroke-width="1"/>
-    <line x1="16" y1="96" x2="94" y2="96" stroke="#CBD5E1" stroke-width="1.5"/>
+    <!-- Description -->
+    <text x="0" y="64" class="p-desc">Predictive analytics for student</text>
+    <text x="0" y="80" class="p-desc">performance using ML models.</text>
 
-    <!-- Ascending Bar Chart -->
-    <!-- Bar 1 -->
-    <rect x="24" y="70" width="12" height="26" rx="3" fill="#BAE6FD"/>
-    <!-- Bar 2 -->
-    <rect x="42" y="52" width="12" height="44" rx="3" fill="#7DD3FC"/>
-    <!-- Bar 3 -->
-    <rect x="60" y="38" width="12" height="58" rx="3" fill="url(#barGrad1)"/>
-    <!-- Bar 4 -->
-    <rect x="78" y="24" width="12" height="72" rx="3" fill="url(#barGrad2)"/>
+    <!-- Tech Badges -->
+    <g transform="translate(0, 102)">
+      <g transform="translate(0, 0)">
+        <rect x="0" y="0" width="56" height="22" rx="6" fill="#EFF6FF" stroke="#DBEAFE" stroke-width="1"/>
+        <text x="28" y="15" class="p-tag" text-anchor="middle">Python</text>
+      </g>
+      <g transform="translate(62, 0)">
+        <rect x="0" y="0" width="62" height="22" rx="6" fill="#EFF6FF" stroke="#DBEAFE" stroke-width="1"/>
+        <text x="31" y="15" class="p-tag" text-anchor="middle">XGBoost</text>
+      </g>
+      <g transform="translate(130, 0)">
+        <rect x="0" y="0" width="50" height="22" rx="6" fill="#EFF6FF" stroke="#DBEAFE" stroke-width="1"/>
+        <text x="25" y="15" class="p-tag" text-anchor="middle">LSTM</text>
+      </g>
+      <g transform="translate(186, 0)">
+        <rect x="0" y="0" width="64" height="22" rx="6" fill="#EFF6FF" stroke="#DBEAFE" stroke-width="1"/>
+        <text x="32" y="15" class="p-tag" text-anchor="middle">Analytics</text>
+      </g>
+    </g>
 
-    <!-- Upward Trendline with Arrow -->
-    <path d="M28 66 Q50 48 84 20" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round"/>
-    <!-- Trend points -->
-    <circle cx="30" cy="65" r="3" fill="#FFFFFF" stroke="#2563EB" stroke-width="2"/>
-    <circle cx="48" cy="48" r="3" fill="#FFFFFF" stroke="#2563EB" stroke-width="2"/>
-    <circle cx="66" cy="34" r="3" fill="#FFFFFF" stroke="#2563EB" stroke-width="2"/>
-    <circle cx="84" cy="20" r="3.5" fill="#2563EB"/>
+    <!-- Links: Code & Live Demo -->
+    <g transform="translate(0, 146)">
+      <!-- Code Button -->
+      <a href="https://github.com/Ashutosh2275/DRAI-AI" target="_blank">
+        <g transform="translate(0, 0)">
+          <circle cx="10" cy="8" r="8" fill="#0F172A"/>
+          <path d="M10 3.5 C6.4 3.5 3.5 6.4 3.5 10 C3.5 12.9 5.4 15.3 8 16.2 C8.3 16.3 8.4 16.1 8.4 15.9 L8.4 14.6 C6.6 15 6.2 13.8 6.2 13.8 C5.9 13.1 5.5 12.8 5.5 12.8 C4.9 12.4 5.5 12.4 5.5 12.4 C6.2 12.5 6.5 13.1 6.5 13.1 C7.1 14.1 8 13.8 8.4 13.6 C8.5 13.1 8.7 12.8 8.9 12.6 C7.5 12.5 6 11.9 6 9.4 C6 8.7 6.3 8.1 6.7 7.7 C6.6 7.5 6.4 6.9 6.8 6 C6.8 6 7.3 5.8 8.6 6.7 C9.1 6.6 9.6 6.5 10.2 6.5 C10.8 6.5 11.3 6.6 11.8 6.7 C13.1 5.8 13.6 6 13.6 6 C14 6.9 13.8 7.5 13.7 7.7 C14.1 8.1 14.4 8.7 14.4 9.4 C14.4 11.9 12.9 12.5 11.5 12.6 C11.7 12.8 11.9 13.2 11.9 13.8 L11.9 15.9 C11.9 16.1 12 16.3 12.3 16.2 C15 15.3 16.8 12.9 16.8 10 C16.8 6.4 13.9 3.5 10 3.5 Z" fill="#FFFFFF"/>
+          <text x="24" y="12" class="p-btn-text">Code</text>
+        </g>
+      </a>
 
-    <!-- Graduation Cap / Target Node in Top Left -->
-    <g transform="translate(-16, -6)">
-      <path d="M22 18 L34 13 L46 18 L34 23 Z" fill="#0284C7"/>
-      <path d="M26 21 V26 C26 28 30 30 34 30 C38 30 42 28 42 26 V21" fill="none" stroke="#0284C7" stroke-width="1.5"/>
-      <line x1="44" y1="18.5" x2="44" y2="28" stroke="#F59E0B" stroke-width="1.2"/>
-      <circle cx="44" cy="29" r="1.5" fill="#F59E0B"/>
+      <!-- Live Demo Button -->
+      <a href="https://heyashutosh.netlify.app/" target="_blank">
+        <g transform="translate(86, 0)">
+          <path d="M 0 3 L 7 3 L 7 10 M 7 3 L 1 9" fill="none" stroke="#2563EB" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="-3" y="0" width="13" height="13" rx="2" fill="none" stroke="#2563EB" stroke-width="1.2"/>
+          <text x="18" y="12" class="p-btn-demo">Live Demo</text>
+        </g>
+      </a>
     </g>
   </g>
 </svg>

@@ -6,231 +6,250 @@
       <stop offset="45%" stop-color="#F8FAFC"/>
       <stop offset="100%" stop-color="#EDF5FF"/>
     </linearGradient>
-    <linearGradient id="blueGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.08"/>
-      <stop offset="100%" stop-color="#1D4ED8" stop-opacity="0.02"/>
-    </linearGradient>
     <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#DCEBFA" stop-opacity="0.7"/>
-      <stop offset="100%" stop-color="#F1F7FD" stop-opacity="0.3"/>
+      <stop offset="0%" stop-color="#BAE6FD" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#E0F2FE" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.2"/>
     </linearGradient>
-    <linearGradient id="buttonGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#2563EB"/>
-      <stop offset="100%" stop-color="#1D4ED8"/>
+    <linearGradient id="sunGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF08A" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#BAE6FD" stop-opacity="0"/>
     </linearGradient>
-    <filter id="cardShadow" x="-2%" y="-2%" width="104%" height="108%" filterUnits="userSpaceOnUse">
+    <linearGradient id="laptopGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+    <linearGradient id="screenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#1E1E2E"/>
+    </linearGradient>
+    <linearGradient id="deskGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#CBD5E1"/>
+      <stop offset="100%" stop-color="#94A3B8"/>
+    </linearGradient>
+
+    <!-- Drop Shadows -->
+    <filter id="cardShadow" x="-2%" y="-3%" width="104%" height="108%">
       <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#0F172A" flood-opacity="0.06"/>
     </filter>
-    <filter id="btnShadow" x="-5%" y="-10%" width="110%" height="130%" filterUnits="userSpaceOnUse">
-      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0F172A" flood-opacity="0.12"/>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
     </filter>
-    <clipPath id="windowClip">
-      <rect x="740" y="24" width="436" height="412" rx="20"/>
-    </clipPath>
   </defs>
 
-  <style>
-    .name-badge { font-size: 13px; font-weight: 700; letter-spacing: 2.5px; fill: #2563EB; text-transform: uppercase; }
-    .main-title { font-size: 38px; font-weight: 800; fill: #0F172A; letter-spacing: -0.5px; }
-    .sub-title { font-size: 16px; font-weight: 400; fill: #475569; line-height: 1.5; }
-    .meta-text { font-size: 13px; font-weight: 500; fill: #334155; }
-    .btn-text { font-size: 13px; font-weight: 600; fill: #FFFFFF; }
-    .quote-text { font-family: 'Caveat', 'Segoe Script', 'Bradley Hand', 'Comic Sans MS', cursive; font-size: 23px; font-weight: 700; fill: #2563EB; }
-  </style>
-
-  <!-- Outer Rounded Banner Card -->
+  <!-- Main Card Container -->
   <rect x="4" y="4" width="1192" height="452" rx="20" fill="url(#bgGrad)" stroke="#E2E8F0" stroke-width="1.5" filter="url(#cardShadow)"/>
-  <rect x="4" y="4" width="1192" height="452" rx="20" fill="url(#blueGlow)"/>
 
-  <!-- Left Content Area -->
-  <g transform="translate(48, 56)">
-    <!-- Small Category Eyebrow -->
-    <text x="0" y="20" class="name-badge">ASHUTOSH MISHRA</text>
+  <!-- ========================================================================
+       RIGHT SIDE: Architectural Window with City Skyline & Anime Developer
+  ======================================================================== -->
+  <g transform="translate(620, 20)">
+    <!-- Window Frame Outer Cutout -->
+    <rect x="0" y="0" width="550" height="420" rx="14" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+    <!-- Window Glass Sky View -->
+    <rect x="8" y="8" width="534" height="404" rx="10" fill="url(#skyGrad)"/>
+    <!-- Soft Sunlight Glow -->
+    <circle cx="200" cy="100" r="140" fill="url(#sunGlow)"/>
 
-    <!-- Main Headline -->
-    <text x="0" y="68" class="main-title">AI/ML &amp; Full-Stack Developer</text>
+    <!-- Distant City Skyline Silhouettes (Layer 1) -->
+    <g fill="#93C5FD" opacity="0.35">
+      <rect x="40" y="160" width="34" height="180" rx="2"/>
+      <rect x="80" y="120" width="45" height="220" rx="2"/>
+      <polygon points="102,90 85,120 120,120"/>
+      <rect x="135" y="180" width="28" height="160" rx="2"/>
+      <rect x="175" y="140" width="52" height="200" rx="2"/>
+      <rect x="240" y="100" width="38" height="240" rx="2"/>
+      <polygon points="259,70 244,100 274,100"/>
+      <rect x="290" y="170" width="48" height="170" rx="2"/>
+      <rect x="350" y="130" width="40" height="210" rx="2"/>
+      <rect x="400" y="150" width="60" height="190" rx="2"/>
+      <polygon points="430,110 405,150 455,150"/>
+      <rect x="470" y="190" width="35" height="150" rx="2"/>
+    </g>
 
-    <!-- Subtitle / Tagline -->
-    <text x="0" y="112" class="sub-title">Building practical AI systems and scalable web applications</text>
-    <text x="0" y="136" class="sub-title">that create real-world impact.</text>
+    <!-- Mid-ground Skyline Silhouettes (Layer 2) -->
+    <g fill="#60A5FA" opacity="0.45">
+      <rect x="60" y="190" width="36" height="160" rx="2"/>
+      <rect x="105" y="150" width="40" height="200" rx="2"/>
+      <rect x="155" y="170" width="32" height="180" rx="2"/>
+      <rect x="200" y="120" width="46" height="230" rx="2"/>
+      <rect x="260" y="160" width="42" height="190" rx="2"/>
+      <rect x="315" y="140" width="36" height="210" rx="2"/>
+      <polygon points="333,115 318,140 348,140"/>
+      <rect x="365" y="180" width="50" height="170" rx="2"/>
+      <rect x="425" y="130" width="38" height="220" rx="2"/>
+      <rect x="475" y="160" width="45" height="190" rx="2"/>
+    </g>
 
-    <!-- Meta Information Strip (Location, Degree, Availability) -->
-    <g transform="translate(0, 172)">
-      <!-- Location Pill -->
-      <g>
-        <rect x="0" y="0" width="175" height="32" rx="16" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1"/>
-        <!-- Map Pin Icon -->
-        <path d="M16 11c-2.2 0-4 1.8-4 4 0 3 4 7 4 7s4-4 4-7c0-2.2-1.8-4-4-4zm0 5.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" fill="#2563EB"/>
-        <text x="32" y="21" class="meta-text">Bhubaneswar, India</text>
+    <!-- Window Pane Frame Divider Lines -->
+    <line x1="170" y1="8" x2="170" y2="412" stroke="#FFFFFF" stroke-width="6" opacity="0.8"/>
+    <line x1="360" y1="8" x2="360" y2="412" stroke="#FFFFFF" stroke-width="6" opacity="0.8"/>
+    <line x1="8" y1="210" x2="542" y2="210" stroke="#FFFFFF" stroke-width="6" opacity="0.8"/>
+
+    <!-- Handwritten Motto on Window Glass (Top Right) -->
+    <g transform="translate(430, 48)">
+      <text x="0" y="0" font-family="'Caveat', 'Segoe Script', 'Brush Script MT', cursive, sans-serif" font-size="21" font-weight="700" fill="#1E3A8A" font-style="italic" letter-spacing="0.5px">"Ideas</text>
+      <text x="8" y="24" font-family="'Caveat', 'Segoe Script', 'Brush Script MT', cursive, sans-serif" font-size="21" font-weight="700" fill="#1E3A8A" font-style="italic" letter-spacing="0.5px">Build</text>
+      <text x="8" y="48" font-family="'Caveat', 'Segoe Script', 'Brush Script MT', cursive, sans-serif" font-size="21" font-weight="700" fill="#1E3A8A" font-style="italic" letter-spacing="0.5px">Solve</text>
+      <text x="4" y="72" font-family="'Caveat', 'Segoe Script', 'Brush Script MT', cursive, sans-serif" font-size="21" font-weight="700" fill="#1E3A8A" font-style="italic" letter-spacing="0.5px">Repeat"</text>
+      <!-- Underline accent -->
+      <path d="M 4 84 Q 30 80, 56 83" fill="none" stroke="#2563EB" stroke-width="2.2" stroke-linecap="round"/>
+    </g>
+
+    <!-- Glass Table Surface -->
+    <rect x="8" y="340" width="534" height="72" fill="url(#deskGrad)" opacity="0.95"/>
+    <rect x="8" y="340" width="534" height="4" fill="#FFFFFF" opacity="0.8"/>
+
+    <!-- Potted Plant on Window Sill / Table (Left) -->
+    <g transform="translate(46, 270)">
+      <!-- Ceramic Pot -->
+      <polygon points="16,70 38,70 42,42 12,42" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+      <rect x="10" y="40" width="34" height="4" rx="1.5" fill="#E2E8F0"/>
+      <!-- Leaves -->
+      <path d="M 27 40 C 20 20, 5 22, 2 30 C 10 32, 22 34, 27 40 Z" fill="#10B981"/>
+      <path d="M 27 40 C 35 15, 50 18, 52 26 C 44 28, 32 32, 27 40 Z" fill="#059669"/>
+      <path d="M 27 40 C 27 10, 23 8, 27 0 C 31 8, 29 20, 27 40 Z" fill="#34D399"/>
+      <path d="M 27 40 C 15 25, 20 15, 12 12 C 12 22, 20 30, 27 40 Z" fill="#047857"/>
+    </g>
+
+    <!-- Coffee Tumbler on Desk -->
+    <g transform="translate(108, 308)">
+      <polygon points="6,34 18,34 20,8 4,8" fill="#1E293B"/>
+      <rect x="2" y="5" width="20" height="3" rx="1" fill="#475569"/>
+      <rect x="6" y="2" width="12" height="3" rx="1" fill="#0F172A"/>
+      <!-- Heat sleeve -->
+      <polygon points="5,24 19,24 18,14 6,14" fill="#94A3B8" opacity="0.6"/>
+    </g>
+
+    <!-- Modern Open Laptop -->
+    <g transform="translate(160, 272)">
+      <!-- Screen Lid Outline -->
+      <rect x="0" y="0" width="126" height="78" rx="5" fill="url(#laptopGrad)" stroke="#334155" stroke-width="1.5"/>
+      <!-- Glowing Screen Bezel Inside -->
+      <rect x="4" y="4" width="118" height="70" rx="3" fill="url(#screenGrad)"/>
+      <!-- Syntax Highlighted Code Lines on Screen -->
+      <g opacity="0.95" font-family="'JetBrains Mono', 'Fira Code', Consolas, monospace" font-size="4">
+        <rect x="8" y="10" width="30" height="3" rx="1" fill="#38BDF8"/>
+        <rect x="42" y="10" width="22" height="3" rx="1" fill="#818CF8"/>
+        <rect x="12" y="16" width="18" height="2.5" rx="1" fill="#F43F5E"/>
+        <rect x="33" y="16" width="35" height="2.5" rx="1" fill="#34D399"/>
+        <rect x="16" y="22" width="45" height="2.5" rx="1" fill="#FBBF24"/>
+        <rect x="16" y="27" width="30" height="2.5" rx="1" fill="#60A5FA"/>
+        <rect x="16" y="32" width="55" height="2.5" rx="1" fill="#A78BFA"/>
+        <rect x="12" y="38" width="25" height="2.5" rx="1" fill="#F43F5E"/>
+        <rect x="12" y="44" width="40" height="2.5" rx="1" fill="#38BDF8"/>
+        <rect x="16" y="50" width="50" height="2.5" rx="1" fill="#34D399"/>
+        <rect x="16" y="56" width="32" height="2.5" rx="1" fill="#FBBF24"/>
+        <rect x="8" y="62" width="20" height="3" rx="1" fill="#818CF8"/>
       </g>
+      <!-- Base & Keyboard -->
+      <polygon points="-12,78 138,78 148,88 -22,88" fill="#334155"/>
+      <rect x="38" y="80" width="50" height="5" rx="1.5" fill="#64748B"/>
+    </g>
 
-      <!-- Education Pill -->
-      <g transform="translate(187, 0)">
-        <rect x="0" y="0" width="205" height="32" rx="16" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1"/>
-        <!-- Academic Cap Icon -->
-        <path d="M16 10l-7 3.5 7 3.5 7-3.5L16 10zm-5 6.5v3c0 2 2.5 3.5 5 3.5s5-1.5 5-3.5v-3l-5 2.5-5-2.5z" fill="#475569"/>
-        <text x="32" y="21" class="meta-text">B.Tech CSE (2023 – 2027)</text>
+    <!-- Developer Working (Back/Profile View) -->
+    <g transform="translate(290, 185)">
+      <!-- Office Chair Top -->
+      <path d="M 60 110 C 60 70, 140 70, 140 110 L 140 170 L 60 170 Z" fill="#1E293B" opacity="0.85"/>
+      <rect x="52" y="100" width="96" height="12" rx="4" fill="#0F172A"/>
+
+      <!-- Body / Dark Hoodie -->
+      <path d="M 30 190 C 20 160, 45 125, 80 120 C 115 125, 140 160, 130 190 Z" fill="#1E293B"/>
+      <!-- Hoodie Hood Shadows & Folds -->
+      <path d="M 60 122 C 70 115, 90 115, 100 122 C 95 135, 65 135, 60 122 Z" fill="#0F172A"/>
+      <!-- Right Arm Reaching to Keyboard -->
+      <path d="M 40 160 Q -10 180, -30 175 Q -25 160, 25 145 Z" fill="#1E293B"/>
+      <!-- Hand on Trackpad / Keyboard -->
+      <ellipse cx="-34" cy="175" rx="8" ry="5" fill="#FBCFE8"/>
+
+      <!-- Neck -->
+      <rect x="73" y="108" width="14" height="16" fill="#FBCFE8"/>
+
+      <!-- Head & Anime Hair Silhouette -->
+      <path d="M 65 80 C 60 65, 70 50, 85 50 C 105 50, 115 65, 110 85 C 105 105, 70 105, 65 80 Z" fill="#FBCFE8"/>
+      <!-- Anime Styled Messy Hair -->
+      <path d="M 60 75 C 55 58, 62 42, 80 38 C 98 34, 118 42, 120 58 C 122 72, 115 88, 105 92 C 102 82, 108 72, 98 70 C 88 68, 86 58, 76 64 C 68 70, 68 80, 60 75 Z" fill="#0F172A"/>
+      <path d="M 85 36 C 88 44, 94 48, 98 42 C 104 50, 112 50, 118 44" stroke="#0F172A" stroke-width="3" stroke-linecap="round"/>
+      <path d="M 58 60 C 52 64, 52 72, 56 75" stroke="#0F172A" stroke-width="3" stroke-linecap="round"/>
+    </g>
+
+    <!-- Potted Plant on Desk (Right) -->
+    <g transform="translate(485, 275)">
+      <polygon points="12,65 30,65 33,42 9,42" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+      <rect x="7" y="40" width="28" height="3" rx="1" fill="#E2E8F0"/>
+      <path d="M 21 40 C 15 22, 5 24, 3 30 C 9 32, 18 34, 21 40 Z" fill="#10B981"/>
+      <path d="M 21 40 C 27 18, 38 20, 39 26 C 33 28, 24 32, 21 40 Z" fill="#059669"/>
+      <path d="M 21 40 C 21 15, 18 12, 21 5 C 24 12, 23 22, 21 40 Z" fill="#34D399"/>
+    </g>
+  </g>
+
+  <!-- ========================================================================
+       LEFT SIDE: Professional Headline, Tagline & Info
+  ======================================================================== -->
+  <g transform="translate(56, 68)">
+    <!-- Kicker / User Label -->
+    <text x="0" y="24" font-size="14" font-weight="700" fill="#64748B" letter-spacing="2.5px">ASHUTOSH MISHRA</text>
+
+    <!-- Headline (Line 1 & Line 2) -->
+    <text x="0" y="80" font-size="44" font-weight="800" fill="#0F172A" letter-spacing="-0.8px">AI/ML &amp; Full-Stack</text>
+    <text x="0" y="132" font-size="44" font-weight="800" fill="#2563EB" letter-spacing="-0.8px">Developer</text>
+
+    <!-- Tagline -->
+    <text x="0" y="184" font-size="17" font-weight="400" fill="#475569" letter-spacing="-0.2px">Turning real-world problems into intelligent</text>
+    <text x="0" y="210" font-size="17" font-weight="400" fill="#475569" letter-spacing="-0.2px">and scalable solutions.</text>
+
+    <!-- Metadata Badges Row -->
+    <g transform="translate(0, 245)">
+      <!-- Location -->
+      <g transform="translate(0, 0)">
+        <rect x="0" y="0" width="168" height="32" rx="8" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="14" y="20" font-size="12" font-weight="600" fill="#334155">📍 Bhubaneswar, India</text>
       </g>
-
-      <!-- Status Pill -->
-      <g transform="translate(404, 0)">
-        <rect x="0" y="0" width="185" height="32" rx="16" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1"/>
-        <!-- Sparkle / Code Icon -->
+      <!-- Education -->
+      <g transform="translate(178, 0)">
+        <rect x="0" y="0" width="186" height="32" rx="8" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1"/>
+        <text x="14" y="20" font-size="12" font-weight="600" fill="#334155">🎓 B.Tech CSE (2023–27)</text>
+      </g>
+      <!-- Status -->
+      <g transform="translate(374, 0)">
+        <rect x="0" y="0" width="156" height="32" rx="8" fill="#ECFDF5" stroke="#A7F3D0" stroke-width="1"/>
         <circle cx="16" cy="16" r="4" fill="#10B981"/>
-        <text x="28" y="21" class="meta-text" fill="#1E40AF" style="fill: #1E40AF; font-weight: 600;">Open to Opportunities</text>
+        <text x="26" y="20" font-size="12" font-weight="600" fill="#065F46">Available to Build</text>
       </g>
     </g>
 
-    <!-- Action Buttons Row -->
-    <g transform="translate(0, 240)">
+    <!-- Quick Action / Interactive Destination Links -->
+    <g transform="translate(0, 298)">
       <!-- LinkedIn Button -->
       <a href="https://www.linkedin.com/in/ashutoshmishra-tech/" target="_blank">
-        <g filter="url(#btnShadow)" style="cursor: pointer;">
-          <rect x="0" y="0" width="118" height="40" rx="10" fill="#0A66C2"/>
-          <!-- LinkedIn In Icon -->
-          <path d="M19 14h3v12h-3V14zm1.5-5a1.75 1.75 0 110 3.5 1.75 1.75 0 010-3.5zM24 14h2.8v1.6h.1c.4-.8 1.4-1.8 3.1-1.8 3.3 0 3.9 2.2 3.9 5v7.2h-3v-6.4c0-1.5 0-3.5-2.1-3.5-2.1 0-2.5 1.7-2.5 3.4v6.5h-3V14z" fill="#FFFFFF"/>
-          <text x="46" y="25" class="btn-text">LinkedIn</text>
-        </g>
+        <rect x="0" y="0" width="118" height="36" rx="8" fill="#0A66C2"/>
+        <text x="22" y="22" font-size="12.5" font-weight="700" fill="#FFFFFF">LinkedIn ↗</text>
       </a>
 
       <!-- Portfolio Button -->
       <a href="https://heyashutosh.netlify.app/" target="_blank">
-        <g transform="translate(130, 0)" filter="url(#btnShadow)" style="cursor: pointer;">
-          <rect x="0" y="0" width="116" height="40" rx="10" fill="#1E293B"/>
-          <!-- Portfolio / Globe Icon -->
-          <path d="M18 20a6 6 0 1112 0 6 6 0 01-12 0zm6-4.5c-1.5 1.2-2.3 2.8-2.5 4.5h5c-.2-1.7-1-3.3-2.5-4.5zm-3.4.9c-.8 1-1.3 2.2-1.5 3.6h2c.2-1.3.6-2.5 1.3-3.6h-1.8zm6.8 0c.7 1.1 1.1 2.3 1.3 3.6h2c-.2-1.4-.7-2.6-1.5-3.6h-1.8z" fill="#FFFFFF"/>
-          <text x="42" y="25" class="btn-text">Portfolio</text>
-        </g>
-      </a>
-
-      <!-- Email Button -->
-      <a href="mailto:ashutoshmishra2275@gmail.com">
-        <g transform="translate(258, 0)" filter="url(#btnShadow)" style="cursor: pointer;">
-          <rect x="0" y="0" width="104" height="40" rx="10" fill="#E11D48"/>
-          <!-- Mail Icon -->
-          <path d="M18 16l6 4 6-4v-1.5l-6 4-6-4V16zm0 1.5V24h12v-6.5l-6 4-6-4z" fill="#FFFFFF"/>
-          <text x="38" y="25" class="btn-text">Email</text>
+        <g transform="translate(128, 0)">
+          <rect x="0" y="0" width="124" height="36" rx="8" fill="#0F172A"/>
+          <text x="22" y="22" font-size="12.5" font-weight="700" fill="#FFFFFF">Portfolio ↗</text>
         </g>
       </a>
 
       <!-- Resume Button -->
       <a href="https://drive.google.com/file/d/1RyirKSNDgrU9XfwkMZfwFgM8A7Jv8sfR/view?usp=sharing" target="_blank">
-        <g transform="translate(374, 0)" filter="url(#btnShadow)" style="cursor: pointer;">
-          <rect x="0" y="0" width="112" height="40" rx="10" fill="#7C3AED"/>
-          <!-- Document / Download Icon -->
-          <path d="M18 14h7l4 4v9a1 1 0 01-1 1H18a1 1 0 01-1-1V15a1 1 0 011-1zm6 1v3h3l-3-3zm-3 7v1.5h6V22h-6zm0-3v1.5h6V19h-6z" fill="#FFFFFF"/>
-          <text x="40" y="25" class="btn-text">Resume</text>
+        <g transform="translate(262, 0)">
+          <rect x="0" y="0" width="118" height="36" rx="8" fill="#7C3AED"/>
+          <text x="24" y="22" font-size="12.5" font-weight="700" fill="#FFFFFF">Resume 📄</text>
+        </g>
+      </a>
+
+      <!-- Email Button -->
+      <a href="mailto:ashutoshmishra2275@gmail.com">
+        <g transform="translate(390, 0)">
+          <rect x="0" y="0" width="110" height="36" rx="8" fill="#E11D48"/>
+          <text x="24" y="22" font-size="12.5" font-weight="700" fill="#FFFFFF">Email ✉️</text>
         </g>
       </a>
     </g>
-  </g>
-
-  <!-- Right Visual & Illustration Area -->
-  <g clip-path="url(#windowClip)">
-    <!-- Window / Sky Backdrop -->
-    <rect x="740" y="24" width="436" height="412" fill="url(#skyGrad)"/>
-
-    <!-- Subtle Cityscape Skyline in soft blue silhouettes -->
-    <g fill="#BFDBFE" opacity="0.6">
-      <rect x="760" y="160" width="38" height="180" rx="3"/>
-      <rect x="806" y="120" width="44" height="220" rx="3"/>
-      <rect x="858" y="140" width="32" height="200" rx="2"/>
-      <rect x="898" y="90" width="52" height="250" rx="4"/>
-      <rect x="958" y="130" width="40" height="210" rx="3"/>
-      <rect x="1006" y="110" width="46" height="230" rx="3"/>
-      <rect x="1060" y="150" width="36" height="190" rx="3"/>
-      <rect x="1104" y="100" width="56" height="240" rx="4"/>
-      <!-- Window Grids on Buildings -->
-      <g fill="#FFFFFF" opacity="0.7">
-        <circle cx="820" cy="140" r="1.5"/><circle cx="835" cy="140" r="1.5"/>
-        <circle cx="820" cy="160" r="1.5"/><circle cx="835" cy="160" r="1.5"/>
-        <circle cx="918" cy="110" r="1.5"/><circle cx="932" cy="110" r="1.5"/>
-        <circle cx="918" cy="130" r="1.5"/><circle cx="932" cy="130" r="1.5"/>
-        <circle cx="1022" cy="130" r="1.5"/><circle cx="1036" cy="130" r="1.5"/>
-        <circle cx="1022" cy="150" r="1.5"/><circle cx="1036" cy="150" r="1.5"/>
-      </g>
-    </g>
-
-    <!-- Foreground Window Sill / Architectural Structure -->
-    <line x1="740" y1="340" x2="1180" y2="340" stroke="#94A3B8" stroke-width="2"/>
-    <line x1="910" y1="24" x2="910" y2="340" stroke="#CBD5E1" stroke-width="1.5" stroke-dasharray="6,4"/>
-
-    <!-- Potted Plant on Window Sill / Desk -->
-    <g transform="translate(765, 270)">
-      <!-- Pot -->
-      <path d="M12 40 L6 62 Q6 66 12 66 L28 66 Q34 66 34 62 L28 40 Z" fill="#64748B"/>
-      <!-- Monstera Leaves -->
-      <path d="M20 40 Q8 20 2 6 Q20 8 20 40 Z" fill="#3B82F6" opacity="0.8"/>
-      <path d="M20 38 Q30 14 44 8 Q34 26 20 38 Z" fill="#2563EB" opacity="0.75"/>
-      <path d="M20 36 Q18 8 26 0 Q28 20 20 36 Z" fill="#60A5FA" opacity="0.9"/>
-      <path d="M18 42 Q2 32 0 24 Q12 28 18 42 Z" fill="#1D4ED8" opacity="0.6"/>
-      <path d="M22 42 Q38 34 42 28 Q30 36 22 42 Z" fill="#93C5FD" opacity="0.8"/>
-    </g>
-
-    <!-- Handwritten Inspiration Script -->
-    <g transform="translate(775, 42)">
-      <text x="0" y="24" class="quote-text">“Ideas</text>
-      <text x="20" y="54" class="quote-text">Build</text>
-      <text x="40" y="84" class="quote-text">Solve</text>
-      <text x="60" y="114" class="quote-text">Repeat”</text>
-    </g>
-
-    <!-- Modern Desk & Tech Setup -->
-    <!-- Desk Surface -->
-    <path d="M740 375 L1180 375 L1180 436 L740 436 Z" fill="#E2E8F0" opacity="0.6"/>
-    <line x1="740" y1="375" x2="1180" y2="375" stroke="#CBD5E1" stroke-width="2"/>
-
-    <!-- Mug on Desk with steam -->
-    <g transform="translate(850, 342)">
-      <rect x="0" y="8" width="16" height="24" rx="3" fill="#3B82F6"/>
-      <path d="M16 14 C19 14 21 16 21 19 C21 22 19 24 16 24" fill="none" stroke="#3B82F6" stroke-width="2"/>
-      <!-- Steam -->
-      <path d="M5 4 Q4 0 7 -4" fill="none" stroke="#93C5FD" stroke-width="1.5" stroke-linecap="round"/>
-      <path d="M11 4 Q13 0 10 -4" fill="none" stroke="#93C5FD" stroke-width="1.5" stroke-linecap="round"/>
-    </g>
-
-    <!-- Laptop Open on Desk -->
-    <g transform="translate(885, 260)">
-      <!-- Screen Display -->
-      <rect x="25" y="20" width="120" height="85" rx="5" fill="#0F172A"/>
-      <rect x="30" y="25" width="110" height="75" rx="3" fill="#1E293B"/>
-      <!-- Code lines on screen -->
-      <line x1="38" y1="36" x2="72" y2="36" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/>
-      <line x1="76" y1="36" x2="96" y2="36" stroke="#A78BFA" stroke-width="2" stroke-linecap="round"/>
-      <line x1="44" y1="46" x2="88" y2="46" stroke="#F472B6" stroke-width="2" stroke-linecap="round"/>
-      <line x1="44" y1="56" x2="115" y2="56" stroke="#4ADE80" stroke-width="2" stroke-linecap="round"/>
-      <line x1="50" y1="66" x2="80" y2="66" stroke="#FBBF24" stroke-width="2" stroke-linecap="round"/>
-      <line x1="38" y1="76" x2="68" y2="76" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/>
-      <!-- Soft screen glow -->
-      <polygon points="15,108 155,108 140,25 30,25" fill="#38BDF8" opacity="0.06"/>
-      <!-- Laptop Base -->
-      <path d="M10 105 L160 105 L170 115 L0 115 Z" fill="#94A3B8"/>
-      <rect x="68" y="106" width="34" height="3" rx="1.5" fill="#64748B"/>
-    </g>
-
-    <!-- Developer Figure (Viewed from Behind / 3/4 Angle) -->
-    <g transform="translate(975, 100)">
-      <!-- Hair & Head -->
-      <ellipse cx="60" cy="58" rx="25" ry="29" fill="#1E293B"/>
-      <!-- Textured hair strokes -->
-      <path d="M40 50 Q50 30 70 34 Q85 38 84 55 Q78 44 65 42 Q52 42 40 50 Z" fill="#0F172A"/>
-      <path d="M38 58 Q36 44 45 40 Q40 50 40 62 Z" fill="#0F172A"/>
-      <!-- Neck -->
-      <rect x="52" y="78" width="16" height="16" fill="#F8C798" rx="3"/>
-      <!-- Hoodie / Torso -->
-      <path d="M60 88 C45 88 20 105 8 135 C-4 165 -12 240 -12 280 L132 280 C132 240 124 165 112 135 C100 105 75 88 60 88 Z" fill="#1E3A8A"/>
-      <!-- Hoodie Highlights & Folds -->
-      <path d="M52 88 Q60 98 68 88 Q64 120 60 145" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round"/>
-      <path d="M8 135 Q30 155 45 195" fill="none" stroke="#1D4ED8" stroke-width="2" opacity="0.6"/>
-      <path d="M112 135 Q90 155 75 195" fill="none" stroke="#1D4ED8" stroke-width="2" opacity="0.6"/>
-      <!-- Hoodie Cord -->
-      <path d="M56 100 L53 125" stroke="#93C5FD" stroke-width="2" stroke-linecap="round"/>
-      <path d="M64 100 L67 122" stroke="#93C5FD" stroke-width="2" stroke-linecap="round"/>
-      <!-- Arm resting forward towards keyboard -->
-      <path d="M-10 190 Q-2 230 18 245 Q40 252 65 248" fill="none" stroke="#1E3A8A" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
-    </g>
-
-    <!-- Subtle framing shadow overlay -->
-    <rect x="740" y="24" width="436" height="412" fill="none" stroke="#E2E8F0" stroke-width="1.5" rx="20"/>
   </g>
 </svg>

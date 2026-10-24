@@ -8,7 +8,7 @@
 
   <!-- Hero Banner -->
   <a href="https://heyashutosh.netlify.app/" target="_blank" rel="noopener noreferrer">
-    <img src="assets/banner.png" alt="Ashutosh Mishra - AI/ML &amp; Full-Stack Developer Banner" width="100%" />
+    <img src="assets/banner.svg" alt="Ashutosh Mishra - AI/ML &amp; Full-Stack Developer Banner" width="100%" />
   </a>
 
   <!-- Quick Action & Professional Links -->
@@ -46,7 +46,7 @@
   <br />
   <!-- Full-Width Value Pillars (Learn, Build, Collaborate, Create) -->
   <p align="center">
-    <img src="assets/values.png" alt="Core Values: Learn New Technologies, Build Real Applications, Collaborate With Amazing People, Create Real-World Impact" width="100%" />
+    <img src="assets/values.svg" alt="Core Values: Learn New Technologies, Build Real Applications, Collaborate With Amazing People, Create Real-World Impact" width="100%" />
   </p>
 </div>
 
@@ -58,7 +58,7 @@
 
 <div align="center">
   <a href="https://github.com/Ashutosh2275">
-    <img src="assets/github-activity.png" alt="Ashutosh Mishra - GitHub Activity" width="100%" />
+    <img src="assets/github-activity.svg" alt="Ashutosh Mishra - GitHub Activity" width="100%" />
   </a>
 </div>
 
@@ -86,7 +86,7 @@
     <!-- Project 1: Healthcare Document Intelligence & RAG Assistant -->
     <td width="50%" valign="top">
       <a href="https://github.com/Ashutosh2275/Datacure">
-        <img src="assets/projects/card-healthcare.png" alt="Healthcare Document Intelligence &amp; RAG Assistant" width="100%" />
+        <img src="assets/projects/healthcare-rag.svg" alt="Healthcare Document Intelligence &amp; RAG Assistant" width="100%" />
       </a>
       <p align="center">
         <a href="https://github.com/Ashutosh2275/Datacure"><b>🐙 View Code</b></a>
@@ -98,7 +98,7 @@
     <!-- Project 2: Intelligent Resume Screening & Job Matching System -->
     <td width="50%" valign="top">
       <a href="https://github.com/Ashutosh2275/Datacure">
-        <img src="assets/projects/card-resume.png" alt="Intelligent Resume Screening &amp; Job Matching System" width="100%" />
+        <img src="assets/projects/resume-screener.svg" alt="Intelligent Resume Screening &amp; Job Matching System" width="100%" />
       </a>
       <p align="center">
         <a href="https://github.com/Ashutosh2275/Datacure"><b>🐙 View Code</b></a>
@@ -112,7 +112,7 @@
     <!-- Project 3: Smart Student Performance Analytics -->
     <td width="50%" valign="top">
       <a href="https://github.com/Ashutosh2275/DRAI-AI">
-        <img src="assets/projects/card-student.png" alt="Smart Student Performance Analytics" width="100%" />
+        <img src="assets/projects/student-analytics.svg" alt="Smart Student Performance Analytics" width="100%" />
       </a>
       <p align="center">
         <a href="https://github.com/Ashutosh2275/DRAI-AI"><b>🐙 View Code</b></a>
@@ -124,7 +124,7 @@
     <!-- Project 4: Financial Intelligence & Fraud Detection -->
     <td width="50%" valign="top">
       <a href="https://github.com/Ashutosh2275/ARTHSAVORA">
-        <img src="assets/projects/card-fraud.png" alt="Financial Intelligence &amp; Fraud Detection" width="100%" />
+        <img src="assets/projects/fraud-detection.svg" alt="Financial Intelligence &amp; Fraud Detection" width="100%" />
       </a>
       <p align="center">
         <a href="https://github.com/Ashutosh2275/ARTHSAVORA"><b>🐙 View Code</b></a>
@@ -146,7 +146,7 @@
 </div>
 
 <p align="center">
-  <img src="assets/skills.png" alt="Technical Skills: Languages, AI/ML, Frontend, Backend, Databases" width="100%" />
+  <img src="assets/skills.svg" alt="Technical Skills: Languages, AI/ML, Frontend, Backend, Databases" width="100%" />
 </p>
 
 <!-- Accessible Categorized Tech Matrix -->
@@ -206,20 +206,20 @@
     <!-- Live GitHub Stats Card -->
     <td width="33%" valign="top" align="center">
       <a href="https://github.com/Ashutosh2275">
-        <img src="assets/stats.png" alt="Ashutosh2275's GitHub Stats" width="100%" />
+        <img src="assets/stats.svg" alt="Ashutosh2275's GitHub Stats" width="100%" />
       </a>
     </td>
 
     <!-- Most Used Languages Card -->
     <td width="34%" valign="top" align="center">
       <a href="https://github.com/Ashutosh2275">
-        <img src="assets/languages.png" alt="Ashutosh2275's Top Languages" width="100%" />
+        <img src="assets/languages.svg" alt="Ashutosh2275's Top Languages" width="100%" />
       </a>
     </td>
 
     <!-- Learning Goals Card -->
     <td width="33%" valign="top" align="center">
-      <img src="assets/learning-goals.png" alt="My Learning Goals" width="100%" />
+      <img src="assets/learning-goals.svg" alt="My Learning Goals" width="100%" />
     </td>
   </tr>
 </table>
@@ -256,5 +256,5 @@
   <br />
 
   <!-- Signature Quote Footer -->
-  <img src="assets/quote-footer.png" alt="Using AI/ML to build impactful, deployable tech, not just prototypes." width="100%" />
+  <img src="assets/quote-footer.svg" alt="Using AI/ML to build impactful, deployable tech, not just prototypes." width="100%" />
 </div>

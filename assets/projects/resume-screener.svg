@@ -1,75 +1,149 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 160" width="100%" height="auto">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 220" width="100%" height="auto" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
   <defs>
-    <linearGradient id="rsBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#F5F3FF"/>
-      <stop offset="100%" stop-color="#EDE9FE"/>
+    <linearGradient id="rsCardBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#F8FAFC"/>
     </linearGradient>
-    <filter id="rsShadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#7C3AED" flood-opacity="0.08"/>
+    <linearGradient id="robotScreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#1E293B"/>
+    </linearGradient>
+    <linearGradient id="robotBody" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#E2E8F0"/>
+    </linearGradient>
+    <filter id="pCardShadow" x="-3%" y="-4%" width="106%" height="112%">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#0F172A" flood-opacity="0.05"/>
     </filter>
   </defs>
 
-  <!-- Background Canvas -->
-  <rect x="2" y="2" width="316" height="156" rx="16" fill="url(#rsBg)" stroke="#EDE9FE" stroke-width="1.5" filter="url(#rsShadow)"/>
+  <style>
+    .p-title { font-size: 15px; font-weight: 700; fill: #0F172A; letter-spacing: -0.2px; }
+    .p-desc { font-size: 11.5px; font-weight: 400; fill: #64748B; }
+    .p-tag { font-size: 10px; font-weight: 600; fill: #2563EB; }
+    .p-btn-text { font-size: 11px; font-weight: 600; fill: #0F172A; }
+    .p-btn-demo { font-size: 11px; font-weight: 600; fill: #2563EB; }
+  </style>
 
-  <!-- Subtle Grid Accent -->
-  <g stroke="#DDD6FE" stroke-width="0.8" opacity="0.35">
-    <line x1="30" y1="20" x2="30" y2="140"/>
-    <line x1="70" y1="20" x2="70" y2="140"/>
-    <line x1="110" y1="20" x2="110" y2="140"/>
-    <line x1="150" y1="20" x2="150" y2="140"/>
-    <line x1="190" y1="20" x2="190" y2="140"/>
-    <line x1="230" y1="20" x2="230" y2="140"/>
-    <line x1="270" y1="20" x2="270" y2="140"/>
-    <line x1="20" y1="40" x2="300" y2="40"/>
-    <line x1="20" y1="80" x2="300" y2="80"/>
-    <line x1="20" y1="120" x2="300" y2="120"/>
-  </g>
+  <!-- Card Container -->
+  <rect x="3" y="3" width="554" height="214" rx="14" fill="url(#rsCardBg)" stroke="#E2E8F0" stroke-width="1.2" filter="url(#pCardShadow)"/>
 
-  <!-- Central Illustration Group -->
-  <g transform="translate(112, 22)">
-    <!-- Main Resume Card -->
-    <rect x="10" y="6" width="80" height="104" rx="8" fill="#FFFFFF" stroke="#DDD6FE" stroke-width="1.5"/>
-    <path d="M72 6 L90 24 L72 24 Z" fill="#EDE9FE" stroke="#DDD6FE" stroke-width="1"/>
+  <!-- Left Side: Robot Illustration Container -->
+  <g transform="translate(16, 16)">
+    <rect x="0" y="0" width="168" height="182" rx="12" fill="#F0F7FF" stroke="#E0F2FE" stroke-width="1"/>
 
-    <!-- Avatar Placeholder -->
-    <circle cx="32" cy="28" r="10" fill="#EDE9FE"/>
-    <!-- Avatar Head & Body -->
-    <circle cx="32" cy="26" r="4.5" fill="#7C3AED"/>
-    <path d="M25 36 C25 32 28 31 32 31 C36 31 39 32 39 36" fill="#7C3AED"/>
+    <!-- Decorative Soft Cross/Star -->
+    <path d="M 136 30 L 138 34 L 136 38 L 134 34 Z" fill="#BAE6FD" opacity="0.8"/>
+    <path d="M 24 40 L 26 43 L 24 46 L 22 43 Z" fill="#BAE6FD" opacity="0.8"/>
 
-    <!-- Name / Title Placeholder Lines -->
-    <line x1="48" y1="25" x2="76" y2="25" stroke="#6D28D9" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="48" y1="32" x2="68" y2="32" stroke="#A78BFA" stroke-width="1.8" stroke-linecap="round"/>
-
-    <!-- Divider -->
-    <line x1="20" y1="44" x2="80" y2="44" stroke="#EDE9FE" stroke-width="1.2"/>
-
-    <!-- Skill Match Tags -->
-    <rect x="20" y="52" width="26" height="7" rx="3.5" fill="#DDD6FE"/>
-    <rect x="50" y="52" width="28" height="7" rx="3.5" fill="#DDD6FE"/>
-    
-    <rect x="20" y="64" width="34" height="7" rx="3.5" fill="#EDE9FE"/>
-    <rect x="58" y="64" width="22" height="7" rx="3.5" fill="#EDE9FE"/>
-
-    <!-- Score Bar -->
-    <rect x="20" y="78" width="60" height="6" rx="3" fill="#F3F4F6"/>
-    <rect x="20" y="78" width="48" height="6" rx="3" fill="#7C3AED"/>
-
-    <line x1="20" y1="92" x2="75" y2="92" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round"/>
-    <line x1="20" y1="99" x2="55" y2="99" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round"/>
-
-    <!-- AI Scan / Magnifying Lens -->
-    <g transform="translate(56, 48)">
-      <circle cx="24" cy="24" r="18" fill="#FFFFFF" fill-opacity="0.85" stroke="#7C3AED" stroke-width="2.5"/>
-      <line x1="37" y1="37" x2="49" y2="49" stroke="#7C3AED" stroke-width="3" stroke-linecap="round"/>
-      <!-- Checkmark inside lens -->
-      <path d="M17 24 L22 29 L31 19" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Resume / CV Document Floating Beside Robot -->
+    <g transform="translate(96, 32)">
+      <rect x="0" y="0" width="56" height="78" rx="6" fill="#FFFFFF" stroke="#C7D2FE" stroke-width="1.2"/>
+      <!-- Header bar with User Avatar -->
+      <rect x="6" y="8" width="18" height="18" rx="4" fill="#818CF8"/>
+      <!-- Avatar Face -->
+      <circle cx="15" cy="15" r="3.5" fill="#FFFFFF"/>
+      <path d="M 10 23 C 10 20, 13 19, 15 19 C 17 19, 20 20, 20 23 Z" fill="#FFFFFF"/>
+      <!-- Candidate Title lines -->
+      <line x1="28" y1="12" x2="48" y2="12" stroke="#6366F1" stroke-width="2" stroke-linecap="round"/>
+      <line x1="28" y1="18" x2="42" y2="18" stroke="#A5B4FC" stroke-width="2" stroke-linecap="round"/>
+      <!-- Experience lines -->
+      <line x1="8" y1="34" x2="48" y2="34" stroke="#94A3B8" stroke-width="1.8" stroke-linecap="round"/>
+      <line x1="8" y1="42" x2="44" y2="42" stroke="#CBD5E1" stroke-width="1.8" stroke-linecap="round"/>
+      <line x1="8" y1="50" x2="46" y2="50" stroke="#CBD5E1" stroke-width="1.8" stroke-linecap="round"/>
+      <line x1="8" y1="58" x2="38" y2="58" stroke="#E2E8F0" stroke-width="1.8" stroke-linecap="round"/>
+      <!-- Matching Score Badge (Green Pill) -->
+      <rect x="8" y="65" width="26" height="7" rx="3.5" fill="#DCFCE7"/>
+      <circle cx="12" cy="68.5" r="1.5" fill="#16A34A"/>
     </g>
 
-    <!-- Sparkle Stars -->
-    <g fill="#7C3AED">
-      <path d="M0 16 L2 10 L4 16 L10 18 L4 20 L2 26 L0 20 L-6 18 Z" opacity="0.8"/>
+    <!-- 3D Cute Robot Mascot -->
+    <g transform="translate(18, 30)">
+      <!-- Antenna -->
+      <line x1="42" y1="12" x2="42" y2="2" stroke="#94A3B8" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="42" cy="2" r="3.5" fill="#38BDF8"/>
+
+      <!-- Robot Ears / Headphone Bolts -->
+      <rect x="10" y="32" width="6" height="14" rx="3" fill="#60A5FA"/>
+      <rect x="68" y="32" width="6" height="14" rx="3" fill="#60A5FA"/>
+
+      <!-- Robot Head Shell -->
+      <rect x="13" y="12" width="58" height="50" rx="18" fill="url(#robotBody)" stroke="#CBD5E1" stroke-width="1.2"/>
+      <!-- Visor / Face Screen -->
+      <rect x="20" y="22" width="44" height="28" rx="10" fill="url(#robotScreen)"/>
+      <!-- Glowing Blue Digital Eyes -->
+      <ellipse cx="32" cy="36" rx="4.5" ry="5.5" fill="#38BDF8"/>
+      <ellipse cx="52" cy="36" rx="4.5" ry="5.5" fill="#38BDF8"/>
+      <circle cx="34" cy="34" r="1.5" fill="#FFFFFF"/>
+      <circle cx="54" cy="34" r="1.5" fill="#FFFFFF"/>
+
+      <!-- Robot Neck -->
+      <rect x="36" y="62" width="12" height="6" rx="2" fill="#94A3B8"/>
+
+      <!-- Robot Body -->
+      <rect x="22" y="68" width="40" height="42" rx="12" fill="url(#robotBody)" stroke="#CBD5E1" stroke-width="1.2"/>
+      <circle cx="42" cy="84" r="6" fill="#38BDF8" opacity="0.3"/>
+      <circle cx="42" cy="84" r="3.5" fill="#0284C7"/>
+
+      <!-- Left Arm -->
+      <path d="M 22 76 C 10 82, 6 96, 12 108" fill="none" stroke="#CBD5E1" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="12" cy="108" r="4.5" fill="#1E293B"/>
+
+      <!-- Right Arm (Presenting the resume) -->
+      <path d="M 62 76 C 76 82, 85 86, 92 82" fill="none" stroke="#CBD5E1" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="92" cy="82" r="4.5" fill="#1E293B"/>
+    </g>
+  </g>
+
+  <!-- Right Side: Content & Actions -->
+  <g transform="translate(198, 26)">
+    <!-- Project Title -->
+    <text x="0" y="18" class="p-title">Intelligent Resume Screening</text>
+    <text x="0" y="38" class="p-title">&amp; Job Matching System</text>
+
+    <!-- Description -->
+    <text x="0" y="64" class="p-desc">AI powered resume analysis and job</text>
+    <text x="0" y="80" class="p-desc">matching system with LLM and NLP.</text>
+
+    <!-- Tech Badges -->
+    <g transform="translate(0, 102)">
+      <g transform="translate(0, 0)">
+        <rect x="0" y="0" width="46" height="22" rx="6" fill="#EFF6FF" stroke="#DBEAFE" stroke-width="1"/>
+        <text x="23" y="15" class="p-tag" text-anchor="middle">NLP</text>
+      </g>
+      <g transform="translate(52, 0)">
+        <rect x="0" y="0" width="42" height="22" rx="6" fill="#EFF6FF" stroke="#DBEAFE" stroke-width="1"/>
+        <text x="21" y="15" class="p-tag" text-anchor="middle">ML</text>
+      </g>
+      <g transform="translate(100, 0)">
+        <rect x="0" y="0" width="54" height="22" rx="6" fill="#EFF6FF" stroke="#DBEAFE" stroke-width="1"/>
+        <text x="27" y="15" class="p-tag" text-anchor="middle">React</text>
+      </g>
+      <g transform="translate(160, 0)">
+        <rect x="0" y="0" width="60" height="22" rx="6" fill="#EFF6FF" stroke="#DBEAFE" stroke-width="1"/>
+        <text x="30" y="15" class="p-tag" text-anchor="middle">FastAPI</text>
+      </g>
+    </g>
+
+    <!-- Links: Code & Live Demo -->
+    <g transform="translate(0, 146)">
+      <!-- Code Button -->
+      <a href="https://github.com/Ashutosh2275/Datacure" target="_blank">
+        <g transform="translate(0, 0)">
+          <circle cx="10" cy="8" r="8" fill="#0F172A"/>
+          <path d="M10 3.5 C6.4 3.5 3.5 6.4 3.5 10 C3.5 12.9 5.4 15.3 8 16.2 C8.3 16.3 8.4 16.1 8.4 15.9 L8.4 14.6 C6.6 15 6.2 13.8 6.2 13.8 C5.9 13.1 5.5 12.8 5.5 12.8 C4.9 12.4 5.5 12.4 5.5 12.4 C6.2 12.5 6.5 13.1 6.5 13.1 C7.1 14.1 8 13.8 8.4 13.6 C8.5 13.1 8.7 12.8 8.9 12.6 C7.5 12.5 6 11.9 6 9.4 C6 8.7 6.3 8.1 6.7 7.7 C6.6 7.5 6.4 6.9 6.8 6 C6.8 6 7.3 5.8 8.6 6.7 C9.1 6.6 9.6 6.5 10.2 6.5 C10.8 6.5 11.3 6.6 11.8 6.7 C13.1 5.8 13.6 6 13.6 6 C14 6.9 13.8 7.5 13.7 7.7 C14.1 8.1 14.4 8.7 14.4 9.4 C14.4 11.9 12.9 12.5 11.5 12.6 C11.7 12.8 11.9 13.2 11.9 13.8 L11.9 15.9 C11.9 16.1 12 16.3 12.3 16.2 C15 15.3 16.8 12.9 16.8 10 C16.8 6.4 13.9 3.5 10 3.5 Z" fill="#FFFFFF"/>
+          <text x="24" y="12" class="p-btn-text">Code</text>
+        </g>
+      </a>
+
+      <!-- Live Demo Button -->
+      <a href="https://heyashutosh.netlify.app/" target="_blank">
+        <g transform="translate(86, 0)">
+          <path d="M 0 3 L 7 3 L 7 10 M 7 3 L 1 9" fill="none" stroke="#2563EB" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="-3" y="0" width="13" height="13" rx="2" fill="none" stroke="#2563EB" stroke-width="1.2"/>
+          <text x="18" y="12" class="p-btn-demo">Live Demo</text>
+        </g>
+      </a>
     </g>
   </g>
 </svg>
