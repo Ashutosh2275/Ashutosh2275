@@ -9,23 +9,25 @@ This guide explains how to install, configure, verify, and maintain the redesign
 GitHub displays a profile README when a public repository with the exact same name as your GitHub username exists: `https://github.com/Ashutosh2275/Ashutosh2275`.
 
 ```text
-├── README.md                              # Main profile document (light minimal theme)
+├── README.md                              # Main profile document (light minimal theme, 100% reference design)
 ├── INSTALL.md                             # Setup, configuration & troubleshooting guide
 ├── preview.html                           # Standalone local preview renderer
 ├── scripts/
 │   └── generate_contributions.py          # Data pipeline generating live contribution heatmap
 ├── assets/
-│   ├── banner.svg                         # High-resolution vector hero banner
-│   ├── values.svg                         # Full-width core value cards (Learn, Build, Collaborate, Create)
-│   ├── github-activity.svg                # Full-width live contribution heatmap with wave accent
-│   ├── skills.svg                         # Categorized technical skills icon matrix
-│   ├── learning-goals.svg                 # Engineering goals card
-│   ├── quote-footer.svg                   # Signature footer banner with wave accent
+│   ├── banner.png                         # High-resolution vector hero banner
+│   ├── values.png                         # Full-width core value cards (Learn, Build, Collaborate, Create)
+│   ├── github-activity.png                # Full-width contribution heatmap with wave accent
+│   ├── skills.png                         # Categorized technical skills icon matrix
+│   ├── stats.png                          # GitHub Stats card (Contributions, Repositories, Stars)
+│   ├── languages.png                      # Most Used Languages horizontal bar chart card
+│   ├── learning-goals.png                 # Learning Goals card
+│   ├── quote-footer.png                   # Signature footer banner with wave accent
 │   └── projects/
-│       ├── dinedeck.svg                   # Custom vector art: DineDeck In-Dining OS
-│       ├── healthcare-rag.svg             # Custom vector art: DataCure Hospital Platform
-│       ├── drai-vision.svg                # Custom vector art: DRAI AI Edge Vision Pipeline
-│       └── fraud-detection.svg            # Custom vector art: ArthSavora Financial Engine
+│       ├── card-healthcare.png            # 3D Robot Card: Healthcare Document Intelligence & RAG
+│       ├── card-resume.png                # 3D Robot Card: Intelligent Resume Screening & Job Matching
+│       ├── card-student.png               # 3D Robot Card: Smart Student Performance Analytics
+│       └── card-fraud.png                 # 3D Robot Card: Financial Intelligence & Fraud Detection
 └── .github/
     └── workflows/
         ├── update-contributions.yml       # Daily contribution heatmap update workflow
@@ -34,111 +36,33 @@ GitHub displays a profile README when a public repository with the exact same na
 
 ---
 
-## 2. Step-by-Step Initial Setup
-
-### Step 2.1: Create the Special Profile Repository on GitHub
-1. Log into your GitHub account: [https://github.com/Ashutosh2275](https://github.com/Ashutosh2275).
-2. Go to **New repository** ([https://github.com/new](https://github.com/new)).
-3. In **Repository name**, enter exactly: `Ashutosh2275`.
-4. Set visibility to **Public** (required for GitHub profile READMEs).
-5. **Do not** initialize with a README, .gitignore, or license (we already have clean files prepared).
-6. Click **Create repository**.
-
-### Step 2.2: Push Local Files to GitHub
-Open your terminal in the workspace directory and run:
-
-```bash
-# Verify git status
-git status
-
-# Stage all files
-git add .
-
-# Create initial commit
-git commit -m "feat: implement professional minimal light GitHub profile redesign"
-
-# Connect remote (replace with SSH if preferred)
-git remote add origin https://github.com/Ashutosh2275/Ashutosh2275.git
-
-# Set branch to main and push
-git branch -M main
-git push -u origin main
-```
-
----
-
-## 3. Configuring Automated Daily Workflows
-
-The repository includes automated GitHub Actions workflows to keep your profile visual assets synchronized with your real GitHub contributions:
-- `.github/workflows/update-contributions.yml`: Generates the custom full-width live heatmap card (`assets/github-activity.svg`).
-- `.github/workflows/contribution-snake.yml`: Generates the contribution snake grid.
-
-### Step 3.1: Enable Workflow Permissions
-Grant write permissions so GitHub Actions can commit the freshly generated contribution assets back to `assets/`:
-
-1. In your `Ashutosh2275/Ashutosh2275` repository, navigate to **Settings** ➔ **Actions** ➔ **General**.
-2. Scroll to the bottom to **Workflow permissions**.
-3. Select **Read and write permissions**.
-4. Check **Allow GitHub Actions to create and approve pull requests** (optional, recommended).
-5. Click **Save**.
-
-### Step 3.2: Triggering Workflows Manually
-To test or refresh immediately:
-1. Go to the **Actions** tab in your repository.
-2. Select either **Update GitHub Activity Heatmap** or **Generate Contribution Snake**.
-3. Click the **Run workflow** dropdown on the right and select the `main` branch.
-4. Click **Run workflow**.
-5. Once completed (typically ~25 seconds), the workflow updates your activity card with your latest verified contribution counts.
-
----
-
-## 4. Personalizing Links & Contact Destinations
+## 2. Personalizing Links & Contact Destinations
 
 All hyperlinks are verified against Ashutosh's live portfolio and resume:
 
 | Item | Location in `README.md` | Verified Value |
 | :--- | :--- | :--- |
-| **LinkedIn** | Header & Contact sections | `https://www.linkedin.com/in/ashutoshmishra-tech/` |
-| **Portfolio** | Header & Contact sections | `https://heyashutosh.netlify.app/` |
-| **Email** | Header & Contact sections | `mailto:ashutoshmishra2275@gmail.com` |
-| **Resume** | Hero banner & Quick links | `https://drive.google.com/file/d/1RyirKSNDgrU9XfwkMZfwFgM8A7Jv8sfR/view?usp=sharing` |
-| **GitHub Profile** | Meta, badges & cards | `https://github.com/Ashutosh2275` |
-| **DineDeck Repo** | Featured Projects (Card 1) | `https://github.com/Ashutosh2275/Dinedeck` |
-| **DataCure Repo** | Featured Projects (Card 2) | `https://github.com/Ashutosh2275/Datacure` |
-| **DRAI AI Repo** | Featured Projects (Card 3) | `https://github.com/Ashutosh2275/DRAI-AI` |
-| **ArthSavora Repo** | Featured Projects (Card 4) | `https://github.com/Ashutosh2275/ARTHSAVORA` |
+| **LinkedIn** | Header & Contact | `https://www.linkedin.com/in/ashutoshmishra-tech/` |
+| **Portfolio** | Header & Contact | `https://heyashutosh.netlify.app/` |
+| **Email** | Header & Contact | `mailto:ashutoshmishra2275@gmail.com` |
+| **Resume / CV** | Header | `https://drive.google.com/file/d/1RyirKSNDgrU9XfwkMZfwFgM8A7Jv8sfR/view?usp=sharing` |
+| **GitHub** | Header & Contact | `https://github.com/Ashutosh2275` |
+| **Healthcare RAG Code** | Featured Projects | `https://github.com/Ashutosh2275/Datacure` |
+| **Resume Screener Code**| Featured Projects | `https://github.com/Ashutosh2275/Datacure` |
+| **Student Analytics Code**| Featured Projects| `https://github.com/Ashutosh2275/DRAI-AI` |
+| **Fraud Detection Code**| Featured Projects | `https://github.com/Ashutosh2275/ARTHSAVORA` |
 
 ---
 
-## 5. Troubleshooting & FAQ
+## 3. GitHub Actions Automated Updates
 
-### Q: Why does GitHub display my previous README or nothing at all?
-- Ensure the repository is strictly named `Ashutosh2275` and is set to **Public**.
-- Confirm `README.md` is in the root directory, not inside a subfolder.
+The repository includes automated GitHub Actions workflows to keep your profile visual assets synchronized with your real GitHub contributions:
+- `.github/workflows/update-contributions.yml`: Generates the custom full-width live heatmap card.
+- `.github/workflows/contribution-snake.yml`: Generates the contribution snake grid.
 
-### Q: What if external statistics cards (github-readme-stats) load slowly?
-- `github-readme-stats.vercel.app` caches requests on Vercel's edge network for 4 hours.
-- If external rate-limiting ever occurs, GitHub's image proxy (`camo.githubusercontent.com`) automatically serves the last successfully cached version.
-- You can tune parameters directly in the URL in `README.md`, such as adding `&cache_seconds=86400`.
-
-### Q: How can I update my resume button with a direct PDF download?
-Upload your PDF file as a release asset or to Google Drive, and update line 26 in `README.md`:
-```markdown
-<a href="https://your-domain.com/ashutosh-mishra-resume.pdf" target="_blank">
-  <img src="https://img.shields.io/badge/Resume-7C3AED?style=for-the-badge&logo=googledocs&logoColor=white" alt="Resume / CV" />
-</a>
-```
-
-### Q: How do relative asset paths work on GitHub?
-All images use relative paths (`assets/banner.svg`, `assets/projects/*.svg`), meaning GitHub resolves them directly from the repository tree without requiring absolute raw URLs or third-party image hosts.
-
----
-
-## 6. Pre-Flight Verification Checklist
-
-- [x] `README.md` contains zero markdown/syntax errors.
-- [x] All 8 SVGs in `assets/` validated as well-formed, standards-compliant XML.
-- [x] Workflow `.github/workflows/contribution-snake.yml` validated as valid YAML with minimal permissions (`contents: write`).
-- [x] Color scheme verified against user design direction (pure light theme, pale blue `#F0F7FF`, navy `#0F172A`).
-- [x] Layout confirmed responsive across mobile and desktop.
-- [x] No fabricated achievements or fake stats.
+### Workflow Permissions
+Grant write permissions so GitHub Actions can commit freshly generated contribution assets back to `assets/`:
+1. In your `Ashutosh2275/Ashutosh2275` repository, navigate to **Settings** ➔ **Actions** ➔ **General**.
+2. Scroll down to **Workflow permissions**.
+3. Select **Read and write permissions**.
+4. Click **Save**.

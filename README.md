@@ -7,8 +7,8 @@
 <div align="center">
 
   <!-- Hero Banner -->
-  <a href="#about-me">
-    <img src="assets/banner.svg" alt="Ashutosh Mishra - AI/ML &amp; Full-Stack Developer Banner" width="100%" />
+  <a href="https://heyashutosh.netlify.app/" target="_blank" rel="noopener noreferrer">
+    <img src="assets/banner.png" alt="Ashutosh Mishra - AI/ML &amp; Full-Stack Developer Banner" width="100%" />
   </a>
 
   <!-- Quick Action & Professional Links -->
@@ -41,31 +41,31 @@
 <div align="left">
   <h3>👤 About Me</h3>
   <p align="justify">
-    I'm a <b>Computer Science Engineering student</b> with a strong interest in <b>AI/ML</b>, <b>backend systems</b>, and <b>real-world applications</b>. I love building products that solve meaningful problems, exploring new technologies, and turning ideas into working solutions.
+    I'm a <b>Computer Science Engineering student</b> with a strong interest in <b>AI/ML</b>, <b>backend systems</b> and <b>real-world applications</b>. I love building products that solve meaningful problems, exploring new technologies and turning ideas into working solutions.
   </p>
   <br />
   <!-- Full-Width Value Pillars (Learn, Build, Collaborate, Create) -->
   <p align="center">
-    <img src="assets/values.svg" alt="Core Values: Learn New Technologies, Build Real Applications, Collaborate With Amazing People, Create Real-World Impact" width="100%" />
+    <img src="assets/values.png" alt="Core Values: Learn New Technologies, Build Real Applications, Collaborate With Amazing People, Create Real-World Impact" width="100%" />
   </p>
 </div>
 
 <br />
 
 <!-- ==========================================================================
-     SECTION: GitHub Activity (Full Width Live Contribution Heatmap)
+     SECTION: GitHub Activity (Full Width Contribution Heatmap)
 ========================================================================== -->
 
 <div align="center">
   <a href="https://github.com/Ashutosh2275">
-    <img src="assets/github-activity.svg" alt="Ashutosh Mishra - GitHub Activity" width="100%" />
+    <img src="assets/github-activity.png" alt="Ashutosh Mishra - GitHub Activity" width="100%" />
   </a>
 </div>
 
 <br />
 
 <!-- ==========================================================================
-     SECTION: Featured Projects (2x2 Uniform Gallery)
+     SECTION: Featured Projects (2x2 Uniform Gallery with 3D Robot Mascots)
 ========================================================================== -->
 
 <div align="left">
@@ -81,99 +81,55 @@
   </table>
 </div>
 
-<table width="100%" border="0" cellpadding="8" cellspacing="0">
+<table width="100%" border="0" cellpadding="6" cellspacing="0">
   <tr>
-    <!-- Project 1: DineDeck -->
+    <!-- Project 1: Healthcare Document Intelligence & RAG Assistant -->
     <td width="50%" valign="top">
-      <a href="https://github.com/Ashutosh2275/Dinedeck">
-        <img src="assets/projects/dinedeck.svg" alt="DineDeck - Next-Generation In-Dining Operating System" width="100%" />
+      <a href="https://github.com/Ashutosh2275/Datacure">
+        <img src="assets/projects/card-healthcare.png" alt="Healthcare Document Intelligence &amp; RAG Assistant" width="100%" />
       </a>
-      <h4>🍽️ DineDeck — Omnichannel In-Dining Operating System</h4>
-      <p align="justify">
-        Enterprise-grade restaurant operating system engineered for high-volume dining establishments, multi-branch food chains, and aggregators. Unifies contactless table QR ordering, real-time Kitchen Display Systems (KDS), POS terminals, and multi-tenant merchant controls into a reactive, high-throughput ecosystem.
-      </p>
-      <p>
-        <img src="https://img.shields.io/badge/Fastify-000000?style=flat-square&logo=fastify&logoColor=white" alt="Fastify" />
-        <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
-        <img src="https://img.shields.io/badge/PostgreSQL_16-336791?style=flat-square&logo=postgresql&logoColor=white" alt="PostgreSQL" />
-        <img src="https://img.shields.io/badge/Redis_7-DC382D?style=flat-square&logo=redis&logoColor=white" alt="Redis" />
-        <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker" />
-      </p>
-      <p>
-        <a href="https://github.com/Ashutosh2275/Dinedeck"><b>🐙 View Code</b></a>
-        &nbsp;•&nbsp;
-        <a href="https://github.com/Ashutosh2275/Dinedeck#system-architecture"><b>📐 Architecture Specification</b></a>
+      <p align="center">
+        <a href="https://github.com/Ashutosh2275/Datacure"><b>🐙 View Code</b></a>
+        &nbsp;&nbsp;•&nbsp;&nbsp;
+        <a href="https://heyashutosh.netlify.app/" target="_blank" rel="noopener noreferrer"><b>🚀 Live Demo</b></a>
       </p>
     </td>
 
-    <!-- Project 2: DataCure -->
+    <!-- Project 2: Intelligent Resume Screening & Job Matching System -->
     <td width="50%" valign="top">
       <a href="https://github.com/Ashutosh2275/Datacure">
-        <img src="assets/projects/healthcare-rag.svg" alt="DataCure - AI-Powered Hospital Intelligence Platform" width="100%" />
+        <img src="assets/projects/card-resume.png" alt="Intelligent Resume Screening &amp; Job Matching System" width="100%" />
       </a>
-      <h4>🏥 DataCure — AI Clinical Operations &amp; Hospital Intelligence</h4>
-      <p align="justify">
-        Production-grade modular Hospital Management Platform (HMS) coupled with predictive ML microservices. Automates patient admission lifecycles, billing, and pharmacy supply chains while deploying supervised models for 30-day readmission risk scoring, bed occupancy optimization, and patient flow forecasting.
-      </p>
-      <p>
-        <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python" />
-        <img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI" />
-        <img src="https://img.shields.io/badge/Scikit--Learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white" alt="Scikit-Learn" />
-        <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React" />
-        <img src="https://img.shields.io/badge/Nginx-009639?style=flat-square&logo=nginx&logoColor=white" alt="Nginx" />
-      </p>
-      <p>
+      <p align="center">
         <a href="https://github.com/Ashutosh2275/Datacure"><b>🐙 View Code</b></a>
-        &nbsp;•&nbsp;
-        <a href="https://github.com/Ashutosh2275/Datacure#overview"><b>📋 Enterprise Overview</b></a>
+        &nbsp;&nbsp;•&nbsp;&nbsp;
+        <a href="https://heyashutosh.netlify.app/" target="_blank" rel="noopener noreferrer"><b>🚀 Live Demo</b></a>
       </p>
     </td>
   </tr>
 
   <tr>
-    <!-- Project 3: DRAI AI -->
+    <!-- Project 3: Smart Student Performance Analytics -->
     <td width="50%" valign="top">
       <a href="https://github.com/Ashutosh2275/DRAI-AI">
-        <img src="assets/projects/drai-vision.svg" alt="DRAI AI - Autonomous Computer Vision Hazard &amp; Safety Pipeline" width="100%" />
+        <img src="assets/projects/card-student.png" alt="Smart Student Performance Analytics" width="100%" />
       </a>
-      <h4>👁️ DRAI AI — Autonomous Edge Computer Vision Pipeline</h4>
-      <p align="justify">
-        Edge-deployable industrial safety intelligence pipeline automating real-time hazard detection and PPE compliance. Leverages lightweight, fine-tuned YOLOv8n deep learning models delivering sub-35ms multi-class inference for personnel tracking, hard-hat verification, and instant fire/smoke alert dispatching.
-      </p>
-      <p>
-        <img src="https://img.shields.io/badge/YOLOv8-Ultralytics-00599C?style=flat-square" alt="YOLOv8" />
-        <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=flat-square&logo=pytorch&logoColor=white" alt="PyTorch" />
-        <img src="https://img.shields.io/badge/OpenCV-5C3EE8?style=flat-square&logo=opencv&logoColor=white" alt="OpenCV" />
-        <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python" />
-        <img src="https://img.shields.io/badge/Edge_Inference-10B981?style=flat-square" alt="Edge ML" />
-      </p>
-      <p>
+      <p align="center">
         <a href="https://github.com/Ashutosh2275/DRAI-AI"><b>🐙 View Code</b></a>
-        &nbsp;•&nbsp;
-        <a href="https://github.com/Ashutosh2275/DRAI-AI#overview"><b>⚡ Pipeline Architecture</b></a>
+        &nbsp;&nbsp;•&nbsp;&nbsp;
+        <a href="https://heyashutosh.netlify.app/" target="_blank" rel="noopener noreferrer"><b>🚀 Live Demo</b></a>
       </p>
     </td>
 
-    <!-- Project 4: ArthSavora -->
+    <!-- Project 4: Financial Intelligence & Fraud Detection -->
     <td width="50%" valign="top">
       <a href="https://github.com/Ashutosh2275/ARTHSAVORA">
-        <img src="assets/projects/fraud-detection.svg" alt="ArthSavora - Financial Intelligence &amp; Predictive Analytics Engine" width="100%" />
+        <img src="assets/projects/card-fraud.png" alt="Financial Intelligence &amp; Fraud Detection" width="100%" />
       </a>
-      <h4>🛡️ ArthSavora — Intelligent Financial Analytics &amp; Anomaly Engine</h4>
-      <p align="justify">
-        Cloud-native financial intelligence platform delivering real-time transaction surveillance, budget governance, and spending analytics. Incorporates machine learning anomaly detection to flag suspicious cash flow deviations, coupled with time-series forecasting models and reactive Firebase synchronization.
-      </p>
-      <p>
-        <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white" alt="Node.js" />
-        <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=tensorflow&logoColor=white" alt="TensorFlow" />
-        <img src="https://img.shields.io/badge/Firebase_RTDB-FFA611?style=flat-square&logo=firebase&logoColor=black" alt="Firebase" />
-        <img src="https://img.shields.io/badge/JWT_Auth-000000?style=flat-square&logo=jsonwebtokens&logoColor=white" alt="JWT" />
-        <img src="https://img.shields.io/badge/REST_API-0284C7?style=flat-square" alt="API" />
-      </p>
-      <p>
+      <p align="center">
         <a href="https://github.com/Ashutosh2275/ARTHSAVORA"><b>🐙 View Code</b></a>
-        &nbsp;•&nbsp;
-        <a href="https://heyashutosh.netlify.app/" target="_blank" rel="noopener noreferrer"><b>↗ Live Showcase</b></a>
+        &nbsp;&nbsp;•&nbsp;&nbsp;
+        <a href="https://heyashutosh.netlify.app/" target="_blank" rel="noopener noreferrer"><b>🚀 Live Demo</b></a>
       </p>
     </td>
   </tr>
@@ -190,7 +146,7 @@
 </div>
 
 <p align="center">
-  <img src="assets/skills.svg" alt="Technical Skills: Languages, AI/ML, Frontend, Backend, Databases" width="100%" />
+  <img src="assets/skills.png" alt="Technical Skills: Languages, AI/ML, Frontend, Backend, Databases" width="100%" />
 </p>
 
 <!-- Accessible Categorized Tech Matrix -->
@@ -218,7 +174,7 @@
       • Next.js<br />
       • Tailwind CSS<br />
       • HTML5 &amp; CSS3<br />
-      • Vite
+      • Redux / Vite
     </td>
     <td width="20%" valign="top">
       <b>Backend</b><br />
@@ -229,12 +185,12 @@
       • Microservices
     </td>
     <td width="20%" valign="top">
-      <b>Databases &amp; Tools</b><br />
+      <b>Databases &amp; Cloud</b><br />
       • PostgreSQL &amp; SQL<br />
       • MongoDB<br />
       • Firebase / Redis<br />
       • Docker &amp; Git/GitHub<br />
-      • Postman &amp; Linux
+      • AWS &amp; Linux
     </td>
   </tr>
 </table>
@@ -242,32 +198,28 @@
 <br />
 
 <!-- ==========================================================================
-     SECTION: GitHub Statistics & Learning Goals
+     SECTION: GitHub Statistics & Analytics (3 Cards)
 ========================================================================== -->
-
-<div align="left">
-  <h3>📊 GitHub Analytics &amp; Continuous Learning</h3>
-</div>
 
 <table width="100%" border="0" cellpadding="4" cellspacing="0">
   <tr>
-    <!-- Live GitHub Stats -->
-    <td width="48%" valign="top" align="center">
+    <!-- Live GitHub Stats Card -->
+    <td width="33%" valign="top" align="center">
       <a href="https://github.com/Ashutosh2275">
-        <img src="https://github-readme-stats.vercel.app/api?username=Ashutosh2275&show_icons=true&bg_color=FFFFFF&border_color=E2E8F0&title_color=0F172A&text_color=475569&icon_color=2563EB&border_radius=12&hide_border=false" alt="Ashutosh2275's GitHub Stats" width="100%" />
+        <img src="assets/stats.png" alt="Ashutosh2275's GitHub Stats" width="100%" />
       </a>
     </td>
 
-    <!-- Most Used Languages -->
-    <td width="26%" valign="top" align="center">
+    <!-- Most Used Languages Card -->
+    <td width="34%" valign="top" align="center">
       <a href="https://github.com/Ashutosh2275">
-        <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Ashutosh2275&layout=compact&bg_color=FFFFFF&border_color=E2E8F0&title_color=0F172A&text_color=475569&border_radius=12&hide_border=false" alt="Ashutosh2275's Top Languages" width="100%" />
+        <img src="assets/languages.png" alt="Ashutosh2275's Top Languages" width="100%" />
       </a>
     </td>
 
     <!-- Learning Goals Card -->
-    <td width="26%" valign="top" align="center">
-      <img src="assets/learning-goals.svg" alt="My Learning Goals" width="100%" />
+    <td width="33%" valign="top" align="center">
+      <img src="assets/learning-goals.png" alt="My Learning Goals" width="100%" />
     </td>
   </tr>
 </table>
@@ -304,5 +256,5 @@
   <br />
 
   <!-- Signature Quote Footer -->
-  <img src="assets/quote-footer.svg" alt="Using AI/ML to build impactful, deployable tech, not just prototypes." width="100%" />
+  <img src="assets/quote-footer.png" alt="Using AI/ML to build impactful, deployable tech, not just prototypes." width="100%" />
 </div>
