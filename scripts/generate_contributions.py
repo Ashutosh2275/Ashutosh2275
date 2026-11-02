@@ -240,148 +240,74 @@ def generate_activity_svg(cal_data, output_path):
     synced_total = calculate_synced_total(raw_total)
     weeks = cal_data.get("weeks", [])
 
-    color_map = {
-        "NONE": "#F1F5F9",
-        "FIRST_QUARTILE": "#BAE6FD",
-        "SECOND_QUARTILE": "#60A5FA",
-        "THIRD_QUARTILE": "#2563EB",
-        "FOURTH_QUARTILE": "#1D4ED8",
-    }
+    colors = {"NONE": "#16233B", "FIRST_QUARTILE": "#0E4F7A", "SECOND_QUARTILE": "#0EA5E9",
+              "THIRD_QUARTILE": "#38BDF8", "FOURTH_QUARTILE": "#A5F3FC"}
 
-    start_x = 76
-    start_y = 104
-    cell_size = 11.8
-    cell_gap = 3.6
-    pitch = cell_size + cell_gap
+    days = [d for w in weeks for d in w.get("contributionDays", [])]
+    counts = [d.get("contributionCount", 0) for d in days]
+    active = sum(1 for c in counts if c > 0)
+    best = max(counts) if counts else 0
+    longest = cur = 0
+    for c in counts:
+        cur = cur + 1 if c > 0 else 0
+        longest = max(longest, cur)
+    current = 0
+    for c in reversed(counts):
+        if c > 0:
+            current += 1
+        elif current or c == 0 and counts and c is not counts[-1]:
+            break
 
-    month_names = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-    month_labels = []
-    last_month = None
+    sx, sy, cs, gap = 64, 196, 12.4, 3.6
+    pitch = cs + gap
+    names = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+    months, last = [], None
+    for ci, w in enumerate(weeks):
+        for d in w.get("contributionDays", []):
+            dt = datetime.strptime(d["date"], "%Y-%m-%d")
+            if dt.month != last and dt.day <= 14:
+                months.append((names[dt.month-1], sx + ci*pitch)); last = dt.month
+            break
 
-    for col_idx, week in enumerate(weeks):
-        for day in week.get("contributionDays", []):
-            dt = datetime.strptime(day["date"], "%Y-%m-%d")
-            if dt.month != last_month and dt.day <= 14:
-                month_labels.append((month_names[dt.month - 1], start_x + col_idx * pitch))
-                last_month = dt.month
-                break
+    cells = []
+    for ci, w in enumerate(weeks):
+        for d in w.get("contributionDays", []):
+            lvl = d.get("contributionLevel", "NONE")
+            x, y = sx + ci*pitch, sy + d.get("weekday", 0)*pitch
+            glow = ' filter="url(#glow)"' if lvl in ("THIRD_QUARTILE", "FOURTH_QUARTILE") else ""
+            cells.append(f'<rect x="{x:.1f}" y="{y:.1f}" width="{cs}" height="{cs}" rx="3" fill="{colors.get(lvl, colors["NONE"])}"{glow}/>')
+    mx = "".join(f'<text x="{x:.1f}" y="{sy-12}" class="lbl">{n}</text>' for n, x in months)
 
-    cells_xml = []
-    for col_idx, week in enumerate(weeks):
-        for day in week.get("contributionDays", []):
-            weekday = day.get("weekday", 0)
-            x = start_x + col_idx * pitch
-            y = start_y + weekday * pitch
-            level = day.get("contributionLevel", "NONE")
-            fill_color = color_map.get(level, "#F1F5F9")
-            stroke_attr = ' stroke="#E2E8F0" stroke-width="0.8"' if level == "NONE" else ""
-            cells_xml.append(
-                f'<rect x="{x:.1f}" y="{y:.1f}" width="{cell_size}" height="{cell_size}" rx="2.5" fill="{fill_color}"{stroke_attr}/>'
-            )
+    def stat(x, val, label):
+        return (f'<g transform="translate({x},0)"><rect width="214" height="58" rx="12" fill="#101B30" stroke="#1E2D4A"/>'
+                f'<rect x="0" y="14" width="3" height="30" rx="1.5" fill="url(#acc)"/>'
+                f'<text x="22" y="29" class="val">{val}</text><text x="22" y="46" class="lbl">{label}</text></g>')
 
-    months_xml = []
-    for m_name, m_x in month_labels:
-        months_xml.append(f'<text x="{m_x:.1f}" y="{start_y - 10}" class="cal-label">{m_name}</text>')
-
-    svg_content = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 286" width="100%" height="auto" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
-  <defs>
-    <linearGradient id="actBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FFFFFF"/>
-      <stop offset="65%" stop-color="#F8FAFC"/>
-      <stop offset="100%" stop-color="#EDF5FF"/>
-    </linearGradient>
-    <linearGradient id="waveCyan" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.55"/>
-      <stop offset="50%" stop-color="#60A5FA" stop-opacity="0.65"/>
-      <stop offset="100%" stop-color="#818CF8" stop-opacity="0.35"/>
-    </linearGradient>
-    <linearGradient id="waveBlue" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#93C5FD" stop-opacity="0.4"/>
-      <stop offset="60%" stop-color="#A5B4FC" stop-opacity="0.5"/>
-      <stop offset="100%" stop-color="#C084FC" stop-opacity="0.25"/>
-    </linearGradient>
-    <filter id="actShadow" x="-2%" y="-5%" width="104%" height="115%">
-      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#0F172A" flood-opacity="0.04"/>
-    </filter>
-  </defs>
-
-  <style>
-    .card-title {{ font-size: 21px; font-weight: 800; fill: #10264A; letter-spacing: -0.3px; }}
-    .card-title-highlight {{ fill: #2878F0; }}
-    .card-subtitle {{ font-size: 13px; font-weight: 400; fill: #526783; }}
-    .metric-val {{ font-size: 18px; font-weight: 800; fill: #10264A; }}
-    .metric-label {{ font-size: 11px; font-weight: 500; fill: #526783; }}
-    .cal-label {{ font-size: 10px; font-weight: 500; fill: #526783; }}
-    .legend-text {{ font-size: 10.5px; font-weight: 500; fill: #526783; }}
-  </style>
-
-  <!-- Outer Rounded Container Card -->
-  <rect x="2" y="2" width="956" height="282" rx="16" fill="url(#actBg)" stroke="#DFE8F5" stroke-width="1.2" filter="url(#actShadow)"/>
-
-  <!-- Flowing Translucent Wave Lines on Right / Behind Grid -->
-  <g transform="translate(480, 110)">
-    <path d="M 0 110 Q 120 40, 240 85 T 460 70" fill="none" stroke="url(#waveCyan)" stroke-width="2.8" stroke-linecap="round"/>
-    <path d="M 0 125 Q 140 60, 260 100 T 460 85" fill="none" stroke="url(#waveBlue)" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="380" cy="74" r="3.5" fill="#2878F0" opacity="0.8"/>
-  </g>
-
-  <!-- Top Header Section -->
-  <g transform="translate(32, 26)">
-    <!-- GitHub Octocat Icon in Dark Circle -->
-    <rect x="2" y="2" width="38" height="38" rx="10" fill="#EFF6FF" stroke="#DBEAFE" stroke-width="1"/>
-    <circle cx="21" cy="21" r="15" fill="#10264A"/>
-    <path d="M21 13 C16.5 13 13 16.5 13 21 C13 24.6 15.3 27.6 18.6 28.7 C19 28.8 19.1 28.5 19.1 28.3 L19.1 27.2 C16.8 27.7 16.3 26.2 16.3 26.2 C15.9 25.3 15.4 25 15.4 25 C14.6 24.5 15.4 24.5 15.4 24.5 C16.3 24.6 16.7 25.4 16.7 25.4 C17.4 26.6 18.6 26.3 19 26.1 C19.1 25.6 19.3 25.2 19.5 25 C17.7 24.8 15.8 24.1 15.8 21 C15.8 20.1 16.1 19.4 16.6 18.8 C16.5 18.6 16.2 17.8 16.7 16.7 C16.7 16.7 17.4 16.5 18.9 17.5 C19.6 17.3 20.3 17.2 21 17.2 C21.7 17.2 22.4 17.3 23.1 17.5 C24.6 16.5 25.3 16.7 25.3 16.7 C25.8 17.8 25.5 18.6 25.4 18.8 C25.9 19.4 26.2 20.1 26.2 21 C26.2 24.1 24.3 24.8 22.5 25 C22.8 25.3 23 25.8 23 26.5 L23 28.3 C23 28.5 23.1 28.8 23.5 28.7 C26.7 27.6 29 24.6 29 21 C29 16.5 25.5 13 21 13 Z" fill="#FFFFFF"/>
-
-    <!-- Heading & Subtitle -->
-    <text x="52" y="18" class="card-title">GitHub <tspan class="card-title-highlight">Activity</tspan></text>
-    <text x="52" y="36" class="card-subtitle">A year of building, learning and contributing</text>
-
-    <!-- Top-Right Metric Pill -->
-    <g transform="translate(740, 0)">
-      <rect x="0" y="0" width="154" height="42" rx="10" fill="#FFFFFF" stroke="#DFE8F5" stroke-width="1"/>
-      <path d="M14 21 L20 21 L24 14 L28 27 L32 17 L36 21 L42 21" fill="none" stroke="#2878F0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="52" y="20" class="metric-val">{synced_total}</text>
-      <text x="52" y="34" class="metric-label">Contributions</text>
-    </g>
-  </g>
-
-  <!-- Month Labels -->
-  {' '.join(months_xml)}
-
-  <!-- Weekday Labels on Left -->
-  <g class="cal-label">
-    <text x="46" y="{start_y + 1 * pitch + 9}">Mon</text>
-    <text x="46" y="{start_y + 3 * pitch + 9}">Wed</text>
-    <text x="46" y="{start_y + 5 * pitch + 9}">Fri</text>
-  </g>
-
-  <!-- Contribution Heatmap Grid -->
-  <g>
-    {' '.join(cells_xml)}
-  </g>
-
-  <!-- Bottom Legend -->
-  <g transform="translate({start_x}, {start_y + 7 * pitch + 24})">
-    <text x="0" y="9.5" class="legend-text">Less activity</text>
-    <g transform="translate(68, 0)">
-      <rect x="0" y="0" width="10" height="10" rx="2" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="0.8"/>
-      <rect x="14" y="0" width="10" height="10" rx="2" fill="#BAE6FD"/>
-      <rect x="28" y="0" width="10" height="10" rx="2" fill="#60A5FA"/>
-      <rect x="42" y="0" width="10" height="10" rx="2" fill="#2563EB"/>
-      <rect x="56" y="0" width="10" height="10" rx="2" fill="#1D4ED8"/>
-    </g>
-    <text x="144" y="9.5" class="legend-text">More activity</text>
-  </g>
+    svg = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 390" width="100%" height="auto" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0A1020"/><stop offset="1" stop-color="#0F1D3A"/></linearGradient>
+<linearGradient id="acc" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#22D3EE"/><stop offset="1" stop-color="#818CF8"/></linearGradient>
+<radialGradient id="orb" cx="0.85" cy="0" r="0.7"><stop offset="0" stop-color="#6366F1" stop-opacity="0.28"/><stop offset="1" stop-color="#6366F1" stop-opacity="0"/></radialGradient>
+<filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<style>.t{{font-size:22px;font-weight:800;fill:#F1F5F9;letter-spacing:-.3px}}.s{{font-size:12.5px;fill:#7C8DAE}}.val{{font-size:20px;font-weight:800;fill:#F8FAFC}}.lbl{{font-size:10.5px;font-weight:500;fill:#7C8DAE}}</style>
+<rect x="1" y="1" width="958" height="388" rx="18" fill="url(#bg)" stroke="#1E2D4A" stroke-width="1.5"/>
+<rect x="1" y="1" width="958" height="388" rx="18" fill="url(#orb)"/>
+<rect x="32" y="30" width="4" height="34" rx="2" fill="url(#acc)"/>
+<text x="46" y="45" class="t">GitHub <tspan fill="url(#acc)">Activity</tspan></text>
+<text x="46" y="63" class="s">A year of building, learning and shipping &#183; updated daily</text>
+<g transform="translate(32,88)">{stat(0, synced_total, "Contributions")}{stat(226, active, "Active days")}{stat(452, f"{longest} days", "Longest streak")}{stat(678, best, "Best day")}</g>
+{mx}
+<g class="lbl"><text x="30" y="{sy+1*pitch+10}">Mon</text><text x="30" y="{sy+3*pitch+10}">Wed</text><text x="30" y="{sy+5*pitch+10}">Fri</text></g>
+{''.join(cells)}
+<g transform="translate({sx},{sy+7*pitch+20})"><text y="9.5" class="lbl">Less</text>
+<rect x="30" width="11" height="11" rx="3" fill="#16233B"/><rect x="45" width="11" height="11" rx="3" fill="#0E4F7A"/><rect x="60" width="11" height="11" rx="3" fill="#0EA5E9"/><rect x="75" width="11" height="11" rx="3" fill="#38BDF8"/><rect x="90" width="11" height="11" rx="3" fill="#A5F3FC"/>
+<text x="108" y="9.5" class="lbl">More</text></g>
 </svg>"""
-
-    try:
-        ET.fromstring(svg_content)
-    except Exception as e:
-        raise ValueError(f"Generated SVG XML is invalid: {e}")
-
+    ET.fromstring(svg)
     with open(output_path, "w", encoding="utf-8") as f:
-        f.write(svg_content)
-    print(f"[SUCCESS] Generated {output_path} with {synced_total} synchronized contributions!")
+        f.write(svg)
+    print(f"[SUCCESS] Generated {output_path} with {synced_total} contributions")
     return synced_total
 
 
