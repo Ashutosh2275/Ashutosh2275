@@ -274,8 +274,10 @@ def generate_activity_svg(cal_data, output_path):
         for d in w.get("contributionDays", []):
             lvl = d.get("contributionLevel", "NONE")
             x, y = sx + ci*pitch, sy + d.get("weekday", 0)*pitch
-            glow = ' filter="url(#glow)"' if lvl in ("THIRD_QUARTILE", "FOURTH_QUARTILE") else ""
-            cells.append(f'<rect x="{x:.1f}" y="{y:.1f}" width="{cs}" height="{cs}" rx="3" fill="{colors.get(lvl, colors["NONE"])}"{glow}/>')
+            hi = lvl in ("THIRD_QUARTILE", "FOURTH_QUARTILE")
+            glow = ' filter="url(#glow)"' if hi else ""
+            dl = f"{ci*0.025:.2f}s" + (f",{1.5 + (ci % 5) * 0.4:.1f}s" if hi else "")
+            cells.append(f'<rect class="c{" h" if hi else ""}" style="animation-delay:{dl}" x="{x:.1f}" y="{y:.1f}" width="{cs}" height="{cs}" rx="3" fill="{colors.get(lvl, colors["NONE"])}"{glow}/>')
     mx = "".join(f'<text x="{x:.1f}" y="{sy-12}" class="lbl">{n}</text>' for n, x in months)
 
     def stat(x, val, label):
@@ -288,9 +290,10 @@ def generate_activity_svg(cal_data, output_path):
 <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0A1020"/><stop offset="1" stop-color="#0F1D3A"/></linearGradient>
 <linearGradient id="acc" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#22D3EE"/><stop offset="1" stop-color="#818CF8"/></linearGradient>
 <radialGradient id="orb" cx="0.85" cy="0" r="0.7"><stop offset="0" stop-color="#6366F1" stop-opacity="0.28"/><stop offset="1" stop-color="#6366F1" stop-opacity="0"/></radialGradient>
+<linearGradient id="shine" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7DD3FC" stop-opacity="0"/><stop offset=".5" stop-color="#7DD3FC"/><stop offset="1" stop-color="#7DD3FC" stop-opacity="0"/></linearGradient>
 <filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
 </defs>
-<style>.t{{font-size:22px;font-weight:800;fill:#F1F5F9;letter-spacing:-.3px}}.s{{font-size:12.5px;fill:#7C8DAE}}.val{{font-size:20px;font-weight:800;fill:#F8FAFC}}.lbl{{font-size:10.5px;font-weight:500;fill:#7C8DAE}}</style>
+<style>.t{{font-size:22px;font-weight:800;fill:#F1F5F9;letter-spacing:-.3px}}.s{{font-size:12.5px;fill:#7C8DAE}}.val{{font-size:20px;font-weight:800;fill:#F8FAFC}}.lbl{{font-size:10.5px;font-weight:500;fill:#7C8DAE}}.c{{opacity:0;animation:pop .5s ease forwards}}.h{{animation:pop .5s ease forwards,pl 2.8s ease-in-out infinite}}@keyframes pop{{to{{opacity:1}}}}@keyframes pl{{50%{{fill-opacity:.5}}}}</style>
 <rect x="1" y="1" width="958" height="388" rx="18" fill="url(#bg)" stroke="#1E2D4A" stroke-width="1.5"/>
 <rect x="1" y="1" width="958" height="388" rx="18" fill="url(#orb)"/>
 <rect x="32" y="30" width="4" height="34" rx="2" fill="url(#acc)"/>
@@ -298,6 +301,7 @@ def generate_activity_svg(cal_data, output_path):
 <text x="46" y="63" class="s">A year of building, learning and shipping &#183; updated daily</text>
 <g transform="translate(32,88)">{stat(0, synced_total, "Contributions")}{stat(226, active, "Active days")}{stat(452, f"{longest} days", "Longest streak")}{stat(678, best, "Best day")}</g>
 {mx}
+<rect y="{sy-4}" width="90" height="{7*pitch+4}" fill="url(#shine)" opacity=".16"><animate attributeName="x" values="40;860;40" dur="9s" repeatCount="indefinite"/></rect>
 <g class="lbl"><text x="30" y="{sy+1*pitch+10}">Mon</text><text x="30" y="{sy+3*pitch+10}">Wed</text><text x="30" y="{sy+5*pitch+10}">Fri</text></g>
 {''.join(cells)}
 <g transform="translate({sx},{sy+7*pitch+20})"><text y="9.5" class="lbl">Less</text>
