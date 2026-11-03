@@ -11,6 +11,7 @@ import os
 import sys
 import json
 import re
+import time
 import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
@@ -64,7 +65,7 @@ def fetch_via_graphql(username, token):
             "Content-Type": "application/json",
         },
     )
-    with urllib.request.urlopen(req, timeout=15) as resp:
+    with urllib.request.urlopen(req, timeout=30) as resp:
         data = json.loads(resp.read().decode("utf-8"))
         if "errors" in data:
             raise RuntimeError(f"GraphQL returned errors: {data['errors']}")
@@ -76,7 +77,7 @@ def fetch_via_html_scraping(username):
     """Fallback fetcher scraping the public contributions calendar."""
     url = f"https://github.com/users/{username}/contributions"
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-    with urllib.request.urlopen(req, timeout=15) as resp:
+    with urllib.request.urlopen(req, timeout=30) as resp:
         html = resp.read().decode("utf-8")
 
     from bs4 import BeautifulSoup
@@ -166,8 +167,40 @@ def get_contribution_data(username):
         except Exception as e:
             print(f"[WARN] GraphQL API failed: {e}. Falling back to public contributions scraping...")
 
-    print("[INFO] Fetching via public contributions scraping...")
-    return fetch_via_html_scraping(username)
+    for attempt in range(1, 4):
+        try:
+            print(f"[INFO] Fetching via public contributions scraping (attempt {attempt}/3)...")
+            return fetch_via_html_scraping(username)
+        except Exception as e:
+            print(f"[WARN] Scraping attempt {attempt} failed: {e}")
+            if attempt < 3:
+                time.sleep(2)
+
+    # Fallback to cached dataset if network fails
+    if os.path.exists(OUTPUT_JSON_DATASET):
+        print("[INFO] Falling back to cached contributions dataset...")
+        with open(OUTPUT_JSON_DATASET, "r", encoding="utf-8") as f:
+            cached = json.load(f)
+        days = cached.get("days", [])
+        weeks = []
+        cur_week = []
+        for d in days:
+            if d.get("weekday") == 0 and cur_week:
+                weeks.append({"contributionDays": cur_week})
+                cur_week = []
+            cur_week.append({
+                "date": d.get("date"),
+                "contributionCount": d.get("count", 0),
+                "contributionLevel": ["NONE", "FIRST_QUARTILE", "SECOND_QUARTILE", "THIRD_QUARTILE", "FOURTH_QUARTILE"][min(d.get("intensity", 0), 4)],
+                "weekday": d.get("weekday", 0)
+            })
+        if cur_week:
+            weeks.append({"contributionDays": cur_week})
+        return {
+            "totalContributions": cached.get("period", {}).get("total_contributions", BASELINE_CONTRIBUTIONS),
+            "weeks": weeks
+        }
+    raise RuntimeError("Could not retrieve contribution data via API, scraping, or cache.")
 
 
 def calculate_synced_total(raw_total):
@@ -239,10 +272,8 @@ def generate_activity_svg(cal_data, output_path):
     raw_total = cal_data.get("totalContributions", 0)
     synced_total = calculate_synced_total(raw_total)
     weeks = cal_data.get("weeks", [])
-
-    colors = {"NONE": "#16233B", "FIRST_QUARTILE": "#0E4F7A", "SECOND_QUARTILE": "#0EA5E9",
-              "THIRD_QUARTILE": "#38BDF8", "FOURTH_QUARTILE": "#A5F3FC"}
-
+    colors = {"NONE": "#E8EDFB", "FIRST_QUARTILE": "#BFDBFE", "SECOND_QUARTILE": "#60A5FA",
+              "THIRD_QUARTILE": "#6366F1", "FOURTH_QUARTILE": "#7C3AED"}
     days = [d for w in weeks for d in w.get("contributionDays", [])]
     counts = [d.get("contributionCount", 0) for d in days]
     active = sum(1 for c in counts if c > 0)
@@ -251,14 +282,8 @@ def generate_activity_svg(cal_data, output_path):
     for c in counts:
         cur = cur + 1 if c > 0 else 0
         longest = max(longest, cur)
-    current = 0
-    for c in reversed(counts):
-        if c > 0:
-            current += 1
-        elif current or c == 0 and counts and c is not counts[-1]:
-            break
 
-    sx, sy, cs, gap = 64, 196, 12.4, 3.6
+    sx, sy, cs, gap = 64, 128, 12.4, 3.6
     pitch = cs + gap
     names = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
     months, last = [], None
@@ -268,45 +293,36 @@ def generate_activity_svg(cal_data, output_path):
             if dt.month != last and dt.day <= 14:
                 months.append((names[dt.month-1], sx + ci*pitch)); last = dt.month
             break
-
     cells = []
     for ci, w in enumerate(weeks):
         for d in w.get("contributionDays", []):
             lvl = d.get("contributionLevel", "NONE")
             x, y = sx + ci*pitch, sy + d.get("weekday", 0)*pitch
             hi = lvl in ("THIRD_QUARTILE", "FOURTH_QUARTILE")
-            glow = ' filter="url(#glow)"' if hi else ""
             dl = f"{ci*0.025:.2f}s" + (f",{1.5 + (ci % 5) * 0.4:.1f}s" if hi else "")
-            cells.append(f'<rect class="c{" h" if hi else ""}" style="animation-delay:{dl}" x="{x:.1f}" y="{y:.1f}" width="{cs}" height="{cs}" rx="3" fill="{colors.get(lvl, colors["NONE"])}"{glow}/>')
+            cells.append(f'<rect class="c{" h" if hi else ""}" style="animation-delay:{dl}" x="{x:.1f}" y="{y:.1f}" width="{cs}" height="{cs}" rx="3" fill="{colors.get(lvl, colors["NONE"])}"/>')
     mx = "".join(f'<text x="{x:.1f}" y="{sy-12}" class="lbl">{n}</text>' for n, x in months)
 
     def stat(x, val, label):
-        return (f'<g transform="translate({x},0)"><rect width="214" height="58" rx="12" fill="#101B30" stroke="#1E2D4A"/>'
-                f'<rect x="0" y="14" width="3" height="30" rx="1.5" fill="url(#acc)"/>'
-                f'<text x="22" y="29" class="val">{val}</text><text x="22" y="46" class="lbl">{label}</text></g>')
+        return (f'<g transform="translate({x},0)"><rect width="214" height="62" rx="14" fill="#FFFFFF" stroke="#E2E8F7"/>'
+                f'<rect x="0" y="16" width="3" height="30" rx="1.5" fill="url(#acc)"/>'
+                f'<text x="24" y="31" class="val">{val}</text><text x="24" y="50" class="lbl">{label}</text></g>')
 
-    svg = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 390" width="100%" height="auto" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+    leg = "".join(f'<rect x="{30+i*15}" width="11" height="11" rx="3" fill="{c}"/>' for i, c in enumerate(colors.values()))
+    svg = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 292" width="960" height="292" style="font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;">
 <defs>
-<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0A1020"/><stop offset="1" stop-color="#0F1D3A"/></linearGradient>
-<linearGradient id="acc" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#22D3EE"/><stop offset="1" stop-color="#818CF8"/></linearGradient>
-<radialGradient id="orb" cx="0.85" cy="0" r="0.7"><stop offset="0" stop-color="#6366F1" stop-opacity="0.28"/><stop offset="1" stop-color="#6366F1" stop-opacity="0"/></radialGradient>
-<linearGradient id="shine" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7DD3FC" stop-opacity="0"/><stop offset=".5" stop-color="#7DD3FC"/><stop offset="1" stop-color="#7DD3FC" stop-opacity="0"/></linearGradient>
-<filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#F1F4FF"/></linearGradient>
+<linearGradient id="acc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3B82F6"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient>
+<linearGradient id="shine" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6366F1" stop-opacity="0"/><stop offset=".5" stop-color="#6366F1"/><stop offset="1" stop-color="#6366F1" stop-opacity="0"/></linearGradient>
 </defs>
-<style>.t{{font-size:22px;font-weight:800;fill:#F1F5F9;letter-spacing:-.3px}}.s{{font-size:12.5px;fill:#7C8DAE}}.val{{font-size:20px;font-weight:800;fill:#F8FAFC}}.lbl{{font-size:10.5px;font-weight:500;fill:#7C8DAE}}.c{{opacity:0;animation:pop .5s ease forwards}}.h{{animation:pop .5s ease forwards,pl 2.8s ease-in-out infinite}}@keyframes pop{{to{{opacity:1}}}}@keyframes pl{{50%{{fill-opacity:.5}}}}</style>
-<rect x="1" y="1" width="958" height="388" rx="18" fill="url(#bg)" stroke="#1E2D4A" stroke-width="1.5"/>
-<rect x="1" y="1" width="958" height="388" rx="18" fill="url(#orb)"/>
-<rect x="32" y="30" width="4" height="34" rx="2" fill="url(#acc)"/>
-<text x="46" y="45" class="t">GitHub <tspan fill="url(#acc)">Activity</tspan></text>
-<text x="46" y="63" class="s">A year of building, learning and shipping &#183; updated daily</text>
-<g transform="translate(32,88)">{stat(0, synced_total, "Contributions")}{stat(226, active, "Active days")}{stat(452, f"{longest} days", "Longest streak")}{stat(678, best, "Best day")}</g>
+<style>.val{{font-size:22px;font-weight:800;fill:#0F172A}}.lbl{{font-size:10.5px;font-weight:600;fill:#64748B}}.c{{opacity:0;animation:pop .5s ease forwards}}.h{{animation:pop .5s ease forwards,pl 2.8s ease-in-out infinite}}@keyframes pop{{to{{opacity:1}}}}@keyframes pl{{50%{{fill-opacity:.55}}}}</style>
+<rect x=".5" y=".5" width="959" height="291" rx="20" fill="url(#bg)" stroke="#E2E8F7"/>
+<g transform="translate(32,26)">{stat(0, synced_total, "Contributions")}{stat(226, active, "Active days")}{stat(452, f"{longest} days", "Longest streak")}{stat(678, best, "Best day")}</g>
 {mx}
-<rect y="{sy-4}" width="90" height="{7*pitch+4}" fill="url(#shine)" opacity=".16"><animate attributeName="x" values="40;860;40" dur="9s" repeatCount="indefinite"/></rect>
 <g class="lbl"><text x="30" y="{sy+1*pitch+10}">Mon</text><text x="30" y="{sy+3*pitch+10}">Wed</text><text x="30" y="{sy+5*pitch+10}">Fri</text></g>
 {''.join(cells)}
-<g transform="translate({sx},{sy+7*pitch+20})"><text y="9.5" class="lbl">Less</text>
-<rect x="30" width="11" height="11" rx="3" fill="#16233B"/><rect x="45" width="11" height="11" rx="3" fill="#0E4F7A"/><rect x="60" width="11" height="11" rx="3" fill="#0EA5E9"/><rect x="75" width="11" height="11" rx="3" fill="#38BDF8"/><rect x="90" width="11" height="11" rx="3" fill="#A5F3FC"/>
-<text x="108" y="9.5" class="lbl">More</text></g>
+<rect y="{sy-4}" width="90" height="{7*pitch+4}" fill="url(#shine)" opacity=".10"><animate attributeName="x" values="-90;960;-90" dur="11s" repeatCount="indefinite"/></rect>
+<g transform="translate({sx},{sy+7*pitch+14})"><text y="9.5" class="lbl">Less</text>{leg}<text x="108" y="9.5" class="lbl">More</text></g>
 </svg>"""
     ET.fromstring(svg)
     with open(output_path, "w", encoding="utf-8") as f:

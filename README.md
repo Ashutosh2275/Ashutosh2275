@@ -25,11 +25,6 @@ I value clean architecture, performance, security and cost-efficient engineering
 
 <img src="assets/github-activity.svg" alt="GitHub contribution activity" width="100%">
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/github-contribution-grid-snake-dark.svg">
-  <img alt="Contribution snake animation" src="assets/github-contribution-grid-snake.svg" width="100%">
-</picture>
-
 <br>
 
 <img src="assets/header-projects.svg" alt="Featured Projects" width="100%">
