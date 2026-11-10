@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ashutosh Mishra - Contribution Orbit</title>
+<style>
+:root{--bg:#F3F6FF;--card:#fff;--ink:#0F172A;--mut:#64748B;--line:#E2E8F7;--l0:#E8EDFB;--l1:#BFDBFE;--l2:#60A5FA;--l3:#6366F1;--l4:#7C3AED;--acc:linear-gradient(90deg,#3B82F6,#8B5CF6)}
+[data-t=dark]{--bg:#070B1A;--card:#0E1530;--ink:#F1F5F9;--mut:#8EA0C4;--line:#1E2A4D;--l0:#17224A;--l1:#1E3A8A;--l2:#3B82F6;--l3:#6366F1;--l4:#A78BFA}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;
+background-image:radial-gradient(600px 300px at 15% -5%,rgba(99,102,241,.16),transparent),radial-gradient(500px 300px at 90% 10%,rgba(59,130,246,.14),transparent)}
+.w{max-width:1040px;margin:0 auto;padding:32px 20px 60px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.tag{font:600 11px 'SF Mono',Consolas,monospace;letter-spacing:3px;color:var(--l3)}h1{margin:6px 0 0;font-size:30px;letter-spacing:-.6px}
+h1 span{background:var(--acc);-webkit-background-clip:text;background-clip:text;color:transparent}
+.live{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--mut)}.live i{width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 0 #22c55e88;animation:p 2s infinite}
+@keyframes p{70%{box-shadow:0 0 0 8px #22c55e00}}
+button{font-weight:600;font-size:13px;font-family:inherit;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 14px;border-radius:999px;cursor:pointer;transition:.2s}
+button:hover{transform:translateY(-1px);border-color:var(--l3)}button.on{background:var(--acc);color:#fff;border-color:transparent}
+.bar{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:22px 0 14px}.grp{display:flex;gap:8px;flex-wrap:wrap}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.st{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;position:relative;overflow:hidden;transition:.25s}
+.st:hover{transform:translateY(-3px);box-shadow:0 14px 30px -14px rgba(99,102,241,.45)}.st:before{content:"";position:absolute;left:0;top:18px;bottom:18px;width:3px;border-radius:2px;background:var(--acc)}
+.st b{font-size:28px;display:block;letter-spacing:-.5px}.st small{color:var(--mut);font-weight:600;font-size:12px}
+.panel{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;overflow-x:auto}
+#grid{display:grid;grid-template-rows:repeat(7,14px);grid-auto-flow:column;grid-auto-columns:14px;gap:4px;width:max-content;margin:auto}
+#grid i{border-radius:4px;cursor:pointer;transition:transform .15s,opacity .25s,box-shadow .15s}#grid i:hover{transform:scale(1.5);box-shadow:0 0 0 2px var(--l3);z-index:2;position:relative}
+.l0{background:var(--l0)}.l1{background:var(--l1)}.l2{background:var(--l2)}.l3{background:var(--l3)}.l4{background:var(--l4)}.dim{opacity:.18}
+.months{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;justify-content:center}.months button{padding:5px 11px;font-size:12px}
+#orb{display:block;margin:auto;max-width:100%;height:auto}#orb path{transition:opacity .25s,filter .15s;cursor:pointer}#orb path:hover{filter:brightness(.8)}
+#rh{display:flex;align-items:flex-end;gap:5px;height:220px;width:100%}#rh i{flex:1;border-radius:5px 5px 2px 2px;background:var(--acc);min-height:3px;cursor:pointer;transition:.2s;transform-origin:bottom;animation:g .7s both}
+#rh i:hover{filter:brightness(1.15);transform:scaleY(1.04)}@keyframes g{from{transform:scaleY(0)}}
+#detail{margin-top:14px;color:var(--mut);font-size:14px;min-height:22px;text-align:center}#detail b{color:var(--ink)}
+#tip{position:fixed;pointer-events:none;background:#0F172A;color:#fff;padding:8px 12px;border-radius:10px;font-size:12px;opacity:0;transition:opacity .12s;z-index:9;white-space:nowrap}
+.leg{display:flex;gap:5px;align-items:center;justify-content:center;margin-top:14px;font-size:11px;color:var(--mut)}.leg i{width:12px;height:12px;border-radius:3px}
+</style></head><body><div class="w">
+<header><div><div class="tag">CONTRIBUTION ORBIT</div><h1>Ashutosh <span>Mishra</span></h1></div>
+<div style="display:flex;gap:10px;align-items:center"><span class="live"><i></i><span id="upd">live</span></span><button id="th">Theme</button><button onclick="location.href='https://github.com/Ashutosh2275'">GitHub</button></div></header>
+<div class="bar"><div class="grp" id="views"><button data-v="grid" class="on">Year</button><button data-v="orb">Orbit</button><button data-v="rh">Rhythm</button></div>
+<div class="grp" id="rng"><button data-r="30">30D</button><button data-r="90">90D</button><button data-r="365" class="on">1Y</button></div></div>
+<div class="stats" id="stats"></div>
+<div class="panel"><div id="stage"></div><div class="months" id="mo"></div><div class="leg">Less <i class="l0"></i><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i> More</div><div id="detail">Hover or tap any day to explore.</div></div>
+</div><div id="tip"></div>
+<script>
+const $=s=>document.querySelector(s),tip=$('#tip'),M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const fmt=d=>new Date(d+'T00:00:00').toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+let D,days,weeks,view='grid',range=365,month=null;
+fetch('assets/contributions.json?'+Date.now()).then(r=>r.json()).then(j=>{D=j;days=j.days;weeks=[];days.forEach(d=>{if(d.weekday===0||!weeks.length)weeks.push([]);weeks.at(-1).push(d)});
+$('#upd').textContent='updated '+new Date(j.generated_at).toLocaleString('en-IN',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});draw()}).catch(()=>$('#stage').textContent='Could not load assets/contributions.json');
+const live=()=>days.slice(-range),inRange=d=>days.indexOf(d)>=days.length-range&&(!month||d.date.slice(0,7)===month);
+function stats(){const a=days.filter(inRange),c=a.map(d=>d.count),t=c.reduce((x,y)=>x+y,0),ac=c.filter(x=>x).length;let best=0,run=0,lg=0;a.forEach(d=>{run=d.count?run+1:0;lg=Math.max(lg,run);best=Math.max(best,d.count)});
+let cur=0,i=a.length-1;if(i>=0&&!a[i].count)i--;while(i>=0&&a[i].count){cur++;i--}
+const S=[[t,'Contributions'],[ac,'Active days'],[cur,'Current streak'],[lg,'Longest streak'],[best,'Best day'],[ac?(t/ac).toFixed(1):0,'Avg / active day']];
+$('#stats').innerHTML=S.map(s=>`<div class="st"><b data-n="${s[0]}">0</b><small>${s[1]}</small></div>`).join('');
+document.querySelectorAll('[data-n]').forEach(e=>{const n=+e.dataset.n,t0=performance.now();(function f(t){const k=Math.min(1,(t-t0)/700);e.textContent=Number.isInteger(n)?Math.round(n*k):(n*k).toFixed(1);if(k<1)requestAnimationFrame(f)})(t0)})}
+function bind(el,d){el.onmousemove=e=>{tip.style.opacity=1;tip.style.left=e.clientX+14+'px';tip.style.top=e.clientY+14+'px';tip.innerHTML=`<b>${d.count}</b> contribution${d.count==1?'':'s'} &middot; ${fmt(d.date)}`};
+el.onmouseleave=()=>tip.style.opacity=0;el.onclick=()=>{const r=[...days].sort((a,b)=>b.count-a.count).findIndex(x=>x.date==d.date);$('#detail').innerHTML=`<b>${fmt(d.date)}</b> &mdash; ${d.count} contribution${d.count==1?'':'s'}${d.count?` &middot; top ${Math.max(1,Math.round(100*(r+1)/days.length))}% busiest day of the year`:''}`}}
+function draw(){stats();const st=$('#stage');
+$('#mo').innerHTML=[...new Set(days.map(d=>d.date.slice(0,7)))].map(m=>`<button data-m="${m}" class="${m==month?'on':''}">${M[+m.slice(5)-1]}</button>`).join('');
+document.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{month=month==b.dataset.m?null:b.dataset.m;draw()});
+if(view=='grid'){st.innerHTML='<div id="grid"></div>';const g=$('#grid');days.forEach((d,i)=>{const e=document.createElement('i');e.className='l'+d.intensity+(inRange(d)?'':' dim');if(i==0)e.style.gridRowStart=d.weekday+1;bind(e,d);g.appendChild(e)})}
+else if(view=='orb'){const cx=260,cy=260,r0=70,p=22,n=weeks.length,a=2*Math.PI/n,P=(r,t)=>(cx+r*Math.cos(t)).toFixed(1)+','+(cy+r*Math.sin(t)).toFixed(1);let h='';
+weeks.forEach((w,wi)=>w.forEach(d=>{const t0=-Math.PI/2+wi*a+.012,t1=t0+a-.024,R0=r0+d.weekday*p,R1=R0+18;h+=`<path data-d="${d.date}" class="l${d.intensity}${inRange(d)?'':' dim'}" d="M${P(R1,t0)}A${R1},${R1} 0 0 1 ${P(R1,t1)}L${P(R0,t1)}A${R0},${R0} 0 0 0 ${P(R0,t0)}Z"/>`}));
+st.innerHTML=`<svg id="orb" viewBox="0 0 520 520" width="560">${h}<text x="260" y="262" text-anchor="middle" font-size="34" font-weight="800" fill="currentColor">${D.stats.total}</text><text x="260" y="284" text-anchor="middle" font-size="12" fill="#64748B">contributions</text></svg>`;
+const m={};days.forEach(d=>m[d.date]=d);document.querySelectorAll('#orb path').forEach(e=>bind(e,m[e.dataset.d]))}
+else{const mx=Math.max(...D.stats.weekly,1);st.innerHTML='<div id="rh"></div>';D.stats.weekly.forEach((v,i)=>{const e=document.createElement('i');e.style.height=Math.max(2,v/mx*100)+'%';e.style.animationDelay=i*20+'ms';const w=weeks[i];e.onmousemove=ev=>{tip.style.opacity=1;tip.style.left=ev.clientX+14+'px';tip.style.top=ev.clientY+14+'px';tip.innerHTML=`<b>${v}</b> contributions &middot; week of ${fmt(w[0].date)}`};e.onmouseleave=()=>tip.style.opacity=0;$('#rh').appendChild(e)})}}
+$('#views').onclick=e=>{if(!e.target.dataset.v)return;view=e.target.dataset.v;document.querySelectorAll('#views button').forEach(b=>b.classList.toggle('on',b==e.target));draw()};
+$('#rng').onclick=e=>{if(!e.target.dataset.r)return;range=+e.target.dataset.r;document.querySelectorAll('#rng button').forEach(b=>b.classList.toggle('on',b==e.target));draw()};
+$('#th').onclick=()=>{const r=document.documentElement;r.dataset.t=r.dataset.t=='dark'?'':'dark'};
+</script></body></html>

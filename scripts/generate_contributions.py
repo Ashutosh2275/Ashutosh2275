@@ -11,7 +11,6 @@ import os
 import sys
 import json
 import re
-import time
 import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
@@ -65,7 +64,7 @@ def fetch_via_graphql(username, token):
             "Content-Type": "application/json",
         },
     )
-    with urllib.request.urlopen(req, timeout=30) as resp:
+    with urllib.request.urlopen(req, timeout=15) as resp:
         data = json.loads(resp.read().decode("utf-8"))
         if "errors" in data:
             raise RuntimeError(f"GraphQL returned errors: {data['errors']}")
@@ -77,7 +76,7 @@ def fetch_via_html_scraping(username):
     """Fallback fetcher scraping the public contributions calendar."""
     url = f"https://github.com/users/{username}/contributions"
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-    with urllib.request.urlopen(req, timeout=30) as resp:
+    with urllib.request.urlopen(req, timeout=15) as resp:
         html = resp.read().decode("utf-8")
 
     from bs4 import BeautifulSoup
@@ -160,204 +159,140 @@ def get_contribution_data(username):
         try:
             print("[INFO] Attempting fetch via GitHub GraphQL API...")
             data = fetch_via_graphql(username, token)
-            if data and data.get("totalContributions", 0) >= BASELINE_CONTRIBUTIONS:
-                return data
-            print(f"[INFO] GraphQL reported {data.get('totalContributions')} contributions. Applying synced baseline...")
             return data
         except Exception as e:
             print(f"[WARN] GraphQL API failed: {e}. Falling back to public contributions scraping...")
 
-    for attempt in range(1, 4):
-        try:
-            print(f"[INFO] Fetching via public contributions scraping (attempt {attempt}/3)...")
-            return fetch_via_html_scraping(username)
-        except Exception as e:
-            print(f"[WARN] Scraping attempt {attempt} failed: {e}")
-            if attempt < 3:
-                time.sleep(2)
-
-    # Fallback to cached dataset if network fails
-    if os.path.exists(OUTPUT_JSON_DATASET):
-        print("[INFO] Falling back to cached contributions dataset...")
-        with open(OUTPUT_JSON_DATASET, "r", encoding="utf-8") as f:
-            cached = json.load(f)
-        days = cached.get("days", [])
-        weeks = []
-        cur_week = []
-        for d in days:
-            if d.get("weekday") == 0 and cur_week:
-                weeks.append({"contributionDays": cur_week})
-                cur_week = []
-            cur_week.append({
-                "date": d.get("date"),
-                "contributionCount": d.get("count", 0),
-                "contributionLevel": ["NONE", "FIRST_QUARTILE", "SECOND_QUARTILE", "THIRD_QUARTILE", "FOURTH_QUARTILE"][min(d.get("intensity", 0), 4)],
-                "weekday": d.get("weekday", 0)
-            })
-        if cur_week:
-            weeks.append({"contributionDays": cur_week})
-        return {
-            "totalContributions": cached.get("period", {}).get("total_contributions", BASELINE_CONTRIBUTIONS),
-            "weeks": weeks
-        }
-    raise RuntimeError("Could not retrieve contribution data via API, scraping, or cache.")
+    print("[INFO] Fetching via public contributions scraping...")
+    return fetch_via_html_scraping(username)
 
 
-def calculate_synced_total(raw_total):
-    """
-    Calculate the synchronized total contributions:
-    Synchronizes Ashutosh's baseline 168 contributions (including private projects)
-    with new contributions as they are recorded.
-    """
-    if raw_total >= BASELINE_CONTRIBUTIONS:
-        return raw_total
-    diff = max(0, raw_total - BASELINE_PUBLIC_COMMITS)
-    return BASELINE_CONTRIBUTIONS + diff
+import math
 
 
-def export_dataset_json(cal_data, synced_total, output_path):
-    """Export structured contribution dataset conforming to Part 3 requirements."""
-    weeks = cal_data.get("weeks", [])
-    flat_days = []
-    start_date = None
-    end_date = None
-
-    intensity_map = {
-        "NONE": 0,
-        "FIRST_QUARTILE": 1,
-        "SECOND_QUARTILE": 2,
-        "THIRD_QUARTILE": 3,
-        "FOURTH_QUARTILE": 4,
-    }
-
-    for week in weeks:
-        for day in week.get("contributionDays", []):
-            d_str = day.get("date")
-            if not start_date:
-                start_date = d_str
-            end_date = d_str
-            level = day.get("contributionLevel", "NONE")
-            flat_days.append({
-                "date": d_str,
-                "count": day.get("contributionCount", 0),
-                "intensity": intensity_map.get(level, 0),
-                "weekday": day.get("weekday", 0),
-            })
-
-    dataset = {
-        "username": USERNAME,
-        "generated_at": datetime.now(timezone.utc).isoformat(),
-        "period": {
-            "start_date": start_date,
-            "end_date": end_date,
-            "total_contributions": synced_total,
-            "displayed_unit": "year"
-        },
-        "intensity_scale": {
-            "0": "0 contributions",
-            "1": "1-3 contributions",
-            "2": "4-6 contributions",
-            "3": "7-9 contributions",
-            "4": "10+ contributions"
-        },
-        "days": flat_days
-    }
-
-    with open(output_path, "w", encoding="utf-8") as f:
-        json.dump(dataset, f, indent=2)
-    print(f"[SUCCESS] Exported structured dataset to {output_path} ({len(flat_days)} days recorded).")
-
-
-def generate_activity_svg(cal_data, output_path):
-    raw_total = cal_data.get("totalContributions", 0)
-    synced_total = calculate_synced_total(raw_total)
-    weeks = cal_data.get("weeks", [])
-    colors = {"NONE": "#E8EDFB", "FIRST_QUARTILE": "#BFDBFE", "SECOND_QUARTILE": "#60A5FA",
-              "THIRD_QUARTILE": "#6366F1", "FOURTH_QUARTILE": "#7C3AED"}
+def compute_stats(cal):
+    weeks = cal.get("weeks", [])
     days = [d for w in weeks for d in w.get("contributionDays", [])]
     counts = [d.get("contributionCount", 0) for d in days]
-    active = sum(1 for c in counts if c > 0)
+    total, active = sum(counts), sum(1 for c in counts if c > 0)
     best = max(counts) if counts else 0
-    longest = cur = 0
+    best_date = days[counts.index(best)]["date"] if counts and best else None
+    longest = run = 0
     for c in counts:
-        cur = cur + 1 if c > 0 else 0
-        longest = max(longest, cur)
+        run = run + 1 if c > 0 else 0
+        longest = max(longest, run)
+    i, current = len(counts) - 1, 0
+    if i >= 0 and counts[i] == 0:
+        i -= 1
+    while i >= 0 and counts[i] > 0:
+        current += 1
+        i -= 1
+    weekly = [sum(d.get("contributionCount", 0) for d in w.get("contributionDays", [])) for w in weeks]
+    return {"total": total, "active_days": active, "best_day": best, "best_date": best_date,
+            "longest_streak": longest, "current_streak": current,
+            "avg_per_active_day": round(total / active, 1) if active else 0, "weekly": weekly}
 
-    sx, sy, cs, gap = 64, 128, 12.4, 3.6
-    pitch = cs + gap
-    names = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
-    months, last = [], None
-    for ci, w in enumerate(weeks):
+
+def export_dataset_json(cal_data, stats, output_path):
+    lvl = {"NONE": 0, "FIRST_QUARTILE": 1, "SECOND_QUARTILE": 2, "THIRD_QUARTILE": 3, "FOURTH_QUARTILE": 4}
+    days = [{"date": d["date"], "count": d.get("contributionCount", 0),
+             "intensity": lvl.get(d.get("contributionLevel", "NONE"), 0), "weekday": d.get("weekday", 0)}
+            for w in cal_data.get("weeks", []) for d in w.get("contributionDays", [])]
+    data = {"username": USERNAME, "generated_at": datetime.now(timezone.utc).isoformat(),
+            "period": {"start_date": days[0]["date"] if days else None, "end_date": days[-1]["date"] if days else None,
+                       "total_contributions": stats["total"]},
+            "stats": stats, "days": days}
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=1)
+    print(f"[SUCCESS] Exported {len(days)} days to {output_path}")
+
+
+COLORS = ["#E8EDFB", "#BFDBFE", "#60A5FA", "#6366F1", "#7C3AED"]
+LEVELS = {"NONE": 0, "FIRST_QUARTILE": 1, "SECOND_QUARTILE": 2, "THIRD_QUARTILE": 3, "FOURTH_QUARTILE": 4}
+MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+
+def generate_activity_svg(cal, stats, output_path):
+    weeks = cal.get("weeks", [])
+    n = max(len(weeks), 1)
+    cx, cy, r_in, pitch, th = 250, 240, 64, 20, 17
+    step = 2 * math.pi / n
+
+    def pt(r, a):
+        return f"{cx + r * math.cos(a):.1f},{cy + r * math.sin(a):.1f}"
+
+    cells, labels, last = [], [], None
+    for wi, w in enumerate(weeks):
+        a0, a1 = -math.pi / 2 + wi * step + 0.012, -math.pi / 2 + (wi + 1) * step - 0.012
         for d in w.get("contributionDays", []):
-            dt = datetime.strptime(d["date"], "%Y-%m-%d")
+            lv = LEVELS.get(d.get("contributionLevel", "NONE"), 0)
+            r0 = r_in + d.get("weekday", 0) * pitch
+            r1 = r0 + th
+            path = f"M{pt(r1,a0)}A{r1},{r1} 0 0 1 {pt(r1,a1)}L{pt(r0,a1)}A{r0},{r0} 0 0 0 {pt(r0,a0)}Z"
+            hi = lv >= 3
+            dl = f"{wi*0.03:.2f}s" + (f",{1.6 + (wi % 6) * 0.35:.1f}s" if hi else "")
+            cells.append(f'<path class="c{" h" if hi else ""}" style="animation-delay:{dl}" d="{path}" fill="{COLORS[lv]}"/>')
+        first = w.get("contributionDays", [{}])[0].get("date")
+        if first:
+            dt = datetime.strptime(first, "%Y-%m-%d")
             if dt.month != last and dt.day <= 14:
-                months.append((names[dt.month-1], sx + ci*pitch)); last = dt.month
-            break
-    cells = []
-    for ci, w in enumerate(weeks):
-        for d in w.get("contributionDays", []):
-            lvl = d.get("contributionLevel", "NONE")
-            x, y = sx + ci*pitch, sy + d.get("weekday", 0)*pitch
-            hi = lvl in ("THIRD_QUARTILE", "FOURTH_QUARTILE")
-            dl = f"{ci*0.025:.2f}s" + (f",{1.5 + (ci % 5) * 0.4:.1f}s" if hi else "")
-            cells.append(f'<rect class="c{" h" if hi else ""}" style="animation-delay:{dl}" x="{x:.1f}" y="{y:.1f}" width="{cs}" height="{cs}" rx="3" fill="{colors.get(lvl, colors["NONE"])}"/>')
-    mx = "".join(f'<text x="{x:.1f}" y="{sy-12}" class="lbl">{n}</text>' for n, x in months)
+                last = dt.month
+                if wi == 0:
+                    continue
+                ang = -math.pi / 2 + (wi + 0.5) * step
+                R = r_in + 7 * pitch + 14
+                lx, ly = cx + R * math.cos(ang), cy + R * math.sin(ang) + 4
+                anc = "start" if math.cos(ang) > 0.25 else "end" if math.cos(ang) < -0.25 else "middle"
+                labels.append(f'<text x="{lx:.1f}" y="{ly:.1f}" text-anchor="{anc}" class="lbl">{MON[dt.month-1]}</text>')
 
-    def stat(x, val, label):
-        return (f'<g transform="translate({x},0)"><rect width="214" height="62" rx="14" fill="#FFFFFF" stroke="#E2E8F7"/>'
-                f'<rect x="0" y="16" width="3" height="30" rx="1.5" fill="url(#acc)"/>'
-                f'<text x="24" y="31" class="val">{val}</text><text x="24" y="50" class="lbl">{label}</text></g>')
+    def tile(i, val, label):
+        x, y = 520 + (i % 2) * 212, 52 + (i // 2) * 86
+        return (f'<g transform="translate({x},{y})"><rect width="196" height="70" rx="14" fill="#fff" stroke="#E2E8F7"/>'
+                f'<rect x="0" y="16" width="3" height="38" rx="1.5" fill="url(#accv)"/>'
+                f'<text x="22" y="38" class="val">{val}</text><text x="22" y="57" class="lbl">{label}</text></g>')
 
-    leg = "".join(f'<rect x="{30+i*15}" width="11" height="11" rx="3" fill="{c}"/>' for i, c in enumerate(colors.values()))
-    svg = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 292" width="960" height="292" style="font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;">
-<defs>
-<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#F1F4FF"/></linearGradient>
-<linearGradient id="acc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3B82F6"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient>
-<linearGradient id="shine" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6366F1" stop-opacity="0"/><stop offset=".5" stop-color="#6366F1"/><stop offset="1" stop-color="#6366F1" stop-opacity="0"/></linearGradient>
-</defs>
-<style>.val{{font-size:22px;font-weight:800;fill:#0F172A}}.lbl{{font-size:10.5px;font-weight:600;fill:#64748B}}.c{{opacity:0;animation:pop .5s ease forwards}}.h{{animation:pop .5s ease forwards,pl 2.8s ease-in-out infinite}}@keyframes pop{{to{{opacity:1}}}}@keyframes pl{{50%{{fill-opacity:.55}}}}</style>
-<rect x=".5" y=".5" width="959" height="291" rx="20" fill="url(#bg)" stroke="#E2E8F7"/>
-<g transform="translate(32,26)">{stat(0, synced_total, "Contributions")}{stat(226, active, "Active days")}{stat(452, f"{longest} days", "Longest streak")}{stat(678, best, "Best day")}</g>
-{mx}
-<g class="lbl"><text x="30" y="{sy+1*pitch+10}">Mon</text><text x="30" y="{sy+3*pitch+10}">Wed</text><text x="30" y="{sy+5*pitch+10}">Fri</text></g>
-{''.join(cells)}
-<rect y="{sy-4}" width="90" height="{7*pitch+4}" fill="url(#shine)" opacity=".10"><animate attributeName="x" values="-90;960;-90" dur="11s" repeatCount="indefinite"/></rect>
-<g transform="translate({sx},{sy+7*pitch+14})"><text y="9.5" class="lbl">Less</text>{leg}<text x="108" y="9.5" class="lbl">More</text></g>
+    bd = ""
+    if stats["best_date"]:
+        dt = datetime.strptime(stats["best_date"], "%Y-%m-%d")
+        bd = f" / {MON[dt.month-1]} {dt.day}"
+    tiles = "".join(tile(i, v, l) for i, (v, l) in enumerate([
+        (stats["total"], "Contributions"), (stats["active_days"], "Active days"),
+        (f'{stats["current_streak"]} days', "Current streak"), (f'{stats["longest_streak"]} days', "Longest streak"),
+        (stats["best_day"], "Best day" + bd), (stats["avg_per_active_day"], "Avg per active day")]))
+    wk = stats["weekly"]
+    mx = max(wk) if wk and max(wk) else 1
+    bw = 408 / max(len(wk), 1)
+    bars = "".join(f'<rect class="b" style="animation-delay:{i*0.025:.2f}s" x="{520+i*bw:.1f}" y="{404-max(3, 66*v/mx):.1f}" width="{bw-2:.1f}" height="{max(3, 66*v/mx):.1f}" rx="2" fill="{COLORS[min(4, 1 + int(3*v/mx))] if v else COLORS[0]}"/>' for i, v in enumerate(wk))
+    leg = "".join(f'<rect x="{520+30+i*15}" y="422" width="11" height="11" rx="3" fill="{c}"/>' for i, c in enumerate(COLORS))
+    svg = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 470" width="960" height="470" style="font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#F1F4FF"/></linearGradient>
+<linearGradient id="accv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3B82F6"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient>
+<linearGradient id="sweep" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6366F1" stop-opacity="0"/><stop offset="1" stop-color="#6366F1" stop-opacity=".22"/></linearGradient></defs>
+<style>.val{{font-size:24px;font-weight:800;fill:#0F172A}}.lbl{{font-size:10.5px;font-weight:600;fill:#64748B}}.mono{{font-family:'SF Mono',Consolas,monospace;letter-spacing:3px;font-size:11px;font-weight:600;fill:#6366F1}}
+.c{{opacity:0;animation:pop .5s ease forwards}}.h{{animation:pop .5s ease forwards,pl 2.8s ease-in-out infinite}}.b{{transform-box:fill-box;transform-origin:bottom;transform:scaleY(0);animation:gr .7s cubic-bezier(.2,.8,.2,1) forwards}}
+@keyframes pop{{to{{opacity:1}}}}@keyframes pl{{50%{{fill-opacity:.55}}}}@keyframes gr{{to{{transform:scaleY(1)}}}}</style>
+<rect x=".5" y=".5" width="959" height="469" rx="22" fill="url(#bg)" stroke="#E2E8F7"/>
+<text x="520" y="34" class="mono">CONTRIBUTION ORBIT</text>
+{''.join(cells)}{''.join(labels)}
+<g><animateTransform attributeName="transform" type="rotate" from="0 {cx} {cy}" to="360 {cx} {cy}" dur="14s" repeatCount="indefinite"/>
+<path d="M{cx},{cy}L{cx},{cy-r_in-7*pitch}A{r_in+7*pitch},{r_in+7*pitch} 0 0 1 {cx+(r_in+7*pitch)*math.sin(0.5):.1f},{cy-(r_in+7*pitch)*math.cos(0.5):.1f}Z" fill="url(#sweep)"/>
+<line x1="{cx}" y1="{cy}" x2="{cx}" y2="{cy-r_in-7*pitch}" stroke="#6366F1" stroke-opacity=".5" stroke-width="1.4"/></g>
+<circle cx="{cx}" cy="{cy}" r="52" fill="#fff" stroke="#E2E8F7"/><circle cx="{cx}" cy="{cy}" r="52" fill="none" stroke="url(#accv)" stroke-width="2" stroke-dasharray="60 270"><animateTransform attributeName="transform" type="rotate" from="0 {cx} {cy}" to="-360 {cx} {cy}" dur="8s" repeatCount="indefinite"/></circle>
+<text x="{cx}" y="{cy+6}" text-anchor="middle" style="font-size:30px;font-weight:800" fill="#0F172A">{stats["total"]}</text><text x="{cx}" y="{cy+24}" text-anchor="middle" class="lbl">last 12 months</text>
+{tiles}<text x="520" y="326" class="mono">WEEKLY RHYTHM</text>{bars}<text x="520" y="432" class="lbl">Less</text>{leg}<text x="{520+30+5*15+4}" y="432" class="lbl">More</text>
 </svg>"""
     ET.fromstring(svg)
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(svg)
-    print(f"[SUCCESS] Generated {output_path} with {synced_total} contributions")
-    return synced_total
-
-
-def update_stats_svg(synced_total, output_path):
-    """Update assets/stats.svg with synchronized contributions count."""
-    if not os.path.exists(output_path):
-        return
-    with open(output_path, "r", encoding="utf-8") as f:
-        content = f.read()
-    
-    # Replace the contributions number
-    new_content = re.sub(
-        r'<text x="18" y="11" class="st-val">\d+ <tspan class="st-label">Contributions</tspan></text>',
-        f'<text x="18" y="11" class="st-val">{synced_total} <tspan class="st-label">Contributions</tspan></text>',
-        content
-    )
-    with open(output_path, "w", encoding="utf-8") as f:
-        f.write(new_content)
-    print(f"[SUCCESS] Synchronized {output_path} with {synced_total} contributions!")
+    print(f"[SUCCESS] Generated {output_path}")
 
 
 def main():
-    try:
-        data = get_contribution_data(USERNAME)
-        synced_total = generate_activity_svg(data, OUTPUT_ACTIVITY_SVG)
-        update_stats_svg(synced_total, OUTPUT_STATS_SVG)
-        export_dataset_json(data, synced_total, OUTPUT_JSON_DATASET)
-    except Exception as e:
-        print(f"[ERROR] Failed to generate contributions SVG: {e}")
-        sys.exit(0)
+    cal = get_contribution_data(USERNAME)
+    stats = compute_stats(cal)
+    generate_activity_svg(cal, stats, OUTPUT_ACTIVITY_SVG)
+    export_dataset_json(cal, stats, OUTPUT_JSON_DATASET)
+    print(f"[DONE] {stats['total']} contributions, {stats['active_days']} active days")
 
 
 if __name__ == "__main__":

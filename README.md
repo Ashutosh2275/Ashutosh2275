@@ -23,7 +23,13 @@ I value clean architecture, performance, security and cost-efficient engineering
 
 <img src="assets/header-activity.svg" alt="GitHub Activity" width="100%">
 
-<img src="assets/github-activity.svg" alt="GitHub contribution activity" width="100%">
+<a href="https://ashutosh2275.github.io/Ashutosh2275/"><img src="assets/github-activity.svg" alt="Contribution Orbit - live GitHub activity" width="100%"></a>
+
+<div align="center">
+
+<a href="https://ashutosh2275.github.io/Ashutosh2275/"><img src="https://img.shields.io/badge/OPEN_LIVE_DASHBOARD-hover_%C2%B7_filter_%C2%B7_explore-6366F1?style=for-the-badge&logo=githubpages&logoColor=white" alt="Open the interactive dashboard"></a>
+
+</div>
 
 <br>
 
@@ -40,11 +46,66 @@ I value clean architecture, performance, security and cost-efficient engineering
 </tr>
 </table>
 
+<details>
+<summary><b>Explore project details</b> &nbsp;(click to expand)</summary>
+
+<br>
+
+<details><summary><b>DineDeck</b> &middot; restaurant operations ecosystem</summary>
+
+- Restaurant discovery, digital and QR-based ordering
+- Partner and admin dashboards, POS and Kitchen Display System (KDS)
+- Real-time order and kitchen management, billing and GST workflows, settlements
+- **Stack:** Kotlin, Jetpack Compose, React, TypeScript, Fastify, Node.js, PostgreSQL, Prisma, Redis, WebSockets, Electron, Docker
+
+</details>
+
+<details><summary><b>DataCure</b> &middot; healthcare management and predictive analytics</summary>
+
+- Patients, doctors, appointments, billing and inventory management
+- Predictions for readmission risk, appointment no-shows, patient flow and medicine demand
+- **Stack:** React, Python, Flask, PostgreSQL, Scikit-learn, Firebase, Redis, Docker, Nginx, AWS EC2 and RDS
+
+</details>
+
+<details><summary><b>DRAI-AI</b> &middot; computer vision detection</summary>
+
+- Person, safety-helmet and fire detection with YOLOv8
+- Dataset preparation and annotation, training and evaluation, real-time webcam inference
+- **Stack:** Python, PyTorch, YOLOv8, Ultralytics, OpenCV, Pillow, Pandas
+
+</details>
+
+<details><summary><b>ARTHSAVORA</b> &middot; AI-powered personal finance</summary>
+
+- Expense tracking and automated categorization, budgets, goals and analytics
+- Receipt and document OCR, ML-driven financial insights, secure JWT-based APIs
+- **Stack:** Python, FastAPI, React, Vite, MongoDB, Scikit-learn, Statsmodels, Tesseract OCR, Supabase, Google Generative AI
+
+</details>
+
+</details>
+
 <br>
 
 <img src="assets/header-skills.svg" alt="Technical Skills" width="100%">
 
 <img src="assets/skills.svg" alt="Technical skills" width="100%">
+
+<details>
+<summary><b>Full skill inventory</b> &nbsp;(click to expand)</summary>
+
+| Area | Skills |
+| --- | --- |
+| **AI / ML** | Machine Learning, Deep Learning, Predictive Analytics, Feature Engineering, Time-Series Forecasting, Anomaly Detection, Computer Vision, Object Detection |
+| **GenAI / LLM** | LLM applications, RAG, Prompt Engineering, AI automation, Intelligent Document Processing, OCR extraction, Hugging Face, LangChain |
+| **Frameworks** | TensorFlow, PyTorch, Scikit-learn, XGBoost, Pandas, NumPy, OpenCV, Statsmodels |
+| **Frontend** | React, Vite, TypeScript, Tailwind CSS, Zustand, React Router, Recharts |
+| **Backend** | FastAPI, Flask, Node.js, Express, Fastify, REST APIs, JWT auth |
+| **Data and Cloud** | PostgreSQL, MySQL, MongoDB, Firebase, Supabase, Redis, Docker, Nginx, AWS EC2/RDS, Vercel, Netlify, Render, Railway |
+| **Mobile and Desktop** | Kotlin, Jetpack Compose, Material Design 3, Electron |
+
+</details>
 
 <br>
 
