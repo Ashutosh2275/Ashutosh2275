@@ -1,19 +1,30 @@
 {
  "username": "Ashutosh2275",
- "generated_at": "2026-11-10T23:08:15.847053+00:00",
+ "generated_at": "2026-11-11T04:24:02.264050+00:00",
  "period": {
   "start_date": "2025-11-09",
-  "end_date": "2026-11-10",
-  "total_contributions": 158
+  "end_date": "2026-11-11",
+  "total_contributions": 161
  },
  "stats": {
-  "total": 158,
-  "active_days": 31,
+  "lifetime": 161,
+  "this_year": 160,
+  "year": 2026,
+  "last_12_months": 160,
+  "active_days": 32,
   "best_day": 23,
   "best_date": "2026-10-19",
-  "longest_streak": 20,
-  "current_streak": 20,
-  "avg_per_active_day": 5.1,
+  "avg_per_active_day": 5.0,
+  "yearly": [
+   {
+    "year": 2025,
+    "total": 1
+   },
+   {
+    "year": 2026,
+    "total": 160
+   }
+  ],
   "weekly": [
    0,
    0,
@@ -67,8 +78,10 @@
    42,
    32,
    60,
-   10
-  ]
+   12
+  ],
+  "source": "scrape",
+  "mode": "public"
  },
  "days": [
   {
@@ -2272,6 +2285,12 @@
    "count": 6,
    "intensity": 2,
    "weekday": 2
+  },
+  {
+   "date": "2026-11-11",
+   "count": 2,
+   "intensity": 1,
+   "weekday": 3
   }
  ]
 }

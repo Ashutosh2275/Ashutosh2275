@@ -34,8 +34,10 @@ jobs:
           import json, xml.etree.ElementTree as ET
           ET.parse('assets/github-activity.svg')
           d = json.load(open('assets/contributions.json'))
+          s = d['stats']
           assert d['days'], 'no contribution days'
-          print('OK', d['stats']['total'], 'contributions')
+          assert s['lifetime'] == sum(y['total'] for y in s['yearly']), 'lifetime != sum of years'
+          print('OK lifetime', s['lifetime'], 'mode', s['mode'])
           "
       - name: Commit changes
         run: |

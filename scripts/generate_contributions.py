@@ -153,44 +153,102 @@ def fetch_via_html_scraping(username):
     }
 
 
+def _gql(query, variables, token):
+    req = urllib.request.Request(
+        "https://api.github.com/graphql",
+        data=json.dumps({"query": query, "variables": variables}).encode("utf-8"),
+        headers={"Authorization": f"bearer {token}", "User-Agent": "GitHub-Contribution-Generator",
+                 "Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        data = json.loads(resp.read().decode("utf-8"))
+    if "errors" in data:
+        raise RuntimeError(f"GraphQL errors: {data['errors']}")
+    return data["data"]
+
+
+def years_graphql(username, token):
+    """Per-calendar-year totals from the account's creation year to now (grows automatically)."""
+    now = datetime.now(timezone.utc)
+    created = _gql("query($l:String!){user(login:$l){createdAt}}", {"l": username}, token)["user"]["createdAt"]
+    parts = []
+    for y in range(int(created[:4]), now.year + 1):
+        to = now.strftime("%Y-%m-%dT%H:%M:%SZ") if y == now.year else f"{y}-12-31T23:59:59Z"
+        parts.append(f'y{y}:contributionsCollection(from:"{y}-01-01T00:00:00Z",to:"{to}")'
+                     '{contributionCalendar{totalContributions}}')
+    user = _gql("query($l:String!){user(login:$l){" + " ".join(parts) + "}}", {"l": username}, token)["user"]
+    return [{"year": int(k[1:]), "total": v["contributionCalendar"]["totalContributions"]}
+            for k, v in sorted(user.items())]
+
+
+def _http_get(url):
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        return re.sub(r"\s+", " ", resp.read().decode("utf-8"))
+
+
+def years_scrape(username):
+    """Public per-year totals from the account's creation year to now (no token; excludes hidden private activity)."""
+    now_year = datetime.now(timezone.utc).year
+    base = f"https://github.com/users/{username}/contributions"
+
+    def year_total(y):
+        m = re.search(r"([\d,]+) contributions? in (?:the last year|\d{4})", _http_get(f"{base}?from={y}-01-01&to={y}-12-31"))
+        return int(m.group(1).replace(",", "")) if m else 0
+
+    try:
+        req = urllib.request.Request(f"https://api.github.com/users/{username}", headers={"User-Agent": "Mozilla/5.0"})
+        start = int(json.loads(urllib.request.urlopen(req, timeout=20).read())["created_at"][:4])
+    except Exception:
+        start, empty = now_year, 0  # probe backwards until two empty years in a row
+        for y in range(now_year - 1, 2007, -1):
+            tot = year_total(y)
+            empty = empty + 1 if tot == 0 else 0
+            if empty >= 2:
+                break
+            if tot > 0:
+                start = y
+    return [{"year": y, "total": year_total(y)} for y in range(start, now_year + 1)]
+
+
 def get_contribution_data(username):
-    token = os.environ.get("GH_PAT") or os.environ.get("GITHUB_TOKEN")
+    """Returns (last-12-months calendar, per-year totals, source, mode).
+    mode 'authenticated' = viewer is the account owner (private contributions included)."""
+    pat, tok = os.environ.get("GH_PAT"), os.environ.get("GITHUB_TOKEN")
+    token = pat or tok
     if token:
         try:
-            print("[INFO] Attempting fetch via GitHub GraphQL API...")
-            data = fetch_via_graphql(username, token)
-            return data
+            print("[INFO] Fetching via GitHub GraphQL API...")
+            return (fetch_via_graphql(username, token), years_graphql(username, token), "graphql",
+                    "authenticated" if pat else "public")
         except Exception as e:
-            print(f"[WARN] GraphQL API failed: {e}. Falling back to public contributions scraping...")
-
-    print("[INFO] Fetching via public contributions scraping...")
-    return fetch_via_html_scraping(username)
+            print(f"[WARN] GraphQL failed: {e}. Falling back to public scraping...")
+    print("[INFO] Fetching via public scraping...")
+    return fetch_via_html_scraping(username), years_scrape(username), "scrape", "public"
 
 
 import math
 
 
-def compute_stats(cal):
-    weeks = cal.get("weeks", [])
-    days = [d for w in weeks for d in w.get("contributionDays", [])]
+def compute_stats(cal, years, source, mode):
+    now = datetime.now(timezone.utc)
+    days = [d for w in cal.get("weeks", []) for d in w.get("contributionDays", [])]
     counts = [d.get("contributionCount", 0) for d in days]
-    total, active = sum(counts), sum(1 for c in counts if c > 0)
+    last12, active = sum(counts), sum(1 for c in counts if c > 0)
     best = max(counts) if counts else 0
-    best_date = days[counts.index(best)]["date"] if counts and best else None
-    longest = run = 0
-    for c in counts:
-        run = run + 1 if c > 0 else 0
-        longest = max(longest, run)
-    i, current = len(counts) - 1, 0
-    if i >= 0 and counts[i] == 0:
-        i -= 1
-    while i >= 0 and counts[i] > 0:
-        current += 1
-        i -= 1
-    weekly = [sum(d.get("contributionCount", 0) for d in w.get("contributionDays", [])) for w in weeks]
-    return {"total": total, "active_days": active, "best_day": best, "best_date": best_date,
-            "longest_streak": longest, "current_streak": current,
-            "avg_per_active_day": round(total / active, 1) if active else 0, "weekly": weekly}
+    best_date = days[counts.index(best)]["date"] if best else None
+    weekly = [sum(d.get("contributionCount", 0) for d in w.get("contributionDays", [])) for w in cal.get("weeks", [])]
+    yearly = sorted(years, key=lambda y: y["year"])
+    while len(yearly) > 1 and yearly[0]["total"] == 0:
+        yearly.pop(0)
+    lifetime = sum(y["total"] for y in yearly)
+    this_year = next((y["total"] for y in yearly if y["year"] == now.year), 0)
+    cal_year = sum(c for d, c in zip(days, counts) if d["date"].startswith(str(now.year)))
+    if cal_year != this_year:
+        print(f"[WARN] heatmap shows {cal_year} for {now.year} but yearly total is {this_year}")
+    return {"lifetime": lifetime, "this_year": this_year, "year": now.year, "last_12_months": last12,
+            "active_days": active, "best_day": best, "best_date": best_date,
+            "avg_per_active_day": round(last12 / active, 1) if active else 0,
+            "yearly": yearly, "weekly": weekly, "source": source, "mode": mode}
 
 
 def export_dataset_json(cal_data, stats, output_path):
@@ -200,7 +258,7 @@ def export_dataset_json(cal_data, stats, output_path):
             for w in cal_data.get("weeks", []) for d in w.get("contributionDays", [])]
     data = {"username": USERNAME, "generated_at": datetime.now(timezone.utc).isoformat(),
             "period": {"start_date": days[0]["date"] if days else None, "end_date": days[-1]["date"] if days else None,
-                       "total_contributions": stats["total"]},
+                       "total_contributions": stats["lifetime"]},
             "stats": stats, "days": days}
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=1)
@@ -251,26 +309,28 @@ def generate_activity_svg(cal, stats, output_path):
                 f'<rect x="0" y="16" width="3" height="38" rx="1.5" fill="url(#accv)"/>'
                 f'<text x="22" y="38" class="val">{val}</text><text x="22" y="57" class="lbl">{label}</text></g>')
 
-    bd = ""
-    if stats["best_date"]:
-        dt = datetime.strptime(stats["best_date"], "%Y-%m-%d")
-        bd = f" / {MON[dt.month-1]} {dt.day}"
     tiles = "".join(tile(i, v, l) for i, (v, l) in enumerate([
-        (stats["total"], "Contributions"), (stats["active_days"], "Active days"),
-        (f'{stats["current_streak"]} days', "Current streak"), (f'{stats["longest_streak"]} days', "Longest streak"),
-        (stats["best_day"], "Best day" + bd), (stats["avg_per_active_day"], "Avg per active day")]))
-    wk = stats["weekly"]
-    mx = max(wk) if wk and max(wk) else 1
-    bw = 408 / max(len(wk), 1)
-    bars = "".join(f'<rect class="b" style="animation-delay:{i*0.025:.2f}s" x="{520+i*bw:.1f}" y="{404-max(3, 66*v/mx):.1f}" width="{bw-2:.1f}" height="{max(3, 66*v/mx):.1f}" rx="2" fill="{COLORS[min(4, 1 + int(3*v/mx))] if v else COLORS[0]}"/>' for i, v in enumerate(wk))
-    leg = "".join(f'<rect x="{520+30+i*15}" y="422" width="11" height="11" rx="3" fill="{c}"/>' for i, c in enumerate(COLORS))
+        (f'{stats["lifetime"]:,}', "Lifetime contributions"), (f'{stats["this_year"]:,}', f'In {stats["year"]}'),
+        (f'{stats["last_12_months"]:,}', "Last 12 months"), (stats["active_days"], "Active days (12 mo)")]))
+    yrs = stats["yearly"][-5:]
+    ymax = max([y["total"] for y in yrs] + [1])
+    bars = ""
+    for i, y in enumerate(yrs):
+        yy = 262 + i * 26
+        w = max(4, 330 * y["total"] / ymax)
+        bars += (f'<text x="520" y="{yy+12}" class="lbl">{y["year"]}</text>'
+                 f'<rect x="566" y="{yy}" width="342" height="16" rx="8" fill="#E8EDFB"/>'
+                 f'<rect class="hb" style="animation-delay:{i*0.12:.2f}s" x="566" y="{yy}" width="{w:.1f}" height="16" rx="8" fill="url(#accv)"/>'
+                 + (f'<text x="{566+w-10:.1f}" y="{yy+12}" text-anchor="end" class="lbl" style="fill:#fff">{y["total"]:,}</text>' if w > 250 else
+                  f'<text x="{566+w+8:.1f}" y="{yy+12}" class="lbl" style="fill:#0F172A">{y["total"]:,}</text>'))
+    leg = "".join(f'<rect x="{520+30+i*15}" y="432" width="11" height="11" rx="3" fill="{c}"/>' for i, c in enumerate(COLORS))
     svg = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 470" width="960" height="470" style="font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif">
 <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#F1F4FF"/></linearGradient>
 <linearGradient id="accv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3B82F6"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient>
 <linearGradient id="sweep" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6366F1" stop-opacity="0"/><stop offset="1" stop-color="#6366F1" stop-opacity=".22"/></linearGradient></defs>
 <style>.val{{font-size:24px;font-weight:800;fill:#0F172A}}.lbl{{font-size:10.5px;font-weight:600;fill:#64748B}}.mono{{font-family:'SF Mono',Consolas,monospace;letter-spacing:3px;font-size:11px;font-weight:600;fill:#6366F1}}
-.c{{opacity:0;animation:pop .5s ease forwards}}.h{{animation:pop .5s ease forwards,pl 2.8s ease-in-out infinite}}.b{{transform-box:fill-box;transform-origin:bottom;transform:scaleY(0);animation:gr .7s cubic-bezier(.2,.8,.2,1) forwards}}
-@keyframes pop{{to{{opacity:1}}}}@keyframes pl{{50%{{fill-opacity:.55}}}}@keyframes gr{{to{{transform:scaleY(1)}}}}</style>
+.c{{opacity:0;animation:pop .5s ease forwards}}.h{{animation:pop .5s ease forwards,pl 2.8s ease-in-out infinite}}.hb{{transform-box:fill-box;transform-origin:left;transform:scaleX(0);animation:gx .9s cubic-bezier(.2,.8,.2,1) forwards}}
+@keyframes pop{{to{{opacity:1}}}}@keyframes pl{{50%{{fill-opacity:.55}}}}@keyframes gx{{to{{transform:scaleX(1)}}}}</style>
 <rect x=".5" y=".5" width="959" height="469" rx="22" fill="url(#bg)" stroke="#E2E8F7"/>
 <text x="520" y="34" class="mono">CONTRIBUTION ORBIT</text>
 {''.join(cells)}{''.join(labels)}
@@ -278,8 +338,8 @@ def generate_activity_svg(cal, stats, output_path):
 <path d="M{cx},{cy}L{cx},{cy-r_in-7*pitch}A{r_in+7*pitch},{r_in+7*pitch} 0 0 1 {cx+(r_in+7*pitch)*math.sin(0.5):.1f},{cy-(r_in+7*pitch)*math.cos(0.5):.1f}Z" fill="url(#sweep)"/>
 <line x1="{cx}" y1="{cy}" x2="{cx}" y2="{cy-r_in-7*pitch}" stroke="#6366F1" stroke-opacity=".5" stroke-width="1.4"/></g>
 <circle cx="{cx}" cy="{cy}" r="52" fill="#fff" stroke="#E2E8F7"/><circle cx="{cx}" cy="{cy}" r="52" fill="none" stroke="url(#accv)" stroke-width="2" stroke-dasharray="60 270"><animateTransform attributeName="transform" type="rotate" from="0 {cx} {cy}" to="-360 {cx} {cy}" dur="8s" repeatCount="indefinite"/></circle>
-<text x="{cx}" y="{cy+6}" text-anchor="middle" style="font-size:30px;font-weight:800" fill="#0F172A">{stats["total"]}</text><text x="{cx}" y="{cy+24}" text-anchor="middle" class="lbl">last 12 months</text>
-{tiles}<text x="520" y="326" class="mono">WEEKLY RHYTHM</text>{bars}<text x="520" y="432" class="lbl">Less</text>{leg}<text x="{520+30+5*15+4}" y="432" class="lbl">More</text>
+<text x="{cx}" y="{cy+6}" text-anchor="middle" style="font-size:30px;font-weight:800" fill="#0F172A">{stats["lifetime"]:,}</text><text x="{cx}" y="{cy+24}" text-anchor="middle" class="lbl">all-time</text>
+{tiles}<text x="520" y="244" class="mono">CONTRIBUTIONS BY YEAR</text>{bars}<text x="520" y="442" class="lbl">Less</text>{leg}<text x="{520+30+5*15+4}" y="442" class="lbl">More</text><text x="908" y="442" text-anchor="end" class="lbl">Ring = last 12 months</text>
 </svg>"""
     ET.fromstring(svg)
     with open(output_path, "w", encoding="utf-8") as f:
@@ -288,11 +348,22 @@ def generate_activity_svg(cal, stats, output_path):
 
 
 def main():
-    cal = get_contribution_data(USERNAME)
-    stats = compute_stats(cal)
+    cal, years, source, mode = get_contribution_data(USERNAME)
+    stats = compute_stats(cal, years, source, mode)
+    try:
+        prev = json.load(open(OUTPUT_JSON_DATASET, encoding="utf-8"))["stats"]
+    except Exception:
+        prev = None
+    if prev and prev.get("mode") == "authenticated" and mode != "authenticated" and stats["lifetime"] < prev.get("lifetime", 0):
+        print(f"[ABORT] Only public data available ({stats['lifetime']}) but last good total was {prev['lifetime']}. "
+              "Add the GH_PAT secret (read:user). Keeping existing files.")
+        sys.exit(1)
+    if mode != "authenticated":
+        print("[NOTE] Public data only: private contributions are not included. Add a GH_PAT secret to include them.")
     generate_activity_svg(cal, stats, OUTPUT_ACTIVITY_SVG)
     export_dataset_json(cal, stats, OUTPUT_JSON_DATASET)
-    print(f"[DONE] {stats['total']} contributions, {stats['active_days']} active days")
+    print(f"[DONE] lifetime={stats['lifetime']} this_year={stats['this_year']} last12={stats['last_12_months']} "
+          f"years={[(y['year'], y['total']) for y in stats['yearly']]} mode={mode}")
 
 
 if __name__ == "__main__":
