@@ -42,8 +42,12 @@ button:hover{transform:translateY(-1px);border-color:var(--l3)}button.on{backgro
 const $=s=>document.querySelector(s),tip=$('#tip'),M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const fmt=d=>new Date(d+'T00:00:00').toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
 let D,days,weeks,view='grid',range=365,month=null;
-fetch('assets/contributions.json?'+Date.now()).then(r=>r.json()).then(j=>{D=j;days=j.days;weeks=[];days.forEach(d=>{if(d.weekday===0||!weeks.length)weeks.push([]);weeks.at(-1).push(d)});
-$('#upd').textContent='updated '+new Date(j.generated_at).toLocaleString('en-IN',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});draw()}).catch(()=>$('#stage').textContent='Could not load assets/contributions.json');
+const RAW='https://raw.githubusercontent.com/Ashutosh2275/Ashutosh2275/main/assets/contributions.json';
+async function get(){for(const u of [RAW,'assets/contributions.json']){try{const r=await fetch(u+'?t='+Date.now(),{cache:'no-store'});if(r.ok)return await r.json()}catch(e){}}throw 0}
+function ingest(j){D=j;days=j.days;weeks=[];days.forEach(d=>{if(d.weekday===0||!weeks.length)weeks.push([]);weeks.at(-1).push(d)})}
+let sig='';async function load(first){try{const j=await get(),s=JSON.stringify([j.stats,j.days.map(d=>d.count)]);if(first||s!==sig){sig=s;ingest(j);draw()}
+$('#upd').textContent='live \u00b7 synced '+new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})}catch(e){if(first)$('#stage').textContent='Could not load contribution data'}}
+load(true);setInterval(load,60000);
 const live=()=>days.slice(-range),inRange=d=>days.indexOf(d)>=days.length-range&&(!month||d.date.slice(0,7)===month);
 function stats(){const a=days.filter(inRange),c=a.map(d=>d.count),t=c.reduce((x,y)=>x+y,0),ac=c.filter(x=>x).length,best=Math.max(0,...c);
 const S=[[D.stats.lifetime,'Lifetime total'],[t,'In selected range'],[ac,'Active days'],[best,'Best day'],[ac?(t/ac).toFixed(1):0,'Avg / active day']];

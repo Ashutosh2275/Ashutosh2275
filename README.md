@@ -29,6 +29,8 @@ I value clean architecture, performance, security and cost-efficient engineering
 
 <a href="https://ashutosh2275.github.io/Ashutosh2275/"><img src="https://img.shields.io/badge/OPEN_LIVE_DASHBOARD-hover_%C2%B7_filter_%C2%B7_explore-6366F1?style=for-the-badge&logo=githubpages&logoColor=white" alt="Open the interactive dashboard"></a>
 
+<sub>Synced automatically every 10 minutes &middot; the dashboard also refreshes itself live</sub>
+
 </div>
 
 <br>

@@ -339,7 +339,7 @@ def generate_activity_svg(cal, stats, output_path):
 <line x1="{cx}" y1="{cy}" x2="{cx}" y2="{cy-r_in-7*pitch}" stroke="#6366F1" stroke-opacity=".5" stroke-width="1.4"/></g>
 <circle cx="{cx}" cy="{cy}" r="52" fill="#fff" stroke="#E2E8F7"/><circle cx="{cx}" cy="{cy}" r="52" fill="none" stroke="url(#accv)" stroke-width="2" stroke-dasharray="60 270"><animateTransform attributeName="transform" type="rotate" from="0 {cx} {cy}" to="-360 {cx} {cy}" dur="8s" repeatCount="indefinite"/></circle>
 <text x="{cx}" y="{cy+6}" text-anchor="middle" style="font-size:30px;font-weight:800" fill="#0F172A">{stats["lifetime"]:,}</text><text x="{cx}" y="{cy+24}" text-anchor="middle" class="lbl">all-time</text>
-{tiles}<text x="520" y="244" class="mono">CONTRIBUTIONS BY YEAR</text>{bars}<text x="520" y="442" class="lbl">Less</text>{leg}<text x="{520+30+5*15+4}" y="442" class="lbl">More</text><text x="908" y="442" text-anchor="end" class="lbl">Ring = last 12 months</text>
+{tiles}<text x="520" y="244" class="mono">CONTRIBUTIONS BY YEAR</text>{bars}<text x="520" y="442" class="lbl">Less</text>{leg}<text x="{520+30+5*15+4}" y="442" class="lbl">More</text><text x="908" y="442" text-anchor="end" class="lbl">Ring = last 12 months</text><text x="908" y="460" text-anchor="end" class="lbl">Updated {datetime.now(timezone.utc).strftime("%d %b %Y, %H:%M")} UTC</text>
 </svg>"""
     ET.fromstring(svg)
     with open(output_path, "w", encoding="utf-8") as f:
@@ -360,6 +360,16 @@ def main():
         sys.exit(1)
     if mode != "authenticated":
         print("[NOTE] Public data only: private contributions are not included. Add a GH_PAT secret to include them.")
+    try:
+        old = json.load(open(OUTPUT_JSON_DATASET, encoding="utf-8"))
+        unchanged = old.get("stats") == stats and [d["count"] for d in old.get("days", [])] == \
+            [c.get("contributionCount", 0) for w in cal.get("weeks", []) for c in w.get("contributionDays", [])] \
+            and os.path.exists(OUTPUT_ACTIVITY_SVG)
+    except Exception:
+        unchanged = False
+    if unchanged:
+        print(f"[NO CHANGE] lifetime={stats['lifetime']} - files left untouched")
+        return
     generate_activity_svg(cal, stats, OUTPUT_ACTIVITY_SVG)
     export_dataset_json(cal, stats, OUTPUT_JSON_DATASET)
     print(f"[DONE] lifetime={stats['lifetime']} this_year={stats['this_year']} last12={stats['last_12_months']} "
