@@ -1,13 +1,13 @@
-name: Update GitHub Activity
+name: Update GitHub Activity & Daily Contributions
 
-"on":
+on:
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: "*/30 * * * *"
   workflow_dispatch:
   push:
     branches: [main]
     paths:
-      - "scripts/generate_contributions.py"
+      - "scripts/*.py"
       - ".github/workflows/update-contributions.yml"
 
 permissions:
@@ -20,18 +20,32 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - run: pip install beautifulsoup4
-      - name: Generate activity SVG and dataset
+
+      - name: Install dependencies
+        run: pip install beautifulsoup4
+
+      - name: Configure Git Author
+        run: |
+          git config user.name "Ashutosh Mishra"
+          git config user.email "ashutoshmishra2275@gmail.com"
+
+      - name: Run daily contribution deployment and activity sync
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python scripts/generate_contributions.py
+        run: python scripts/daily_auto_contribute.py
+
       - name: Validate outputs
         run: |
           python -c "
@@ -41,12 +55,10 @@ jobs:
           s = d['stats']
           assert d['days'], 'no contribution days'
           assert s['lifetime'] == sum(y['total'] for y in s['yearly']), 'lifetime != sum of years'
-          print('OK lifetime', s['lifetime'], 'mode', s['mode'])
+          print('OK lifetime', s['lifetime'], 'today', s.get('today', 0), 'mode', s['mode'])
           "
-      - name: Commit changes
+
+      - name: Push updates to repository
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
           git pull --rebase origin main || true
-          git add assets/github-activity.svg assets/contributions.json
-          git diff --staged --quiet || (git commit -m "chore: refresh contribution activity [skip ci]" && git push)
+          git push origin main

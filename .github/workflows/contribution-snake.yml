@@ -6,10 +6,6 @@ on:
     - cron: "0 0 * * *"
   # Allows manual triggering from Actions tab
   workflow_dispatch:
-  # Run on pushes to main branch
-  push:
-    branches:
-      - main
 
 # Enforce least-privilege permissions
 permissions:

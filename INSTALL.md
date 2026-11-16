@@ -84,7 +84,9 @@ The heatmap in `assets/github-activity.svg` and the counter in `assets/stats.svg
 ## 4. GitHub Actions Automated Updates
 
 ### Scheduled Trigger:
-- Runs automatically at `00:00 UTC` daily via `.github/workflows/update-contributions.yml`.
+- Runs automatically every 30 minutes via `.github/workflows/update-contributions.yml`.
+- Dynamically selects a daily contribution target between 10 and 30 commits (weighted ~88% between 20-30), pacing commits across the 24-hour cycle under `Ashutosh Mishra <ashutoshmishra2275@gmail.com>`.
+- Re-calculates and renders real-time metrics in `assets/github-activity.svg` and `assets/contributions.json`.
 - Can also be manually triggered anytime via the **Actions** tab (`workflow_dispatch`).
 
 ### Workflow Permissions:

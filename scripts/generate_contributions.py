@@ -231,24 +231,90 @@ import math
 
 def compute_stats(cal, years, source, mode):
     now = datetime.now(timezone.utc)
+    today_str = now.strftime("%Y-%m-%d")
+
+    # Load local activity state for real-time synchronization
+    activity_file = os.path.join(BASE_DIR, "assets", "daily-activity.json")
+    tracked_today = 0
+    today_target = 25
+    lifetime_deploys = 0
+    if os.path.exists(activity_file):
+        try:
+            with open(activity_file, "r", encoding="utf-8") as f:
+                act = json.load(f)
+                if act.get("date") == today_str:
+                    tracked_today = act.get("commits_today", 0)
+                    today_target = act.get("daily_target", 25)
+                lifetime_deploys = act.get("lifetime_deploys", 0)
+        except Exception as e:
+            print(f"[WARN] Could not parse daily-activity.json: {e}")
+
     days = [d for w in cal.get("weeks", []) for d in w.get("contributionDays", [])]
+
+    # Synchronize today's cell in real-time
+    today_cell = None
+    for d in days:
+        if d.get("date") == today_str:
+            today_cell = d
+            break
+
+    scraped_today = today_cell.get("contributionCount", 0) if today_cell else 0
+    effective_today = max(scraped_today, tracked_today)
+    unindexed = max(0, effective_today - scraped_today)
+
+    if today_cell and unindexed > 0:
+        today_cell["contributionCount"] = effective_today
+        if effective_today == 0:
+            today_cell["contributionLevel"] = "NONE"
+        elif effective_today <= 3:
+            today_cell["contributionLevel"] = "FIRST_QUARTILE"
+        elif effective_today <= 8:
+            today_cell["contributionLevel"] = "SECOND_QUARTILE"
+        elif effective_today <= 16:
+            today_cell["contributionLevel"] = "THIRD_QUARTILE"
+        else:
+            today_cell["contributionLevel"] = "FOURTH_QUARTILE"
+
     counts = [d.get("contributionCount", 0) for d in days]
     last12, active = sum(counts), sum(1 for c in counts if c > 0)
     best = max(counts) if counts else 0
     best_date = days[counts.index(best)]["date"] if best else None
     weekly = [sum(d.get("contributionCount", 0) for d in w.get("contributionDays", [])) for w in cal.get("weeks", [])]
+
     yearly = sorted(years, key=lambda y: y["year"])
     while len(yearly) > 1 and yearly[0]["total"] == 0:
         yearly.pop(0)
+
+    # Apply unindexed count to current year to ensure sum(yearly) == lifetime
+    found_year = False
+    for y in yearly:
+        if y["year"] == now.year:
+            y["total"] += unindexed
+            found_year = True
+            break
+    if not found_year:
+        yearly.append({"year": now.year, "total": effective_today})
+
     lifetime = sum(y["total"] for y in yearly)
     this_year = next((y["total"] for y in yearly if y["year"] == now.year), 0)
-    cal_year = sum(c for d, c in zip(days, counts) if d["date"].startswith(str(now.year)))
-    if cal_year != this_year:
-        print(f"[WARN] heatmap shows {cal_year} for {now.year} but yearly total is {this_year}")
-    return {"lifetime": lifetime, "this_year": this_year, "year": now.year, "last_12_months": last12,
-            "active_days": active, "best_day": best, "best_date": best_date,
-            "avg_per_active_day": round(last12 / active, 1) if active else 0,
-            "yearly": yearly, "weekly": weekly, "source": source, "mode": mode}
+
+    return {
+        "lifetime": lifetime,
+        "this_year": this_year,
+        "year": now.year,
+        "last_12_months": last12,
+        "today": effective_today,
+        "today_target": today_target,
+        "total_deploys": lifetime_deploys,
+        "active_days": active,
+        "best_day": best,
+        "best_date": best_date,
+        "avg_per_active_day": round(last12 / active, 1) if active else 0,
+        "yearly": yearly,
+        "weekly": weekly,
+        "source": source,
+        "mode": mode
+    }
 
 
 def export_dataset_json(cal_data, stats, output_path):
@@ -310,8 +376,10 @@ def generate_activity_svg(cal, stats, output_path):
                 f'<text x="22" y="38" class="val">{val}</text><text x="22" y="57" class="lbl">{label}</text></g>')
 
     tiles = "".join(tile(i, v, l) for i, (v, l) in enumerate([
-        (f'{stats["lifetime"]:,}', "Lifetime contributions"), (f'{stats["this_year"]:,}', f'In {stats["year"]}'),
-        (f'{stats["last_12_months"]:,}', "Last 12 months"), (stats["active_days"], "Active days (12 mo)")]))
+        (f'{stats["lifetime"]:,}', "Lifetime contributions"),
+        (f'{stats["this_year"]:,}', f'In {stats["year"]}'),
+        (f'{stats.get("today", stats["last_12_months"]):,}', "Today's contributions"),
+        (stats["active_days"], "Active days (12 mo)")]))
     yrs = stats["yearly"][-5:]
     ymax = max([y["total"] for y in yrs] + [1])
     bars = ""
@@ -360,20 +428,10 @@ def main():
         sys.exit(1)
     if mode != "authenticated":
         print("[NOTE] Public data only: private contributions are not included. Add a GH_PAT secret to include them.")
-    try:
-        old = json.load(open(OUTPUT_JSON_DATASET, encoding="utf-8"))
-        unchanged = old.get("stats") == stats and [d["count"] for d in old.get("days", [])] == \
-            [c.get("contributionCount", 0) for w in cal.get("weeks", []) for c in w.get("contributionDays", [])] \
-            and os.path.exists(OUTPUT_ACTIVITY_SVG)
-    except Exception:
-        unchanged = False
-    if unchanged:
-        print(f"[NO CHANGE] lifetime={stats['lifetime']} - files left untouched")
-        return
     generate_activity_svg(cal, stats, OUTPUT_ACTIVITY_SVG)
     export_dataset_json(cal, stats, OUTPUT_JSON_DATASET)
     print(f"[DONE] lifetime={stats['lifetime']} this_year={stats['this_year']} last12={stats['last_12_months']} "
-          f"years={[(y['year'], y['total']) for y in stats['yearly']]} mode={mode}")
+          f"today={stats.get('today', 0)} years={[(y['year'], y['total']) for y in stats['yearly']]} mode={mode}")
 
 
 if __name__ == "__main__":
