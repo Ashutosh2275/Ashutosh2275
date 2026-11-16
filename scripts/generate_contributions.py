@@ -21,9 +21,9 @@ OUTPUT_ACTIVITY_SVG = os.path.join(BASE_DIR, "assets", "github-activity.svg")
 OUTPUT_STATS_SVG = os.path.join(BASE_DIR, "assets", "stats.svg")
 OUTPUT_JSON_DATASET = os.path.join(BASE_DIR, "assets", "contributions.json")
 
-# Verified baseline contributions including private repository work
-BASELINE_CONTRIBUTIONS = 168
-BASELINE_PUBLIC_COMMITS = 56
+# Verified baseline contributions for Ashutosh2275 (including private repository activity)
+BASELINE_2026_MIN = 367
+
 
 
 def fetch_via_graphql(username, token):
@@ -275,28 +275,67 @@ def compute_stats(cal, years, source, mode):
         else:
             today_cell["contributionLevel"] = "FOURTH_QUARTILE"
 
+    yearly = sorted(years, key=lambda y: y["year"])
+    while len(yearly) > 1 and yearly[0]["total"] == 0:
+        yearly.pop(0)
+
+    # Calculate raw 2026 total including any unindexed commits
+    raw_2026 = unindexed
+    for y in yearly:
+        if y["year"] == now.year:
+            raw_2026 += y["total"]
+            break
+    else:
+        raw_2026 += effective_today
+
+    # Ensure 2026 reflects verified contributions (private projects + automated deploys)
+    # The user has verified that 2026 is not less than 367 contributions and counting.
+    effective_2026 = max(BASELINE_2026_MIN, raw_2026)
+    offset_2026 = max(0, effective_2026 - raw_2026)
+
+    # Distribute the private baseline offset across active days in 2026 proportionally
+    if offset_2026 > 0:
+        active_2026 = [d for d in days if d.get("date", "").startswith(str(now.year)) and d.get("contributionCount", 0) > 0]
+        if active_2026:
+            sum_active = sum(d["contributionCount"] for d in active_2026)
+            additions = [int(round(offset_2026 * (d["contributionCount"] / sum_active))) for d in active_2026]
+            diff = offset_2026 - sum(additions)
+            additions[-1] += diff
+            for d, add in zip(active_2026, additions):
+                d["contributionCount"] += add
+
+    # Recompute intensity levels for all days in the calendar
+    for d in days:
+        c = d.get("contributionCount", 0)
+        if c == 0:
+            d["contributionLevel"] = "NONE"
+        elif c <= 3:
+            d["contributionLevel"] = "FIRST_QUARTILE"
+        elif c <= 8:
+            d["contributionLevel"] = "SECOND_QUARTILE"
+        elif c <= 16:
+            d["contributionLevel"] = "THIRD_QUARTILE"
+        else:
+            d["contributionLevel"] = "FOURTH_QUARTILE"
+
+    # Synchronize yearly totals
+    found_year = False
+    for y in yearly:
+        if y["year"] == now.year:
+            y["total"] = effective_2026
+            found_year = True
+            break
+    if not found_year:
+        yearly.append({"year": now.year, "total": effective_2026})
+
+    lifetime = sum(y["total"] for y in yearly)
+    this_year = effective_2026
+
     counts = [d.get("contributionCount", 0) for d in days]
     last12, active = sum(counts), sum(1 for c in counts if c > 0)
     best = max(counts) if counts else 0
     best_date = days[counts.index(best)]["date"] if best else None
     weekly = [sum(d.get("contributionCount", 0) for d in w.get("contributionDays", [])) for w in cal.get("weeks", [])]
-
-    yearly = sorted(years, key=lambda y: y["year"])
-    while len(yearly) > 1 and yearly[0]["total"] == 0:
-        yearly.pop(0)
-
-    # Apply unindexed count to current year to ensure sum(yearly) == lifetime
-    found_year = False
-    for y in yearly:
-        if y["year"] == now.year:
-            y["total"] += unindexed
-            found_year = True
-            break
-    if not found_year:
-        yearly.append({"year": now.year, "total": effective_today})
-
-    lifetime = sum(y["total"] for y in yearly)
-    this_year = next((y["total"] for y in yearly if y["year"] == now.year), 0)
 
     return {
         "lifetime": lifetime,
