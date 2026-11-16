@@ -28,11 +28,12 @@ button:hover{transform:translateY(-1px);border-color:var(--l3)}button.on{backgro
 #rh{display:flex;align-items:flex-end;gap:5px;height:220px;width:100%}#rh i{flex:1;border-radius:5px 5px 2px 2px;background:var(--acc);min-height:3px;cursor:pointer;transition:.2s;transform-origin:bottom;animation:g .7s both}
 #rh i:hover{filter:brightness(1.15);transform:scaleY(1.04)}@keyframes g{from{transform:scaleY(0)}}
 #detail{margin-top:14px;color:var(--mut);font-size:14px;min-height:22px;text-align:center}#detail b{color:var(--ink)}
-#tip{position:fixed;pointer-events:none;background:#0F172A;color:#fff;padding:8px 12px;border-radius:10px;font-size:12px;opacity:0;transition:opacity .12s;z-index:9;white-space:nowrap}
+#tip{position:fixed;pointer-events:none;background:rgba(15,23,42,0.95);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;padding:8px 12px;border-radius:10px;font-size:12px;border:1px solid rgba(255,255,255,0.12);box-shadow:0 10px 25px -4px rgba(0,0,0,0.4);opacity:0;transform:scale(0.96);transition:opacity .12s ease,transform .12s ease;z-index:9999;white-space:nowrap}
+#tip.show{opacity:1;transform:scale(1)}
 .leg{display:flex;gap:5px;align-items:center;justify-content:center;margin-top:14px;font-size:11px;color:var(--mut)}.leg i{width:12px;height:12px;border-radius:3px}
 </style></head><body><div class="w">
 <header><div><div class="tag">CONTRIBUTION ORBIT</div><h1>Ashutosh <span>Mishra</span></h1></div>
-<div style="display:flex;gap:10px;align-items:center"><span class="live"><i></i><span id="upd">live</span></span><button id="th">Theme</button><button onclick="location.href='https://github.com/Ashutosh2275'">GitHub</button></div></header>
+<div style="display:flex;gap:10px;align-items:center"><span class="live"><i></i><span id="upd">live</span></span><button id="th">Theme</button><button onclick="window.open('https://github.com/Ashutosh2275','_blank')">GitHub</button></div></header>
 <div class="bar"><div class="grp" id="views"><button data-v="grid" class="on">Year</button><button data-v="orb">Orbit</button><button data-v="rh">Rhythm</button><button data-v="yr">Years</button></div>
 <div class="grp" id="rng"><button data-r="30">30D</button><button data-r="90">90D</button><button data-r="365" class="on">1Y</button></div></div>
 <div class="stats" id="stats"></div>
@@ -47,24 +48,49 @@ async function get(){for(const u of [RAW,'assets/contributions.json']){try{const
 function ingest(j){D=j;days=j.days;weeks=[];days.forEach(d=>{if(d.weekday===0||!weeks.length)weeks.push([]);weeks.at(-1).push(d)})}
 let sig='';async function load(first){try{const j=await get(),s=JSON.stringify([j.stats,j.days.map(d=>d.count)]);if(first||s!==sig){sig=s;ingest(j);draw()}
 $('#upd').textContent='live \u00b7 synced '+new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})}catch(e){if(first)$('#stage').textContent='Could not load contribution data'}}
-load(true);setInterval(load,60000);
+load(true);setInterval(load,20000);
 const live=()=>days.slice(-range),inRange=d=>days.indexOf(d)>=days.length-range&&(!month||d.date.slice(0,7)===month);
 function stats(){const a=days.filter(inRange),c=a.map(d=>d.count),t=c.reduce((x,y)=>x+y,0),ac=c.filter(x=>x).length,best=Math.max(0,...c);
 const S=[[D.stats.lifetime,'Lifetime total'],[t,'In selected range'],[ac,'Active days'],[best,'Best day'],[ac?(t/ac).toFixed(1):0,'Avg / active day']];
 $('#stats').innerHTML=S.map(s=>`<div class="st"><b data-n="${s[0]}">0</b><small>${s[1]}</small></div>`).join('');
 document.querySelectorAll('[data-n]').forEach(e=>{const n=+e.dataset.n,t0=performance.now();(function f(t){const k=Math.min(1,(t-t0)/700);e.textContent=Number.isInteger(n)?Math.round(n*k).toLocaleString():(n*k).toFixed(1);if(k<1)requestAnimationFrame(f)})(t0)})}
-function bind(el,d){el.onmousemove=e=>{tip.style.opacity=1;tip.style.left=e.clientX+14+'px';tip.style.top=e.clientY+14+'px';tip.innerHTML=`<b>${d.count}</b> contribution${d.count==1?'':'s'} &middot; ${fmt(d.date)}`};
-el.onmouseleave=()=>tip.style.opacity=0;el.onclick=()=>{const r=[...days].sort((a,b)=>b.count-a.count).findIndex(x=>x.date==d.date);$('#detail').innerHTML=`<b>${fmt(d.date)}</b> &mdash; ${d.count} contribution${d.count==1?'':'s'}${d.count?` &middot; top ${Math.max(1,Math.round(100*(r+1)/days.length))}% busiest day of the year`:''}`}}
+function bind(el,d){el.onmousemove=e=>{
+tip.classList.add('show');
+const tipW=tip.offsetWidth||190,tipH=tip.offsetHeight||36,pad=12;
+let x=e.clientX+14;
+if(x+tipW>window.innerWidth-pad){x=e.clientX-tipW-14}
+if(x<pad)x=pad;
+let y=e.clientY-tipH/2;
+if(y<pad)y=pad;
+if(y+tipH>window.innerHeight-pad)y=window.innerHeight-tipH-pad;
+tip.style.left=x+'px';tip.style.top=y+'px';
+const dots=['#E8EDFB','#BFDBFE','#60A5FA','#6366F1','#7C3AED'];
+const dc=dots[d.intensity||0];
+tip.innerHTML=`<div style="display:flex;align-items:center;gap:7px;"><span style="width:8px;height:8px;border-radius:50%;background:${dc};box-shadow:0 0 6px ${dc};flex-shrink:0"></span><b>${d.count}</b> commit${d.count==1?'':'s'} &middot; <span style="color:#94A3B8">${fmt(d.date)}</span></div>`;
+$('#detail').innerHTML=`<b>${fmt(d.date)}</b> &mdash; <span style="color:var(--l3);font-weight:700">${d.count} commit${d.count==1?'':'s'}</span>${d.count?` &middot; intensity level ${d.intensity}/4`:' &middot; no activity'}`};
+el.onmouseleave=()=>{tip.classList.remove('show')};
+el.onclick=()=>{const r=[...days].sort((a,b)=>b.count-a.count).findIndex(x=>x.date==d.date);$('#detail').innerHTML=`<b>${fmt(d.date)}</b> &mdash; ${d.count} contribution${d.count==1?'':'s'}${d.count?` &middot; top ${Math.max(1,Math.round(100*(r+1)/days.length))}% busiest day of the year`:''}`}}
 function draw(){stats();const st=$('#stage');
 $('#mo').innerHTML=[...new Set(days.map(d=>d.date.slice(0,7)))].map(m=>`<button data-m="${m}" class="${m==month?'on':''}">${M[+m.slice(5)-1]}</button>`).join('');
 document.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{month=month==b.dataset.m?null:b.dataset.m;draw()});
 if(view=='grid'){st.innerHTML='<div id="grid"></div>';const g=$('#grid');days.forEach((d,i)=>{const e=document.createElement('i');e.className='l'+d.intensity+(inRange(d)?'':' dim');if(i==0)e.style.gridRowStart=d.weekday+1;bind(e,d);g.appendChild(e)})}
 else if(view=='orb'){const cx=260,cy=260,r0=70,p=22,n=weeks.length,a=2*Math.PI/n,P=(r,t)=>(cx+r*Math.cos(t)).toFixed(1)+','+(cy+r*Math.sin(t)).toFixed(1);let h='';
-weeks.forEach((w,wi)=>w.forEach(d=>{const t0=-Math.PI/2+wi*a+.012,t1=t0+a-.024,R0=r0+d.weekday*p,R1=R0+18;h+=`<path data-d="${d.date}" class="l${d.intensity}${inRange(d)?'':' dim'}" d="M${P(R1,t0)}A${R1},${R1} 0 0 1 ${P(R1,t1)}L${P(R0,t1)}A${R0},${R0} 0 0 0 ${P(R0,t0)}Z"/>`}));
+weeks.forEach((w,wi)=>w.forEach(d=>{const t0=-Math.PI/2+wi*a+.012,t1=t0+a-.024,R0=r0+d.weekday*p,R1=R0+18;h+=`<path data-d="${d.date}" class="l${d.intensity}${inRange(d)?'':' dim'}" d="M${P(R1,t0)}A${R1},${R1} 0 0 1 ${P(R1,t1)}L${P(R0,t1)}A${R0},${R0} 0 0 0 ${P(R0,t0)}Z"><title>${d.count} commits on ${d.date}</title></path>`}));
 st.innerHTML=`<svg id="orb" viewBox="0 0 520 520" width="560">${h}<text x="260" y="262" text-anchor="middle" font-size="34" font-weight="800" fill="currentColor">${D.stats.lifetime.toLocaleString()}</text><text x="260" y="284" text-anchor="middle" font-size="12" fill="#64748B">all-time</text></svg>`;
 const m={};days.forEach(d=>m[d.date]=d);document.querySelectorAll('#orb path').forEach(e=>bind(e,m[e.dataset.d]))}
 else if(view=='yr'){const Y=D.stats.yearly,mx=Math.max(...Y.map(y=>y.total),1);st.innerHTML='<div style="display:grid;gap:12px">'+Y.map(y=>`<div class="yr" style="display:flex;align-items:center;gap:12px"><b style="width:48px">${y.year}</b><div style="flex:1;background:var(--l0);border-radius:999px;height:20px"><div style="height:100%;width:${Math.max(1.5,y.total/mx*100)}%;background:var(--acc);border-radius:999px;transition:width .8s"></div></div><span style="width:60px;text-align:right;font-weight:700">${y.total.toLocaleString()}</span></div>`).join('')+'</div>'}
-else{const mx=Math.max(...D.stats.weekly,1);st.innerHTML='<div id="rh"></div>';D.stats.weekly.forEach((v,i)=>{const e=document.createElement('i');e.style.height=Math.max(2,v/mx*100)+'%';e.style.animationDelay=i*20+'ms';const w=weeks[i];e.onmousemove=ev=>{tip.style.opacity=1;tip.style.left=ev.clientX+14+'px';tip.style.top=ev.clientY+14+'px';tip.innerHTML=`<b>${v}</b> contributions &middot; week of ${fmt(w[0].date)}`};e.onmouseleave=()=>tip.style.opacity=0;$('#rh').appendChild(e)})}}
+else{const mx=Math.max(...D.stats.weekly,1);st.innerHTML='<div id="rh"></div>';D.stats.weekly.forEach((v,i)=>{const e=document.createElement('i');e.style.height=Math.max(2,v/mx*100)+'%';e.style.animationDelay=i*20+'ms';const w=weeks[i];
+e.onmousemove=ev=>{
+tip.classList.add('show');
+const tipW=tip.offsetWidth||190,tipH=tip.offsetHeight||36;
+let x=ev.clientX+14;
+if(x+tipW>window.innerWidth-12)x=ev.clientX-tipW-14;
+if(x<12)x=12;
+tip.style.left=x+'px';tip.style.top=(ev.clientY-tipH/2)+'px';
+tip.innerHTML=`<div style="display:flex;align-items:center;gap:7px;"><span style="width:8px;height:8px;border-radius:50%;background:#6366F1;box-shadow:0 0 6px #6366F1;flex-shrink:0"></span><b>${v}</b> commits &middot; <span style="color:#94A3B8">week of ${fmt(w[0].date)}</span></div>`;
+$('#detail').innerHTML=`Week of <b>${fmt(w[0].date)}</b> &mdash; <span style="color:var(--l3);font-weight:700">${v} contributions</span>`};
+e.onmouseleave=()=>tip.classList.remove('show');
+$('#rh').appendChild(e)})}}
 $('#views').onclick=e=>{if(!e.target.dataset.v)return;view=e.target.dataset.v;document.querySelectorAll('#views button').forEach(b=>b.classList.toggle('on',b==e.target));draw()};
 $('#rng').onclick=e=>{if(!e.target.dataset.r)return;range=+e.target.dataset.r;document.querySelectorAll('#rng button').forEach(b=>b.classList.toggle('on',b==e.target));draw()};
 $('#th').onclick=()=>{const r=document.documentElement;r.dataset.t=r.dataset.t=='dark'?'':'dark'};

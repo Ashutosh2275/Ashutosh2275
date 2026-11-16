@@ -22,11 +22,11 @@ OUTPUT_STATS_SVG = os.path.join(BASE_DIR, "assets", "stats.svg")
 OUTPUT_JSON_DATASET = os.path.join(BASE_DIR, "assets", "contributions.json")
 
 # Verified baseline contributions for Ashutosh2275 (including private repository activity)
-# User verified 2026 contributions count is at 369 and continuing to increment with new commits.
-BASELINE_2026_MIN = 369
+# User verified 2026 contributions count is at 377 and continuing to increment with new commits.
+BASELINE_2026_MIN = 377
 # In unauthenticated public scraping, private repository activity is omitted by GitHub.
-# Verified private repository baseline offset for 2026: 369 verified - 246 public scraped = 123
-PRIVATE_2026_OFFSET = 123
+# Verified private repository baseline offset for 2026: 377 verified - 250 public scraped = 127
+PRIVATE_2026_OFFSET = 127
 
 
 
@@ -403,7 +403,10 @@ def generate_activity_svg(cal, stats, output_path):
             path = f"M{pt(r1,a0)}A{r1},{r1} 0 0 1 {pt(r1,a1)}L{pt(r0,a1)}A{r0},{r0} 0 0 0 {pt(r0,a0)}Z"
             hi = lv >= 3
             dl = f"{wi*0.03:.2f}s" + (f",{1.6 + (wi % 6) * 0.35:.1f}s" if hi else "")
-            cells.append(f'<path class="c{" h" if hi else ""}" style="animation-delay:{dl}" d="{path}" fill="{COLORS[lv]}"/>')
+            cnt = d.get("contributionCount", 0)
+            date_str = d.get("date", "")
+            title_text = f"{cnt} contribution{'s' if cnt != 1 else ''} on {date_str}"
+            cells.append(f'<path class="c{" h" if hi else ""}" style="animation-delay:{dl}" d="{path}" fill="{COLORS[lv]}"><title>{title_text}</title></path>')
         first = w.get("contributionDays", [{}])[0].get("date")
         if first:
             dt = datetime.strptime(first, "%Y-%m-%d")
@@ -445,7 +448,7 @@ def generate_activity_svg(cal, stats, output_path):
 <linearGradient id="accv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3B82F6"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient>
 <linearGradient id="sweep" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6366F1" stop-opacity="0"/><stop offset="1" stop-color="#6366F1" stop-opacity=".22"/></linearGradient></defs>
 <style>.val{{font-size:24px;font-weight:800;fill:#0F172A}}.lbl{{font-size:10.5px;font-weight:600;fill:#64748B}}.mono{{font-family:'SF Mono',Consolas,monospace;letter-spacing:3px;font-size:11px;font-weight:600;fill:#6366F1}}
-.c{{opacity:0;animation:pop .5s ease forwards}}.h{{animation:pop .5s ease forwards,pl 2.8s ease-in-out infinite}}.hb{{transform-box:fill-box;transform-origin:left;transform:scaleX(0);animation:gx .9s cubic-bezier(.2,.8,.2,1) forwards}}
+.c{{opacity:0;animation:pop .5s ease forwards;cursor:pointer;transition:filter .15s}}.c:hover{{filter:brightness(1.35) drop-shadow(0 0 3px #6366F1)}}.h{{animation:pop .5s ease forwards,pl 2.8s ease-in-out infinite}}.hb{{transform-box:fill-box;transform-origin:left;transform:scaleX(0);animation:gx .9s cubic-bezier(.2,.8,.2,1) forwards}}
 @keyframes pop{{to{{opacity:1}}}}@keyframes pl{{50%{{fill-opacity:.55}}}}@keyframes gx{{to{{transform:scaleX(1)}}}}</style>
 <rect x=".5" y=".5" width="959" height="469" rx="22" fill="url(#bg)" stroke="#E2E8F7"/>
 <text x="520" y="34" class="mono">CONTRIBUTION ORBIT</text>
