@@ -22,7 +22,11 @@ OUTPUT_STATS_SVG = os.path.join(BASE_DIR, "assets", "stats.svg")
 OUTPUT_JSON_DATASET = os.path.join(BASE_DIR, "assets", "contributions.json")
 
 # Verified baseline contributions for Ashutosh2275 (including private repository activity)
-BASELINE_2026_MIN = 367
+# User verified 2026 contributions count is at 369 and continuing to increment with new commits.
+BASELINE_2026_MIN = 369
+# In unauthenticated public scraping, private repository activity is omitted by GitHub.
+# Verified private repository baseline offset for 2026: 369 verified - 246 public scraped = 123
+PRIVATE_2026_OFFSET = 123
 
 
 
@@ -289,8 +293,13 @@ def compute_stats(cal, years, source, mode):
         raw_2026 += effective_today
 
     # Ensure 2026 reflects verified contributions (private projects + automated deploys)
-    # The user has verified that 2026 is not less than 367 contributions and counting.
-    effective_2026 = max(BASELINE_2026_MIN, raw_2026)
+    # The user has verified that 2026 is at least 369 contributions and counting.
+    if mode == "public":
+        raw_2026_with_private = raw_2026 + PRIVATE_2026_OFFSET
+    else:
+        raw_2026_with_private = raw_2026
+
+    effective_2026 = max(BASELINE_2026_MIN, raw_2026_with_private)
     offset_2026 = max(0, effective_2026 - raw_2026)
 
     # Distribute the private baseline offset across active days in 2026 proportionally

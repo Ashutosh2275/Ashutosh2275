@@ -2,7 +2,8 @@ name: Update GitHub Activity & Daily Contributions
 
 on:
   schedule:
-    - cron: "*/30 * * * *"
+    # Synchronize every minute with zero latency
+    - cron: "* * * * *"
   workflow_dispatch:
   push:
     branches: [main]

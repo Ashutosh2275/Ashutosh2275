@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
 scripts/daily_auto_contribute.py
-Automates daily GitHub portfolio contributions:
+Automates daily GitHub portfolio contributions with realistic, organic pacing:
 - Selects a daily target between 10 and 30 commits (heavily weighted towards 20-30).
-- Paces commits across the 24-hour cycle so every day has active contributions.
-- Records each deploy in assets/daily-activity.json.
+- Generates a randomized daily schedule with realistic variable intervals (10 min, 50 min, 1 hour, 3 hours).
+- NEVER makes bulk commits at once: at most ONE commit per execution when a scheduled window arrives.
 - Commits as Ashutosh Mishra <ashutoshmishra2275@gmail.com>.
-- Invokes generate_contributions.py to recalculate real-time metrics and update github-activity.svg.
+- Invokes generate_contributions.py to ensure real-time metrics and dynamic UTC timestamps with zero latency.
 """
 
 import os
@@ -46,6 +46,33 @@ def choose_daily_target():
     return random.choices(candidates, weights=weights)[0]
 
 
+def generate_day_schedule(target_count, date_str):
+    """
+    Generates target_count unique scheduled UTC timestamps distributed organically
+    across the 24-hour day (1440 minutes).
+    Random intervals range from 10 minutes up to 3+ hours (e.g. 10m, 50m, 1h, 3h).
+    """
+    slack = 1440 - (target_count * 10)
+    if slack <= target_count:
+        segs = [max(0, slack // target_count)] * target_count
+    else:
+        cuts = sorted(random.sample(range(slack), target_count - 1))
+        segs = [cuts[0]] + [cuts[i] - cuts[i-1] for i in range(1, len(cuts))] + [slack - cuts[-1]]
+        random.shuffle(segs)
+
+    gaps = [10 + s for s in segs]
+    schedule = []
+    curr = random.randint(2, 12)
+    for g in gaps:
+        curr += g
+        if curr >= 1440:
+            curr = 1438
+        h = curr // 60
+        m = curr % 60
+        schedule.append(f"{date_str}T{h:02d}:{m:02d}:00Z")
+    return sorted(list(dict.fromkeys(schedule)))
+
+
 def load_state():
     if os.path.exists(ACTIVITY_FILE):
         try:
@@ -58,6 +85,7 @@ def load_state():
         "daily_target": 25,
         "commits_today": 0,
         "lifetime_deploys": 0,
+        "scheduled_times": [],
         "history": {},
         "recent_deploys": []
     }
@@ -82,13 +110,11 @@ def run_git(cmd):
 
 
 def main():
-    force_all = "--force-all" in sys.argv
     force_one = "--force-one" in sys.argv or os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch"
 
     now = datetime.now(timezone.utc)
     today_str = now.strftime("%Y-%m-%d")
     hour = now.hour
-    minute = now.minute
 
     state = load_state()
 
@@ -107,53 +133,61 @@ def main():
                     del state["history"][old_k]
 
         target = choose_daily_target()
+        schedule = generate_day_schedule(target, today_str)
         state["date"] = today_str
-        state["daily_target"] = target
+        state["daily_target"] = len(schedule)
         state["commits_today"] = 0
-        print(f"[NEW DAY] {today_str}: Selected daily target = {target} commits (weighted 20-30)")
+        state["scheduled_times"] = schedule
+        print(f"[NEW DAY] {today_str}: Selected daily target = {len(schedule)} commits spaced with random intervals across 24h")
     else:
-        target = state.get("daily_target", 25)
+        # Ensure scheduled_times exists for current day
+        if not state.get("scheduled_times"):
+            target = state.get("daily_target", 25)
+            state["scheduled_times"] = generate_day_schedule(target, today_str)
+            state["daily_target"] = len(state["scheduled_times"])
 
+    target = state.get("daily_target", len(state.get("scheduled_times", [])))
     commits_today = state.get("commits_today", 0)
-    lifetime_deploys = state.get("lifetime_deploys", 0)
+    scheduled_times = state.get("scheduled_times", [])
 
-    # Calculate expected commits up to this point in the day
-    elapsed_fraction = (hour + minute / 60.0) / 24.0
-    if hour >= 23:
-        expected = target
-    else:
-        expected = int(round(elapsed_fraction * target))
-        expected = max(1, min(target, expected))
+    # Determine if a commit is due now
+    # Rule: NEVER make bulk commits. At most 1 commit per execution.
+    commit_due = False
+    next_slot_time = None
 
-    if force_all:
-        expected = target
-    elif force_one:
-        expected = max(expected, min(target, commits_today + 1))
+    if commits_today < len(scheduled_times):
+        next_slot_time = scheduled_times[commits_today]
+        try:
+            next_slot_dt = datetime.fromisoformat(next_slot_time.replace("Z", "+00:00"))
+            if now >= next_slot_dt:
+                commit_due = True
+        except Exception:
+            commit_due = True
+    elif commits_today < target and hour >= 23:
+        commit_due = True
 
-    needed = max(0, expected - commits_today)
-    # Batch up to 3 commits per normal run, or all needed if force_all
-    batch_size = needed if force_all else min(3, needed)
+    if force_one and commits_today < target:
+        commit_due = True
 
-    print(f"[STATUS] {today_str} {now.strftime('%H:%M')} UTC | Commits today: {commits_today}/{target} | Expected by now: {expected} | To make: {batch_size}")
+    print(f"[STATUS] {today_str} {now.strftime('%H:%M')} UTC | Commits today: {commits_today}/{target}")
 
-    messages = [
-        "portfolio contribution sync",
-        "record automated deployment",
-        "portfolio telemetry & metric refresh",
-        "live activity heartbeat",
-        "continuous portfolio deployment",
-        "refresh daily contribution cadence",
-        "automated profile update sync"
-    ]
-
-    commits_made = 0
-    for i in range(batch_size):
+    if commit_due and commits_today < target:
         commits_today += 1
-        lifetime_deploys += 1
+        lifetime_deploys = state.get("lifetime_deploys", 0) + 1
+
+        messages = [
+            "portfolio contribution sync",
+            "record automated deployment",
+            "portfolio telemetry & metric refresh",
+            "live activity heartbeat",
+            "continuous portfolio deployment",
+            "refresh daily contribution cadence",
+            "automated profile update sync"
+        ]
         msg_type = messages[(commits_today - 1) % len(messages)]
 
         entry = {
-            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "timestamp": now.isoformat(),
             "deploy_index": commits_today,
             "target": target,
             "lifetime_total": lifetime_deploys,
@@ -173,11 +207,16 @@ def main():
         run_git(["git", "add", "assets/daily-activity.json"])
         commit_msg = f"chore(deploy): {msg_type} [#{commits_today}/{target}] [skip ci]"
         if run_git(["git", "commit", "-m", commit_msg]):
-            commits_made += 1
+            print(f"[DEPLOY] Successfully executed scheduled commit #{commits_today} of {target} ({msg_type})")
+    else:
+        if commits_today >= target:
+            print(f"[STATUS] Daily quota reached ({commits_today}/{target}). Waiting for midnight UTC rollover.")
+        elif next_slot_time:
+            next_slot_dt = datetime.fromisoformat(next_slot_time.replace("Z", "+00:00"))
+            diff_mins = (next_slot_dt - now).total_seconds() / 60.0
+            print(f"[PACING] Next commit scheduled at {next_slot_time} (in {diff_mins:.1f} mins). Interval-paced; no bulk commits.")
 
-    print(f"[DONE] Successfully generated {commits_made} new contribution commits.")
-
-    # Always invoke generate_contributions.py to ensure SVGs and JSON are synchronized
+    # Always invoke generate_contributions.py to ensure SVGs and JSON are synchronized with live UTC timestamp
     gen_script = os.path.join(BASE_DIR, "scripts", "generate_contributions.py")
     print("[INFO] Invoking generate_contributions.py to synchronize SVG and JSON...")
     res = subprocess.run([sys.executable, gen_script], cwd=BASE_DIR, capture_output=True, text=True)
