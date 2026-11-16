@@ -1,9 +1,9 @@
 <div align="center">
 
-<a href="https://mishrag.codes/"><img src="assets/banner.svg" alt="Ashutosh Mishra - AI/ML and Full-Stack Developer" width="100%"></a>
+<a href="https://mishraji.codes/"><img src="assets/banner.svg" alt="Ashutosh Mishra - AI/ML and Full-Stack Developer" width="100%"></a>
 
 <a href="https://www.linkedin.com/in/ashutoshmishra-tech/"><img src="https://img.shields.io/badge/LinkedIn-Ashutosh_Mishra-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
-<a href="https://mishrag.codes/"><img src="https://img.shields.io/badge/Portfolio-mishrag.codes-6366F1?style=for-the-badge&logo=firefoxbrowser&logoColor=white" alt="Portfolio"></a>
+<a href="https://mishraji.codes/"><img src="https://img.shields.io/badge/Portfolio-mishraji.codes-6366F1?style=for-the-badge&logo=firefoxbrowser&logoColor=white" alt="Portfolio"></a>
 <a href="mailto:ashutoshmishra2275@gmail.com"><img src="https://img.shields.io/badge/Email-Get_in_touch-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"></a>
 <a href="https://drive.google.com/file/d/1RyirKSNDgrU9XfwkMZfwFgM8A7Jv8sfR/view?usp=sharing"><img src="https://img.shields.io/badge/Resume-View_PDF-7C3AED?style=for-the-badge&logo=googledrive&logoColor=white" alt="Resume"></a>
 
@@ -118,7 +118,7 @@ Open to discussing AI architectures, backend systems, open-source work and engin
 <div align="center">
 
 <a href="https://www.linkedin.com/in/ashutoshmishra-tech/"><img src="https://img.shields.io/badge/LinkedIn-ashutoshmishra--tech-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
-<a href="https://mishrag.codes/"><img src="https://img.shields.io/badge/Portfolio-mishrag.codes-6366F1?style=flat-square&logo=firefoxbrowser&logoColor=white" alt="Portfolio"></a>
+<a href="https://mishraji.codes/"><img src="https://img.shields.io/badge/Portfolio-mishraji.codes-6366F1?style=flat-square&logo=firefoxbrowser&logoColor=white" alt="Portfolio"></a>
 <a href="mailto:ashutoshmishra2275@gmail.com"><img src="https://img.shields.io/badge/Email-ashutoshmishra2275@gmail.com-EA4335?style=flat-square&logo=gmail&logoColor=white" alt="Email"></a>
 
 <br><br>

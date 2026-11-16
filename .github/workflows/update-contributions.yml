@@ -7,9 +7,6 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths:
-      - "scripts/*.py"
-      - ".github/workflows/update-contributions.yml"
 
 permissions:
   contents: write
