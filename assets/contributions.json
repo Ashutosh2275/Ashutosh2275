@@ -1,6 +1,6 @@
 {
  "username": "Ashutosh2275",
- "generated_at": "2026-11-16T19:53:43.406524+00:00",
+ "generated_at": "2026-11-16T19:57:24.364338+00:00",
  "period": {
   "start_date": "2025-11-16",
   "end_date": "2026-11-16",
@@ -10,12 +10,12 @@
   "lifetime": 378,
   "this_year": 377,
   "year": 2026,
-  "last_12_months": 376,
+  "last_12_months": 377,
   "today": 35,
   "today_target": 27,
   "total_deploys": 27,
   "active_days": 37,
-  "best_day": 45,
+  "best_day": 46,
   "best_date": "2026-11-16",
   "avg_per_active_day": 10.2,
   "yearly": [
@@ -81,9 +81,9 @@
    50,
    92,
    99,
-   47
+   48
   ],
-  "source": "scrape",
+  "source": "graphql",
   "mode": "public"
  },
  "days": [
@@ -2279,7 +2279,7 @@
   },
   {
    "date": "2026-11-16",
-   "count": 45,
+   "count": 46,
    "intensity": 4,
    "weekday": 1
   }
