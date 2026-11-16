@@ -1,6 +1,6 @@
 {
  "username": "Ashutosh2275",
- "generated_at": "2026-11-16T17:57:57.774725+00:00",
+ "generated_at": "2026-11-16T18:05:30.434727+00:00",
  "period": {
   "start_date": "2025-11-16",
   "end_date": "2026-11-16",
@@ -83,7 +83,7 @@
    96,
    61
   ],
-  "source": "scrape",
+  "source": "graphql",
   "mode": "public"
  },
  "days": [
