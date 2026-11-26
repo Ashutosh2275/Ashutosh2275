@@ -1,8 +1,8 @@
 {
   "date": "2026-11-26",
   "daily_target": 24,
-  "commits_today": 2,
-  "lifetime_deploys": 56,
+  "commits_today": 3,
+  "lifetime_deploys": 57,
   "history": {
     "2026-11-16": {
       "target": 27,
@@ -46,13 +46,6 @@
     }
   },
   "recent_deploys": [
-    {
-      "timestamp": "2026-11-16T15:17:37.767272+00:00",
-      "deploy_index": 7,
-      "target": 27,
-      "lifetime_total": 7,
-      "type": "automated profile update sync"
-    },
     {
       "timestamp": "2026-11-16T15:17:37.867112+00:00",
       "deploy_index": 8,
@@ -395,9 +388,16 @@
       "target": 24,
       "lifetime_total": 56,
       "type": "record automated deployment"
+    },
+    {
+      "timestamp": "2026-11-26T19:13:22.171234+00:00",
+      "deploy_index": 3,
+      "target": 24,
+      "lifetime_total": 57,
+      "type": "portfolio telemetry & metric refresh"
     }
   ],
-  "last_deploy_time": "2026-11-26T09:28:13.559301+00:00",
+  "last_deploy_time": "2026-11-26T19:13:22.171234+00:00",
   "scheduled_times": [
     "2026-11-26T00:40:00Z",
     "2026-11-26T01:10:00Z",
